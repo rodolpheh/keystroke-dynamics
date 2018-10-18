@@ -1,0 +1,256 @@
+https://drive.google.com/open?id=1adxwXQXfHi4nvih_J28tLC30JoRbVOcm
+R. Gaines, W. Lisowski, S Press, N. Shapiro
+Authentication by keystroke timing: some preliminary results
+1980
+Identification des personnes par la manière dont ils tapent avec une méthode statistique et des probabilités. Evoque les digraphes et leur fréquence.
+
+https://drive.google.com/open?id=1SOglRMStJuOhKo45ugviCsUtdOXROKlA
+F. Monrose, A. Rubin
+Authentication via Keystroke Dynamics
+1997
+Description de la méthodologie pour établir des profils et des outils pour l'analyse des motifs de frappe au clavier.
+
+https://drive.google.com/open?id=1_6U_HDcKUyHGOIVnpSgcWzP77yH__PWc
+F. Monrose, A Rubin
+Keystroke dynamics as a biometric for authentication
+2000
+Étude de nouvelles méthodes (à l'époque) d'analyse non-statique (??) pour l'identification de personnes.
+
+https://drive.google.com/open?id=14q-tVhybbeklHh9L1tsvsi0La8VP5Gu8
+F. Monrose, M. Reiter, S. Wetzel
+Password Hardening Based on Keystroke Dynamics
+2002
+Implémentation d'un prototype pour renforcer un mot de passe avec la reconnaissance de frappe au clavier.
+
+https://drive.google.com/open?id=16a098J0nqYPm_u2JF6uEb94qTkediRlP
+P.S.DOWLAND, S.M.FVRNELL and M.PAPADAKI
+KEYSTROKE ANALYSIS AS A METHOD OF ADVANCED USER AUTHENTICATION AND RESPONSE
+2002
+Bonnes bases de lexique concenant les methodes et type d'authentification dans le cas de la dynamique de touches
+
+https://drive.google.com/open?id=1qgD6S4Agj7oQ1qbqVHFTMsEXPgA95_q4
+Chen Change Loy, Weng Kin Lai, and Chee Peng Lim
+Keystroke Patterns Classification using the ARTMAP-FD Neural Network
+2007
+Développement d'un système d'identification par keystroke dynamics, avec une méthode de réseau de neurone ARTMAP-FD. A généré un dataset accessible en ligne
+
+https://drive.google.com/open?id=1xpD3z5bq7KLLmC--xnhNC2G-Vt8cTokn
+Kenneth Revett and al.
+A machine learning approach to keystroke dynamics based user authentication
+2007
+But: Examiner les possibilités de traitement des données de keystroke dynamics.
+Idée: Utiliser les réseaux neuronaux.
+Résultat: L'approche PNN* prouvé être plus efficace que le Machine Learning "classique".
+
+https://drive.google.com/open?id=1JyiBNvsa9WI3iqX9HFdRZKuSb4L2BJD5
+Sylvain Hocquet, Jean-Yves Ramel, and Hubert Cardot
+User Classification for Keystroke Dynamics Authentication
+2007
+Test de classification de personnes par etude de la dynamique de frappe
+
+https://drive.google.com/open?id=1j_PKLgke1hY4yrZuSBz_6ljBqfjVdg_A
+A. Buchoux and N.L. Clarke
+Deployment of Keystroke Analysis on a Smartphone
+2008
+Implantation d'une méthode d'analyse de dynamique de touches, sur les claviers mobiles
+
+https://drive.google.com/open?id=1Apljv490tmO-3dZ0r0qw5tyyugEqCBZP
+J.Hu, D. Gingric
+A k-Nearest Neighbor Approach for User Authentication through Biometric Keystroke Dynamics 
+2008
+Propose une approche kNN pour régler les problèmes de FAR et FRR contre lesquelles les méthodes d'identification par keystroke dynamics butent. 
+
+https://drive.google.com/open?id=1Y1c7sBnquCednstFlVcjz1G5yziHJsor
+Kathryn Hempstalk
+Continuous Typist Verification using Machine Learning 
+2009
+Grosse thèse (~180 pages) qui permet d'avoir un rapide état de l'art sur les données à récupérer, ce qui a été fait, les performances, le sujet en lui même, bref pas mal.
+
+https://drive.google.com/open?id=1QFoXlEbeWVyqZyBWDVOceCniQgsjyTXD
+D. Shanmugapriya , G. Padmavathi
+A Survey of Biometric keystroke Dynamics: Approaches, Security and Challenges
+2009
+Etude généraliste sur la dynamique des touches : méthodes, debouchés, etc ...
+
+https://drive.google.com/open?id=1hR3WlZRpjHttp9e6jOjyr7w5o2Kx0ISl
+Piotr Panasiuk and Khalid Saeed
+User Authentication with Keystroke Dynamics using Fixed Text 
+2009
+But: Rendre l'authentification keystroke dynamics plus efficace.
+Idée: Utiliser l'analyse de keystroke dynamics sur court texte prédéfini, simultanément à une connexion mot de passe classique.
+Résultat: Un court texte peut être suffisant pour efficacement différencier la majorité des utilisateurs.
+Idée de Pb: Reproduire les résultats et essayer de généraliser l'enregistrement sur un clavier pour des types de clavier différents. Rendre l'authentification multi-appareil. Trouver un pattern de transfert entre clavier et appareil mobile.
+
+https://drive.google.com/open?id=17-LWiCioBX90ljNb3exlX44eg9SDysp4
+Kevin Killourhy and Roy Maxion
+Comparing Anomaly-Detection Algorithms  for Keystroke Dynamics
+2009
+Analyse des performances des algorithmes de détection des anomalies dans l'identification des keystrokes. Proposition de renforcement de la cohérence dans les méthodes d'évaluation des anomalies à travers les études. Source de la base de données DSL2009
+
+https://drive.google.com/open?id=1_n6KXhSemkgDwBlMe5ZvGhpyPXveb7wt
+Romain Giot, Mohamad El-Abed, Christophe Rosenberger
+GREYC Keystroke: a Benchmark for Keystroke Dynamics Biometric Systems 
+2009
+Benchmark de test de système de dynamique de touche basé sur une base de donnée et un logiciel
+
+https://hal.archives-ouvertes.fr/hal-00432775/document
+R. Giot, M. El-Abed, C. Rosenberg
+Keystroke Dynamics With Low Constraints SVM Based Passphrase Enrollment
+2009
+Utilisation d'une SVM (State Vector Machine) sur la base du GREYC
+
+https://drive.google.com/open?id=1rJ1fmE5rkig3PsVOgPSYN8Jj-DV-xjEE
+Piotr Panasiuk and Khalid Saeed
+A modified algorithm for user identification by his typing on the keyboard
+2010
+But : Améliorer l'algorithme kNN établi précédemment.
+Idée: Implementer l'Analyse Discriminative Linéaire.
+Résultat: Un taux de réussite de 98% pour un groupe de 16 individus, mais une considérable dégradation en parallèle à la croissance du nombre d'individus.
+
+https://drive.google.com/open?id=1Wb12AocgriK2770FhO82dy8uIPzF_IH0
+Romain Giot, Mohamad El-Abed
+Christophe Rosenberger. Authentification faiblement contrainte par dynamique de frappe au clavier.
+2010
+Méthode d'authentification par dynamique de frappes : etude sur une centaine d'individus
+
+https://drive.google.com/open?id=1dQux43ZB7tn7an9VW_8zc4pC30WEu3K5
+Piotr Panasiuk and Khalid Saeed
+Influence of Database Quality on the Results of Keystroke Dynamics Algorithms
+2011
+But: Faire une synthèse de l'histoire du Keystroke Dynamics et présenter quelques approches possibles.
+Idée: Décrire les différentes observations.
+Résultat: Le Keystroke Dynamics ne permet pas de constituer un moyen d'authentification apart, mais peut constituer une amélioration des systèmes existants. Toutefois il y a une nécessité d'universalisation des données récoltées.
+
+https://drive.google.com/open?id=1SWc9yN8o6veRf0fVLJYv4wOqNecDoSyY
+Romain Giot, Mohamad El-Abed, Christophe Rosenbergerg
+Keystroke Dynamics Authentication
+2012
+But: Vue d'ensemble de la littérature concernant le Keystroke Dynamics
+Résultat: Keystroke Dynamics a le potentiel de rendre l'authentification plus difficile à circonvenir
+
+https://drive.google.com/open?id=1Ee8S-Izy_Dby8Km7qY6M4iCt6HebLtpH
+R. Giot
+Contributions à la dynamique de frappe au clavier : multibiométrie, biométrie douce et mise à jour de la référence
+2012
+Thèse, inventaire des publications sur le sujet, et proposition d'amélioration des performances des systèmes de reconnaissance par DDF
+
+https://drive.google.com/open?id=1qpNvssk6uHV4JDh-RI581SS_q4L9oURD
+Hataichanok Saevanee, Nathan L. Clarkeand, Steven M. Furnell
+Multi-modal Behavioural Biometric Authentication for Mobile Devices
+2012
+Etude de dynamique des touches, appliquée au cas du texting sur telephone portable
+
+https://drive.google.com/open?id=1NauqpzU0NTvkia01veyabqcx3yTywnrS
+R Giot, M. El-Abed, C. Rosenberg
+Web-Based Benchmark for Keystroke Dynamics Biometric Systems: A Statistical Analysis 
+2012
+Etude présentée à une conférence et qui s'accompagne de la deuxième DB du Greyc WEBGREYC{A,B}
+
+https://drive.google.com/open?id=1ihSmcPQq1WVemx_JcQexYdyS4MHm9Cd4
+M. El-Abed, M. Dafer, R. El Khayat
+RHU Keystroke: A mobile-based benchmark for Keystroke Dynamics Systems 
+2014
+A la base de la DB RHU Keystroke (voir plus bas). Contribution pour créer une base de données disponibles pour les chercheurs pour évaluer les algorithmes de reconnaissance de keystroke dynamics. Cette base de données fonctionne sur les keystrokes récupérées sur des téléphones tactiles.
+
+https://drive.google.com/open?id=1gtKUTMX8ei29rQiWjddWBx6crX1WilqF
+Ritwik Banerjee, Song Feng, Jun S. Kang, Yejin Choi
+Keystroke Patterns as Prosody in Digital Writings: A Case Study with Deceptive Reviews and Essays
+2014
+Fourni une base de donnée accompagnant la publication
+
+https://drive.google.com/open?id=1R6hk-jzRhWdFEyoN7UZ_woZbihxnnxfP
+Tomasz Emanuel WESOŁOWSKI, Piotr PORWIK
+User verification based on the analysis of keystrokes while using various software 
+2015
+But: Etablir une nouvelle méthode de l'authentification des utilisateurs.
+Idée: Analyser le comportement dans les utils d'édition de texte pour construire un profil par classification kNN*.
+Résultat: L'approche peut être utilisé pour la detection des intrus, spécialement dans les établissements médicaux où les données sensitives sont traitées.
+
+https://drive.google.com/open?id=1siFTFhOkhTzwvffadmpZQ1T4d5XCmt5S
+Malgorzata PALYS, Tomasz Emanuel WESOŁOWSKI
+Features reduction for computer user profiling based on mouse activity
+2015
+But: Detecter les intrus qui prétendent d'être un utilisateur légitime.
+Idée: Analyser les mouvements de la souris avec moins de fonctionnalités sans introduire des pertes d'informations utiles
+Résultat: La méthode a été considérablement simplifié. L'analyse et donc plus rapide. Le EER est de 18%.
+
+https://drive.google.com/open?id=1yFhjogHLA2QpMRQR69ww5NTuy6j_ZQee
+Romain Giot, Bernadette Dorizzi, Christophe Rosenberger
+A Review on the Public Benchmark Databases for Static Keystroke Dynamics 
+2015
+Inventaire + évaluation des différentes bases de données publiques servant à l'évaluation des algorithmes d'identification par frappe au clavier. Catégorisation des BDD, analyse de leur performance en fonction des objectifs et des critères.
+
+https://drive.google.com/open?id=1uLscyu3xuuc5mFcT-XrLU6WCBrtB4ITv
+A Ali, Alex X. Liu, Wei Wang, Muhammad Shahzad
+Keystroke Recognition Using WiFi Signals
+2015
+Etude basé sur la reconnaissances des touches à l'aide la technologie Wi-Fi
+
+https://drive.google.com/open?id=1pu7vgjP-zZAW_Wu9oz5I7KHdk8A5iT0a
+Paweł Kobojek and Khalid Saeed
+Application of Recurrent Neural Networks for User Verification based on Keystroke Dynamics
+2016
+Histoire + état de l'art des keystroke dynamics. Puis méthode réseaux de neurones. A utilisé une base de donnée déjà existante (??)
+
+https://drive.google.com/open?id=1V-frCi1zPjrbAOtgNAnT6fw9OqR9CRQA
+Puja Mukherjee and Rituparna Chaki
+Towards Generating a Unique Signature for Remote User by Keystrokes Dynamics
+2016
+But: Donner une application aux données collectées.
+Idée: Générer des vecteurs de signatures ( hooo ça sonne scientifique ça )
+Résultat: La qualité des données d'entrée est très importante. L'analyse du texte libre permet de réduire le taux de faux positifs. 
+
+https://drive.google.com/open?id=183LaKC5nuIMJfRHh9YJ56dcmHkUPvO7J
+Piotr Panasiuk, Maciej Szymkowski , Marcin Dąbrowski, and Khalid Saeed
+A Multimodal Biometric User Identification System Based on Keystroke Dynamics and Mouse Movements
+2016
+But: Renforcer la sécurité des ordinateurs personnels durant l'utilisation quotidienne.
+Idée: Joindre le keystroke dynamics à d'autres techniques d'authentification
+Résultat: Le keystroke dynamics n'est pas aussi fiable que les techniques biométriques, mais a l'avantage de pouvoir être transparent à l'utilisateur. On peut donc le joindre à d'autres techniques pour offrir une couche de protection supplémentaire.
+
+https://drive.google.com/open?id=1CP4kM1OPKlZrZbFjSb739h5QTtd5dogC
+Tapalina Bhattasali, Piotr Panasiuk, Khalid Saeed, Nabendu Chaki, and Rituparna Chaki
+Modular Logic of Authentication Using Dynamic Keystroke Pattern Analysis
+2016
+But: Proposer une solution d'authentification modulaire basé sur le key-stroke biometrics.
+Idée: Analyser les pattern 
+Résultat: La précision peut être augmenté avec une solution low cost 
+
+https://drive.google.com/open?id=1BfnqibhpjYM1_tkdc82qmTvcWPVJiXMm
+Paulo Henrique Pisani, Romain Giot, Andre C. P. L. F. de Carvalho, Ana Carolina Lorena
+Enhanced Template Update: Application to Keystroke Dynamics
+2016
+Parle de l'adapation des profils de keystroke au changement. Les données biométriques périment et sont difficile à faire évoluer. Analyse de performance de modèles prédictifs du changement.
+
+https://drive.google.com/open?id=1Tz2ffJFmHRn2mP3l2PJ2Olpe__5-Au0n
+Anna Maria Feit, Daryl Weir, Antti Oulasvirta
+How We Type: Movement Strategies and Performance in Everyday Typing
+2016
+Propose des croisement avec d'autres données + analyse de stratégies dans la frappe au clavier. Beau site
+https://userinterfaces.aalto.fi/how-we-type/
+
+https://link.springer.com/chapter/10.1007/978-3-319-33622-0_4
+Margit AntalEmail, Lehel Nemes
+The MOBIKEY Keystroke Dynamics Password Database: Benchmark Results
+2016
+Mise en place d'une DB pour benchmark. Dataset de keystroke dynamics sur touch screen
+
+https://drive.google.com/open?id=1po_8eI9_sStxAIsMQTZkPa5qIRbMQ6yQ
+Tomasz Emanuel WESOLOWSKI, Hossein SAFAVERDI, Rafal DOROZ, Krzysztof WROBEL
+Hybrid verification method based on finger-knuckle analysis and keystroke dynamics
+2017
+But: Examiner le potentiel d'un nouveau moyen d'authentification biométrique
+Idée: Réunir 2 technologies d'authentification, le keystroke dynamics et l'empreinte de l'articulation de doigt.
+Résultat: L'approche hybride rapporte des meilleur résultats que les approches basés sur une seule technologie.
+
+https://drive.google.com/open?id=1zKoSEfldgwGWf1kTpITepuZ2kdHJV620
+Nadia Binte Asif
+Biometric Keystroke  Dynamics (Working paper : le papier n'a pas encore été accepté)
+2017
+Inventaire de la recherche
+
+https://drive.google.com/open?id=1iXh4EBLraGkTho6jwPwiypqAFt31LkPz
+Sowndarya Krishnamoorthy
+Identification of User Behavioral Biometrics for Authentication Using Keystroke Dynamics and Machine Learning
+2018
+Thèse - Utilisation de la base de donnée Greyc, Mobikey. Adaptation de ces démarches précédentes au support (smartphone) et fait avec des réseaux de neurones.
