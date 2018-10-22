@@ -14,10 +14,25 @@ L'utilisation d'un mot de passe permet de vérifier qu'un utilisateur possède l
 
 La variabilité et l'instabilité des keystroke dynamics entraîne un bottleneck technologique.
 
+Bergadano utilise 680 caractères pour le texte d'entraînement. Il mesure le rythme de frappe des différents trigraphes et les ordonne. L'ordre des trigraphes est utilisé pour le processus d'authentification, ce qui permet de supprimer la dimension temporelle. Il appelle cette technique Degree of Disorder.
 
+Gunetti et Picardi étendent cette idée en intégrant tous les n-graphes. FAR de 5% et FRR de 0.005%.
 
-## Conclusion
+Ce papier propose d'utiliser une classification en kNN. Même performances que Gunetti et Picardi avec une performance améliorée de 66.7%.
+
+## Classification par kNN
+
+La classification est souvent utilisée comme outil de vérification dans le domaine de la biométrie. La méthode de kNN (k-Nearest Neighbours ou k plus proches voisins) est une méthode de classification simple basé sur la distance entre une nouvelle mesure et les mesures déjà obtenues. Pour classifier notre nouvelle mesure, on calcule la position moyenne entre les k voisins les plus proches de notre mesure.
 
 CKAA : Clustering based Keystroke Authentication Algorithm.
+
+Construction des profils utilisateurs :
+
+* Chaque utilisateur entre plusieurs échantillons. Chaque échantillons comporte n-graphes. On fait la moyenne des différents n-graphes et on les tris.
+* Un profile est constitué à partir de la moyenne des vecteurs obtenus précédemment.
+
+Authentification : pour confirmer l'authentification d'un utilisateur, on compare l'échantillon X capturé aux regroupements et au profil A qu'il prétend être. Il faut que A soit dans le group le plus proche de X et la distance (A, X) doit être la plus proche de la moyenne de A dans ce groupe.
+
+## Conclusion
 
 CKAA permet d'obtenir des bons résultats en terme de FAR et de FRR tout en améliorant sensiblement la vitesse d'authentification.
