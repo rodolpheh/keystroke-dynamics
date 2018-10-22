@@ -33,6 +33,10 @@ Construction des profils utilisateurs :
 
 Authentification : pour confirmer l'authentification d'un utilisateur, on compare l'échantillon X capturé aux regroupements et au profil A qu'il prétend être. Il faut que A soit dans le group le plus proche de X et la distance (A, X) doit être la plus proche de la moyenne de A dans ce groupe.
 
+En faisant varier la valeur du seuil utilisé pour le regroupement, on peut faire varier le FAR et le FRR. Un faible seuil donnera un système très strict (faible FAR) avec un fort FRR. Un fort seuil donnera un système plus tolérant (faible FRR) avec un fort FAR.
+
 ## Conclusion
 
 CKAA permet d'obtenir des bons résultats en terme de FAR et de FRR tout en améliorant sensiblement la vitesse d'authentification.
+
+Les auteurs obtiennent un FRR de 0% et un FAR de 0.045%.
