@@ -1,14 +1,14 @@
 #A Review on the Public Benchmark Databases for Static Keystroke Dynamics
 ##Keystroke Dynamics System in a static case
 
-A keystroke dynamics system is composed of two main modules :
+Un système "Keystroke Dynamics" est composé de deux modules principaux :
 
-- **The Enrollment** : This phase, consists in a recording of the biometrics signature of an user. In this step, the string used for the test could be a password or a text (short if possible), but already pre-defined, in order to copy it. The user types the same password several times, in order to acquire multiple samples. Those samples are used in order to create a biometric reference of the user, with the goal to identify him.    
-For each input, a sequance of timing and typing information are recorded. Those records will help to know the keystroke dynamics caracteristics of the user.
+- **Le module d'enregistrement** : Cette phase consiste à effectuer un enregistrement de la signature biométriques d'un utilisateur. Dans cette etape, la chaine de caractères utilisée lors des tests peut etre un mot de passe ou un texte pré-défini (de courte taille si possible) afin de le recopier. Les utilisateurs tapent donc le même mot de passe, à de multiples reprises, dans le but d'obtenir pluseurs acquisitions de données. Ces données récoltées seront donc utilisées afin de créer une référence biométrique propre à l'utilisateur testé, afin de l'identifier.    
+Pour chaque entrée enregistrée, des informations concernant les temps de frappes au clavier sont enregistrés. Ces enregistrements pourront donc aider a connaitre les caractéristiques de frappe d'un utilisateur enregistré.
 
-- **The Verification Module**
+- **Module de vérification**
 
-##Comparative values between studied databases
+##Comparaison de valeurs entres les bases de données etudiées
 |       Categories       | GREYC |WEBGREYC|DSN2009|BIOCHAVES|GREYC-NISLAB|
 |:----------------------:|:-----:|:------:|:-----:|:-------:|:----------:|
 |    Numbers of Users    |  133  |  118   |  51   |   30    |    110     |
