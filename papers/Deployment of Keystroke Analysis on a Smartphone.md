@@ -25,3 +25,8 @@ Il existe, selon Wood, trois approches à l'authentification :
 Cette dernière approche est la biométrie.
 
 Selon les auteurs, une meilleure approche de la sécurité serait une sécurité multi-factorielle. Dans ce document, l'approche utilisée sera une approche bi-factorielle, utilisant un mot de passe et les données de frappe au clavier. Cette approche sera implémentée sur un téléphone portable.
+
+## Revue de la littérature
+
+Les auteurs font une revue de la littérature autour des keystroke dynamics et liste les scores de FAR et FRR obtenus en fonction de la technique de classification, des données mesurées, du nombre de sujet et de la méthode utilisée (statique ou dynamique). La revue de ces documents leur permet de conclure qu'il est conseillé d'utiliser les données de latence et de hold-time des touches, sauf pour les mobiles, pour lesquels seul la latence importe (Karatzouni et al. (2007)).
+
