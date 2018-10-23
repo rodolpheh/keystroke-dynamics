@@ -1,5 +1,6 @@
-#A Review on the Public Benchmark Databases for Static Keystroke Dynamics
-##Keystroke Dynamics System in a static case
+# A Review on the Public Benchmark Databases for Static Keystroke Dynamics
+
+## Keystroke Dynamics System in a static case
 
 Un système "Keystroke Dynamics" est composé de deux modules principaux :
 
@@ -8,7 +9,8 @@ Pour chaque entrée enregistrée, des informations concernant les temps de frapp
 
 - **Module de vérification**
 
-##Comparaison de valeurs entres les bases de données etudiées
+## Comparaison de valeurs entres les bases de données etudiées
+
 |       Categories       | GREYC |WEBGREYC|DSN2009|BIOCHAVES|GREYC-NISLAB|
 |:----------------------:|:-----:|:------:|:-----:|:-------:|:----------:|
 |    Numbers of Users    |  133  |  118   |  51   |   30    |    110     |
@@ -16,7 +18,6 @@ Pour chaque entrée enregistrée, des informations concernant les temps de frapp
 |   Number of Sessions   |   5   |   47   |   8   |    ?    |     ?      |
 |   Number of Keyboard   |   2   |   1    |   1   |    1    |     1      |
 |    Number of Samples   |12/ses | 1/sess |50/ses |   300   |    6600    |
-
 
 |       Categories       |       Mean       |
 |:----------------------:|:----------------:|
@@ -26,7 +27,7 @@ Pour chaque entrée enregistrée, des informations concernant les temps de frapp
 |   Number of Keyboard   |    1 keyboard    |
 |    Number of Samples   | near 23/sessions |
 
-##Points pouvant impacter les performances d'authentification (Variances entre base de données)
+## Points pouvant impacter les performances d'authentification (Variances entre base de données)
 
 - Durée d'acquisition de la base : Meilleurs résultats sur des courtes periodes, mais non réalistes
 - Autorisation ou non, des fautes de frappes : Souvent non autorisé de se tromper. Pour corriger : besoin d'un grand nombre de frappe du mot erroné, sous la bonne forme afin d'entrer l'habitude de frappe du mot.
@@ -39,7 +40,7 @@ Pour chaque entrée enregistrée, des informations concernant les temps de frapp
 - Précision du chronométre
 - Types d'informations capturées
 
-##Critères de filtres de populations
+## Critères de filtres de populations
 
 - Sexe Feminin/Masculin
 - Maitrise du clavier
@@ -49,7 +50,7 @@ Pour chaque entrée enregistrée, des informations concernant les temps de frapp
 - Nombre de sessions durant l'etude.
 - Nombre d'echantillons par utilisateur
 
-##Critères de selection des mots de passes
+## Critères de selection des mots de passes
 
 - Mot de passe imposés contre mot de passe
 - Complexité du mot de passe

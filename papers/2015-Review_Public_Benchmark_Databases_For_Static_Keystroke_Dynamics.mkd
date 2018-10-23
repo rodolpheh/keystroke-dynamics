@@ -1,11 +1,14 @@
 # Résumé "A Review on the Public Benchmark Databases for Static Keystroke Dynamics"
+
 >*Romain Giot, Bernadette Dorizzi, Christophe Rosenberger, 2015*
 
 ## Abstract
+
 Le document nous donne un point de vue comparatif des performances de différentes bases de données "Keystroke Dynamics".    
 L'etude nous permet egalement d'avoir un aperçu sur le vocabulaire trouvable dans la littérature et des divers critères de comparaisons et de performances d'une base de données.
 
 ## Résumé du document
+
 L'auteur commence en nous définisant la composition d'un sysytème de frappe dynamique(KDS), divisé en deux parties : la phase d'enregistrement et la phase de vérification.
 Les différentes bases de données "Keystroke Dynamics" (KD), nous sont présentés, avec des caractéristiques sur la densité de données (nombre de sessions de captures, nombre de captures par session ...) et sur les méthodes d'acquisition (durée inter-capture, inter-session, ...).  
 Un etat de l'art des caractéristiques et des configurations de captures est ensuite effectué, afin de comprendre la manière dont sont effectués les études.
@@ -13,6 +16,7 @@ D'autres critères de performances sont egalement définis (exemple : Unicité).
 Enfin, l'auteur effectue un etude comparative inter-bases de données , appuyés de graphes et de tables de valeurs.
 
 ## Pertinance du Document
+
 Cette étude comparative nous permet tout d'abord de comprendre les divers notions et autres vocabulaires ressortant souvent dans les différentes thèses.    
 De plus, avec les divers figures de comparaisons des bases et les données présentes, nous avons une représentation des données et des bases de données, pouvant être trouvés lors des recherches.   
 Enfin, le document nous dresse une liste de critères à la réalisation d'une base. Ces critères nous seront donc utile lors de la phase d'expérience.
