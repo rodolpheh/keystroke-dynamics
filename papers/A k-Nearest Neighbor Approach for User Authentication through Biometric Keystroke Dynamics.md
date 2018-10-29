@@ -10,7 +10,7 @@ FAR et FRR trop hauts dans le domaine des keystroke dynamics. Améliorés avec l
 
 ## Introduction
 
-L'utilisation d'un mot de passe permet de vérifier qu'un utilisateur possède l'information attendue mais ne permet pas de vérifier si l'utilisateur est légitime ou pas (il y a 20 ans on pensait que posséder le mot de passe était une preuve de légétimité, ce genre de raisonnement pourra s'appliquer dans 20 ans pour les systèmes biométriques tel que les empreintes digitales ou le visage, jusqu'où ira-t'on dans cette logique ?).
+L'utilisation d'un mot de passe permet de vérifier qu'un utilisateur possède l'information attendue mais ne permet pas de vérifier si l'utilisateur est légitime ou pas.
 
 La variabilité et l'instabilité des keystroke dynamics entraîne un bottleneck technologique.
 

@@ -8,9 +8,11 @@ Edith Cowan University
 
 2008
 
-## Spoiler alert
+## Résumé
 
-Pour une bonne balance entre la performance et l'efficacité, les classificateurs statistiques sont les plus intéressants. Attention, ce document a été écrit en 2008, les performances ont grandement évoluées depuis. L'efficacité des méthodes mises en places dans le document restent valables, même d'après les standards d'aujourd'hui.
+Pour une bonne balance entre la performance et l'efficacité, les classificateurs statistiques sont les plus intéressants.
+
+Attention : ce document ayant été écrit en 2008, les performances ont grandement évoluées depuis. L'efficacité des méthodes mises en places dans le document restent valables, même d'après les standards d'aujourd'hui.
 
 ## Introduction
 
@@ -28,7 +30,7 @@ Selon les auteurs, une meilleure approche de la sécurité serait une sécurité
 
 ## Revue de la littérature
 
-Les auteurs font une revue de la littérature autour des keystroke dynamics et liste les scores de FAR et FRR obtenus en fonction de la technique de classification, des données mesurées, du nombre de sujet et de la méthode utilisée (statique ou dynamique). La revue de ces documents leur permet de conclure qu'il est conseillé d'utiliser les données de latence et de hold-time des touches, sauf pour les mobiles, pour lesquels seul la latence importe (Karatzouni et al. (2007)).
+Les auteurs font une revue de la littérature sur la frappe au clavier et liste les scores de FAR et FRR obtenus en fonction de la technique de classification, des données mesurées, du nombre de sujet et de la méthode utilisée (statique ou dynamique). La revue de ces documents leur permet de conclure qu'il est conseillé d'utiliser les données de latence et de hold-time des touches, sauf pour les mobiles, pour lesquels seul la latence importe (Karatzouni et al. (2007)).
 
 ## Méthodologie
 
@@ -42,4 +44,4 @@ Les auteurs observent un rapport de 10 entre les temps d'enregistrements des dif
 
 ## Conclusion
 
-Les auteurs concluent qu'il est possible d'implémenter une authentification combinant mot de passe et frappe au clavier, à condition d'utilise tous les caractères (pas d'approche par code PIN). Aujourd'hui, les performances des téléphones pourraient permettre de refaire l'étude et de la compléter avec des résultats sur l'utilisation d'un réseau de neurones.
+Les auteurs concluent qu'il est possible d'implémenter une authentification combinant mot de passe et frappe au clavier, à condition d'utiliser tous les caractères (pas d'approche par code PIN). Aujourd'hui, les performances des téléphones pourraient permettre de refaire l'étude et de la compléter avec des résultats sur l'utilisation d'un réseau de neurones.
