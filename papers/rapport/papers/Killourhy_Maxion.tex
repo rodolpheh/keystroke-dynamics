@@ -1,0 +1,33 @@
+\section{Comparing Anomaly-Detection Algorithms for Keystroke Dynamics\cite{killourhy2009}}
+
+\bibentry{killourhy2009}
+
+\subsection{Résumé}
+Il existe une multitude de publications sur l'identification d'un utilisateur sur la base de sa manière d'écrire au clavier. Chaque publication cherche à déterminer quels algorithmes sont les plus performants, mais a aussi son propre protocole d'acquisition des données, rendant la comparaison directe de deux algorithmes impossible.
+
+Cela pose un problème car le standard européen pour les systèmes de contrôle d'accès est très exigeant : avec un taux de faux négatifs (FRR) inférieur à 1\%, et un taux de faux positifs (FAR) inférieur à 0.001 \% (Norme européene \no EN-50133-1). Avec les techniques de biométrie comportementale actuelles, ce standard est assez loin d'être respecté. Cela rend impossible la commercialisation de dispositifs permettant d'identifier une personne uniquement sur la manière dont elle frappe au clavier.
+
+Cette publication propose d'apporter à la recherche une base de données et une méthodologie reproductible, afin de permettre les comparaisons entre les algorithmes utilisés par les chercheurs en \textit{keystroke dynamics}.
+
+\subsection{Approche retenue}
+La méthodologie proposée se limite à l'identification d'une personne tapant un mot de passe fixe, et les algorithmes de classifications qu'on appelle les \textbf{détecteurs d'anomalie}. Ces algorithmes n'identifient pas une personne parmi plusieurs possibles mais identifient si l'utilisateur est bien la bonne personne ou non. On a donc une classification de la donnée entre deux classes :
+
+* Utilisateur authentique ;
+* Imposteurs.
+
+Même si cette méthodologie limite quelque peu les comparaisons à une partie spécifique de la recherche dans le champ des \textit{keystroke dynamics}, les auteurs soulignent que la base de données pourrait être utilisée pour des algorithmes de classification à plusieurs classes (identifier un utilisateur parmi plusieurs). Si la donnée rendue publique ne comporte que des utilisateurs tapant un mot de passe fixe, les auteurs argumentent que la méthodologie pourrait être généralisée pour acquérir la donnée d'utilisateurs tapant du texte libre.
+
+La publication apporte aussi des orientations sur les protocole d'acquisition de la donnée, notamment en soulignant l'utilisation d'une horloge externe pour une plus grande précision, et qu'ils ont choisi de ne pas retenir les tentatives erronnées dans la base de données. Les auteurs parlent aussi de la mise en forme des données, soit le processus de prendre une tentative d'identification d'un utilisateur et le transformer en échantillon exploitable par le système.
+
+\subsubsection{Le problème de l'évaluation}
+La publication soulève un problème de taille pour l'évaluation des performances de systèmes d'identification par frappe au clavier : un utilisateur va rentrer son mot de passe plusieurs fois pour constituer un profil reconnaissable par l'algorithme de détection. Cependant, pour vérifier si l'algorithme est bien capable de discriminer un imposteur essayant de se connecter en utilisant le même mot de passe, il faut des données de personnes tapant le même mot de passe, ce qui n'est pas une donnée dont on dispose dans la vraie vie. Par conséquent constituer une base de données où tous les échantillons de tous les utilisateurs sont basés sur le même mot de passe est artificiel, mais offre une facilité d'évaluation des performances des algorithmes. Il faut arriver à évaluer les performances de ces algorithmes, tout en évitant d'entraîner un modèle qui surinterprête les données sur un mot de passe spécifique.
+
+\subsection{Comparaison des algorithmes}
+
+Une fois la méthodologie détaillée et le protocole de comparaison mis en place, les auteurs présentent les différents algorithmes comparés. Ils en expliquent le principe général et référencent les publications qui les ont implémentés.
+
+Enfin, la publication utilise une méthode statistique pour déterminer quels sont les algorithmes les plus performants suivant deux critères : la limitation des faux positifs (FAR) avec  et la limitation des faux négatifs (FRR).comparés
+
+\subsection{Conclusion}
+L'apport de cette publication est plus la méthodologie de comparaison que les résultats de la comparaison qui sont amenés à évoluer avec la recherche. On retiendra notamment que dans la détection entre utilisateur authentique et imposteur, le seuil de discrimination et la performance visée peut avoir une
+forte influence. De même, le protocole d'acquisition des données peut introduire une très forte variation des performances d'un algorithme. Donc pour évaluer la performance d'un algorithme, il faudrait pouvoir le tester sur plusieurs bases de données différentes.
