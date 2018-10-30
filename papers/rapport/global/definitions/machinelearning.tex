@@ -1,16 +1,29 @@
-\subsection{Machine Learning}
+\subsection{\textit{Machine Learning}}
 
-En définitive les méthodes d'identification orbitent autour de deux catégories :
+Le \textit{machine learning} est un ensemble d'algorithme d'analyses statistiques qui ont la particularité d'améliorer leurs performances à résoudre une tâche sans avoir été programmés pour résoudre cette tâche en particulier. Le \textit{machine learning} est particulièrement utilisé dans les tâches de classifications qui consistent à associer une classe à une donnée inconnue (par exemple reconnaître un objet dans une image). À ce titre, le \textit{machine learning} est particulièrement adapté pour des tâches d'authentification.\\
 
-* Méthodologie statistique: pour tout échantillon à évaluer, on calcule des
-caractéristiques statistiques de la donnée d'entrée et on parcourt toute la base
-d'échantillons enregistrés pour trouver celui qui s'en rapproche le plus ;
-* Utilisation d'algorithmes de Machine Learning : pour tout échantillon à
-évaluer, on le traite pour le transformer en vecteur et le modèle va le
-rapprocher de la classe correspondante.
+Les algorithmes de \textit{machine learning} prennent en entrée des échantillons qui sont constitués des attributs et de la classe à laquelle rattacher l'échantillon. Dans le cadre d'une authentification, l'algorithme de \textit{machine learning} aura comme classes les utilisateurs (une classe par utilisateur) et comme attributs les données mesurées (il peut s'agir des temps entre les pressions sur les touches\cite{giotGREYC} ou des temps de frappe des n-graphes\cite{Hu2008}).\\
 
-Attention : les deux méthodes ne sont pas exclusives. Après tout les algorithmes
-de classification en Machine Learning sont d'abord et avant tout des méthodes
-statistiques automatisées. De plus, on peut utiliser des échantillons traités au
-moyen de la statistique pour "entraîner" son modèle de Machine Learning.
-[Hu, Ginrich]
+Les algorithmes de \textit{machine learning} qui font de la classification multi-classe (c'est-à-dire une classification entre 3 ou plus classes) sont divisés en deux sections :\\
+
+%http://scikit-learn.org/stable/modules/svm.html#multi-class-classification
+
+\begin{enumerate}
+  \item \textit{one-vs-one} : pour chaque couple de classe, on créé un classifieur binaire. Pour classifier une nouvelle donnée, on effectue une prédiction avec tous les classifieurs et on récupère la classe ayant été la plus prédite parmis tous les classifieurs.
+  \item \textit{one-vs-rest} : pour chaque classe, on créé un classifieur binaire dont la tâche sera de distinguer la classe concernée de toutes les autres données (qui sont alors regroupées dans une classe "autre"). Lorsqu'on veut classifier une nouvelle donnée, on effectue une prédiction avec tous les classifieurs et on récupère la classe qui n'aura pas été classifiée comme étant "autre".
+\end{enumerate}
+
+%En définitive les méthodes d'identification orbitent autour de deux catégories :
+
+%* Méthodologie statistique: pour tout échantillon à évaluer, on calcule des
+%caractéristiques statistiques de la donnée d'entrée et on parcourt toute la base
+%d'échantillons enregistrés pour trouver celui qui s'en rapproche le plus ;
+%* Utilisation d'algorithmes de Machine Learning : pour tout échantillon à
+%évaluer, on le traite pour le transformer en vecteur et le modèle va le
+%rapprocher de la classe correspondante.
+
+%Attention : les deux méthodes ne sont pas exclusives. Après tout les algorithmes
+%de classification en Machine Learning sont d'abord et avant tout des méthodes
+%statistiques automatisées. De plus, on peut utiliser des échantillons traités au
+%moyen de la statistique pour "entraîner" son modèle de Machine Learning.
+%[Hu, Ginrich]
