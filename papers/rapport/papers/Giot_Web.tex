@@ -2,35 +2,33 @@
 
 \subsection{Introduction}
 
-Le domaine de l'analyse de la frappe au clavier se base globalement sur le même principe.
-En effet, la plupart des bases de données se reposent sur une analyse statique : le mot de passe entré est le même pour tous les utilisateurs. 
-Dans l'optique d'adopter une approche plus actuelle de la problématique, l'étude se base donc sur une application web. Chaque utilisateur doit effectuer une saisie d'identifiants imposés et un saisie d'identifiants choisi par l'utilisateur(Approche Dynamique). L'objectif majeur de cette étude est donc de montrer la viabilité d'utiliser des identifiants personnalisés.
+Le domaine de l'analyse de la frappe au clavier se base globalement sur le même principe. En effet, la plupart des bases de données se reposent sur une analyse statique : le mot de passe entré est le même pour tous les utilisateurs.\\
+
+Dans l'optique d'adopter une approche plus actuelle de la problématique, l'étude se base sur une application web. Chaque utilisateur doit effectuer une saisie d'identifiants imposés et une saisie d'identifiants choisis par l'utilisateur. L'objectif majeur de cette étude est donc de montrer la viabilité d'utiliser des identifiants personnalisés.
 
 \subsection{Bases de données publique de dynamique de frappe}
  
-	Deux bases de données sont mises en avant dans cette partie, étant selon l'auteur, les bases de données avec les résultats les plus significatifs. Afin de tenter de combler les lacunes de ces bases, sur la partie utilisateur, l'orientation choisie est la variation de divers paramètres de captures, pour se rapprocher au mieux d'une expérience réaliste (Les variations se feront au niveau du type de clavier, des mots de passes rentrés).
+Deux bases de données sont mises en avant dans cette partie, étant selon l'auteur, les bases de données avec les résultats les plus significatifs. Afin de tenter de combler les lacunes de ces bases, sur la partie utilisateur, l'orientation choisie est la variation de divers paramètres de captures, pour se rapprocher au mieux d'une expérience réaliste (Les variations se feront au niveau du type de clavier, des mots de passes rentrés).
 
 \subsection{Expérimentations}
 
-	Dans un premier temps, le déroulement et les caractéristiques de l'expérience nous sont décrits. Par un envoi hebdomadaire de mail, l'expérimentation repose donc sur une base de 83 utilisateurs  et de plus de 15000 échantillons, le tout effectué sur une population d'étudiants. Les expérimentations auront donc pour but de fournir des éléments de réponses sur 4 questions :
+Dans un premier temps, le déroulement et les caractéristiques de l'expérience nous sont décrits. Par un envoi hebdomadaire de mail, l'expérimentation repose donc sur une base de 83 utilisateurs  et de plus de 15000 échantillons, le tout effectué sur une population d'étudiants. Les expérimentations auront donc pour but de fournir des éléments de réponses sur 4 questions :\\
 
 \begin{itemize}
 \item Différence entre mot de passe choisi et mot de passe imposé 
 \item Seuil individuel contre seuil global 
 \item Fonctionnalités à utiliser pour l'amélioration des résultats
-\item Corrélation de la longueur, la complexité et l'entropie d'un mot de passe, par rapport aux performances de reconnaissance.
+\item Corrélation de la longueur, la complexité et l'entropie d'un mot de passe, par rapport aux performances de reconnaissance.\\
 \end{itemize}
 
 Il y a donc ensuite une présentations des divers formules et algorithmes afin d'observer et mesurer les divers résultats.
 
 \subsection{Résultats}
 
-	Les auteurs nous exposent donc les résultats de leur expérience. 
-Il s'avère qu'il n'existe pas de différence significative de fiabilité entre un mot de passe choisi est un mot de passe imposé.
-Ensuite, le fait de croiser diverses fonctionnalités et autres informations, permet d'accroitre la fiabilité du procédé(utilisation des différents timings et délais concernant la pression sur un touche et le relâchement d'une touche).
-Enfin, les résultats de cette étude indique un impact de la taille et de l'entropie d'une mot de passe, sur les performances du système de reconnaissance Par contre, la complexité du mot de passe n'influe en rien.
+Il s'avère qu'il n'existe pas de différence significative de fiabilité entre un mot de passe choisi est un mot de passe imposé. Le fait de croiser diverses fonctionnalités et autres informations, permet d'accroitre la fiabilité du procédé (utilisation des temps de latence et délais concernant la pression sur une touche et le relâchement d'une touche).\\
 
+Enfin, les résultats de cette étude indique un impact de la taille et de l'entropie d'une mot de passe, sur les performances du système de reconnaissance. Par contre, la complexité du mot de passe n'influe en rien.
 
-\subsection{Pertinence du document}
+\subsection{Conclusion}
 
-	Dans un premier temps, le document a une approche un peu plus dynamique sur la manière de faire : le dynamique étant peu représenté dans les divers documents étudiées. Ensuite, selon les auteurs, la base de données est publique et par conséquent, accessible à tous. Il sera donc possible d'étudier les résultats de cette base, dans le cadre de nos expérimentations ultérieures. De plus, nous avons donc un point de vue intéressant sur l'usage d'une application web dans le cadre du domaine des keystroke dynamics. Enfin, nous avons un point de vue, décrivant la manière par le biais de formules et autres outils, de la manière de mesurer des données de base de données, dans le cadre d'un système de keystroke dynamics.
+Selon les auteurs, la base de données est publique et par conséquent, accessible à tous. Il sera donc possible d'étudier les résultats de cette base, dans le cadre de nos expérimentations ultérieures. De plus, nous avons un point de vue intéressant sur l'usage d'une application web dans le cadre du domaine des keystroke dynamics. Enfin, nous avons un point de vue, décrivant la manière par le biais de formules et autres outils, de la manière de mesurer des données de base de données, dans le cadre d'un système de keystroke dynamics.
