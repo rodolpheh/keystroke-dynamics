@@ -1,0 +1,22 @@
+\section{Comparing Anomaly-Detection Algorithms for Keystroke Dynamics\cite{panasiuk2016}}
+
+\bibentry{panasiuk2016}
+
+\subsection{Résumé}
+Cette publication essaye de résoudre le problème des \textit{keystroke dynamics} en ce qui concerne la qualité des données. En effet, les données biométriques comportementales (comme les mouvements de la souris et la frappe au clavier) sont trop imprécises pour atteindre le niveau de performance des données biométriques classiques comme les empreintes digitales. En revanche, croiser deux données biométriques comportementales pourrait donner de meilleures performances pour un faible coût d'acquisition, sans nécessiter de matériel supplémentaire comme un capteurs d'empreintes digitales.
+
+\subsection{Le problème de la donnée}
+Pour la mise en pratique de solution d'identification, la captation des événements de clavier est d'autant plus problématique que l'échantillon est réduit. La donnée captée inclut souvent du bruit qui n'est pas réductible du fait des différentes manières de taper : un texte avec des majuscules, par exemple, peut être capitalisé avec la touche majuscule gauche ou droite. L'analyse des données du clavier donne de meilleurs résultats quand on limite le nombre de caractéristiques analysées. Notamment, le temps entre deux touches varie trop pour être utile sur un faible nombre d'échantillons, contrairement au \textit{dwell time}, soit le temps de pression d'une touche spécifique.
+
+\subsection{L'union fait la force ?}
+Les auteurs montrent qu'en croisant et en pondérant de manière \textif{ad hoc} les différentes données de biométrie comportementale (clavier et souris), on peut arriver à des  résultats très satisfaisants, même avec un nombre réduit d'échantillons. Cela permet de constituer une base de données et d'entraîner une Intelligence Artificielle beaucoup plus rapidement. 
+
+\subsection{Apports et limites de la publication}
+La limite de la publication réside dans la méthode empirique de trouver les pondérations donnant les meilleurs résultats. La méthode utilisée implique une recherche à tâtons des meilleurs poids pour les caractéristiques extraites des données. Cette méthode n'explique pas de protocole rigoureux pour l'identification des poids, et ne permet pas de savoir si les coefficients utilisés sont adaptés dans toutes les situations, ou uniquement pour les données collectées pour cette publication (surinterprétation).
+
+De plus, l'algorithme k-NN, dont la dimension dépend du nombre d'échantillons dans l'approche retenue, limite rapidement le nombre de classes possibles. Les auteurs soulignent ne pas pouvoir faire plus de 50 classes pour 10 échantillons par utilisateur, par exemple. 
+
+Enfin, les auteurs ont rencontré les difficultés habituelles de l'acquisition de données de clavier. Cela souligne la difficulté de généraliser les méthodes d'acquistion pour des solutions d'identification grand public.
+
+Cette publication nous apporte donc des enseignements sur les écueils à éviter mais aussi de l'inspiration sur la manière de traiter les données au préalable afin d'obtenir de meilleurs résultats.
+
