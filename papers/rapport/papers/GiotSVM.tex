@@ -40,4 +40,6 @@ La méthode intelligente est celle qui performe le mieux sur toutes les méthode
 
 L'utilisation d'un seuil individuel pour valider l'authentification permet d'améliorer sensiblement les valeurs pour les méthodes autres que machine learning. Pour une SVM, le gain est égal à 0.01\%. Le seuil individuel est l'EER de l'individu calculé à partir de la validation des essais en seuil global. Cette méthode ne peut pas être appliquée sur des données composées de différents mots de passe (le seuil ne peut que se calculer lorsqu'on a des données d'imposteurs).\\
 
-Le nombre d'utilisateurs dans la base de données a une influence sur la performance. En dessous de 10 utilisateurs, l'EER est inférieur à 10\% mais peut être très variable. Selon Giot, 50 individus est un maximum acceptable.
+Le nombre d'utilisateurs dans la base de données a une influence sur la performance. En dessous de 10 utilisateurs, l'EER est inférieur à 10\% mais peut être très variable. Selon Giot, 50 individus est un maximum acceptable.\\
+
+Cette publication est très intéressante pour notre étude bibliographique : elle liste et étudie les différents aspects à prendre en compte lors de l'implémentation d'un système biométrique tels que l'adaptation du modèle, les conditions d'enregistrement, le nombre d'enregistrements minimum et le nombre d'utilisateurs dans la base de données.
