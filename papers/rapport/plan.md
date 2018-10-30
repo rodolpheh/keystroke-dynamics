@@ -14,8 +14,6 @@ Comment on *fait* les choses.
 
 ### *Keystroke Dynamics*
 
-[Monrose] Identification peu coûteuse en hardware et en process. Transparente
-pour les utilisateurs.
 
 * Statique :
 Identification d'un utilisateur en fonction d'un secret connu à l'avance par le
