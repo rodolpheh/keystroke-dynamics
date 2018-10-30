@@ -1,0 +1,56 @@
+% WELCOME WELCOME WELCOME
+
+% Bienvenue dans notre rapport bibliographique en LaTeX
+
+% Les paquets importés et les paramêtres de ceux-ci peuvent se trouver dans headers.tex
+
+% La bibliographie peut se trouver dans RapportBibliographique.bib
+
+% Les synthèses individuelles sont à mettre dans 'papers'
+% Elles peuvent être inclus avec la commande \includesynthese{filename}
+% Pas besoin d'indiquer l'extension, LaTeX va chercher automatiquement pour des *.tex
+
+% Pour faire une citation, il faut utiliser la commande \cite{reference}
+% La reference peut être trouvée dans le fichier de bibliographie
+
+\include{headers}
+
+% Ici on indique le titre et les auteurs (\\ pour passer une ligne dans la liste d'auteurs)
+
+\title{Rapport bibliographique}
+\author{Rémi Bourgeon\\
+Franciszek Dobrowolski\\
+Rodolphe Houdas\\
+Timothee Jouglet}
+
+% Let's start that shit
+
+\begin{document}
+
+% On ajoute la page de garde et la page de sommaire
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+% ABSTRACT
+
+\begin{abstract}
+Dans ce document, nous présenterons la dynamique de clavier et son utilisation dans le cadre de l'authentification par biométrie.
+\end{abstract}
+
+\newpage
+
+% On ajoute les synthèses individuelles des publications
+
+\includesynthese{Hu}
+\includesynthese{Buchoux}
+\includesynthese{GiotSVM}
+
+% Bibliographie (faut voir plus tard pour que ça s'affiche dans le sommaire
+
+\bibliography{RapportBibliographique}
+\bibliographystyle{ieeetr}
+
+\end{document}

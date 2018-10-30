@@ -29,3 +29,10 @@ Thumbs.db
 *.dvi
 *.synctex.gz
 *.fdb_latexmk
+
+# Gnome-LaTeX temps
+*~
+
+# Bibtex temps
+*.bbl
+*.blg
