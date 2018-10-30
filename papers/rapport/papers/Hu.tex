@@ -1,30 +1,20 @@
-\section{A k-Nearest Neighbor Approach for User Authentication through Biometric Keystroke Dynamics}
-
-J.Hu, D.Gingrich
-
-School of Computer Science and IT, RMIT University, Melbourne, Australia
+\section{A k-Nearest Neighbor Approach for User Authentication through Biometric Keystroke Dynamics\cite{Hu2008}}
 
 \subsection{Abstract}
 
-FAR et FRR trop hauts dans le domaine des keystroke dynamics. Améliorés avec les travaux de Gunetti et Picardi mais problème de scalabilité. Les auteurs de la publication utilise une approche kNN pour obtenir des résultats identiques à Gunetti et Picardi mais avec une amélioration de 66.7\% de la vitesse d'authentification.\\
+Les auteurs partent du constat que les taux de faux positifs et de faux négatifs sont trop élevés dans le domaine de la dynamique de frappe. Les travaux de Gunetti et Picardi ont permis de grandement baisser les taux de FAR et FRR mais posent des problèmes d'optimisation des ressources informatiques. Les auteurs proposent de pallier à ce problème en utilisant une approche kNN pour obtenir des résultats identiques à Gunetti et Picardi mais avec une amélioration de la vitesse d'authentification.\\
 
 \subsection{Introduction}
 
-L'utilisation d'un mot de passe permet de vérifier qu'un utilisateur possède l'information attendue mais ne permet pas de vérifier si l'utilisateur est légitime ou pas.\\
+L'utilisation d'un mot de passe permet de vérifier qu'un utilisateur possède l'information attendue mais ne permet pas de vérifier si l'utilisateur est légitime ou pas. En tant que biométrie comportementale, la dynamique de frappe permettrait de mettre en place une vérification de la légitimité de l'utilisateur à moindre coût. Le problème est que la dynamique de frappe peut être variable et l'instable.\\
 
-La variabilité et l'instabilité des keystroke dynamics entraîne un bottleneck technologique.\\
+Bergadano utilise 680 caractères pour le texte d'entraînement. Il mesure la dynamique de frappe des différents trigraphes et les ordonne. L'ordre des trigraphes est utilisé pour le processus d'authentification, ce qui permet de supprimer la dimension temporelle. Il appelle cette technique "Degree of Disorder".\\
 
-Bergadano utilise 680 caractères pour le texte d'entraînement. Il mesure le rythme de frappe des différents trigraphes et les ordonne. L'ordre des trigraphes est utilisé pour le processus d'authentification, ce qui permet de supprimer la dimension temporelle. Il appelle cette technique Degree of Disorder.\\
-
-Gunetti et Picardi étendent cette idée en intégrant tous les n-graphes. FAR de 5\% et FRR de 0.005\%.\\
-
-Ce papier propose d'utiliser une classification en kNN. Même performances que Gunetti et Picardi avec une performance améliorée de 66.7\%.
+Gunetti et Picardi étendent cette idée en intégrant tous les n-graphes. Ils obtiennent un FAR de 5\% et FRR de 0.005\%. Les auteurs de la publication utilise une classification à l'aide d'un kNN et obtiennent des performances identiques à celle de Gunetti et Picardi avec une amélioration de vitesse d'authentification de 66.7\%.
 
 \subsection{Classification par kNN}
 
-La classification est souvent utilisée comme outil de vérification dans le domaine de la biométrie. La méthode de kNN (k-Nearest Neighbours ou k plus proches voisins) est une méthode de classification simple basé sur la distance entre une nouvelle mesure et les mesures déjà obtenues. Pour classifier notre nouvelle mesure, on calcule la position moyenne entre les k voisins les plus proches de notre mesure.\\
-
-CKAA : Clustering based Keystroke Authentication Algorithm.\\
+La classification est souvent utilisée comme outil de vérification dans le domaine de la biométrie. La méthode de kNN (k-Nearest Neighbours ou k plus proches voisins) est une méthode de classification simple basé sur la distance entre une nouvelle mesure et les mesures déjà obtenues. Pour classifier notre nouvelle mesure, on calcule la position moyenne entre les k voisins les plus proches de notre mesure. Les auteurs nomment leur algorithme CKAA (Clustering base Keystroke Authentication Algorithm).\\
 
 Construction des profils utilisateurs :\\
 
@@ -33,12 +23,10 @@ Construction des profils utilisateurs :\\
   \item Un profile est constitué à partir de la moyenne des vecteurs obtenus précédemment.\\
 \end{itemize}
 
-Authentification : pour confirmer l'authentification d'un utilisateur, on compare l'échantillon X capturé aux regroupements et au profil A qu'il prétend être. Il faut que A soit dans le group le plus proche de X et la distance (A, X) doit être la plus proche de la moyenne de A dans ce groupe.\\
+Pour confirmer l'authentification d'un utilisateur, on compare l'échantillon X capturé aux regroupements et au profil A qu'il prétend être. Il faut que A soit dans le group le plus proche de X et la distance (A, X) doit être la plus proche de la moyenne de A dans ce groupe.\\
 
 En faisant varier la valeur du seuil utilisé pour le regroupement, on peut faire varier le FAR et le FRR. Un faible seuil donnera un système très strict (faible FAR) avec un fort FRR. Un fort seuil donnera un système plus tolérant (faible FRR) avec un fort FAR.
 
 \subsection{Conclusion}
 
-CKAA permet d'obtenir des bons résultats en terme de FAR et de FRR tout en améliorant sensiblement la vitesse d'authentification.\\
-
-Les auteurs obtiennent un FRR de 0\% et un FAR de 0.045\%.
+CKAA permet d'obtenir des bons résultats en terme de FAR et de FRR tout en améliorant sensiblement la vitesse d'authentification. En finale, les auteurs obtiennent un FRR de 0\% et un FAR de 0.045\%.
