@@ -2,15 +2,19 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
-\usepackage[francais]{babel}
+\usepackage[french]{babel}
 \usepackage{color}
 \usepackage{hyperref}
 \usepackage{cite}
-\usepackage{bibentry}
+%\usepackage{bibentry}
+
+\bibliographystyle{ieeetr}
 
 % Je cite la doc du package bibentry:
 % \nobibliography*: tells bibentry to (re)use the bibliographic data from the standard BibTeX setup
-\nobibliography*
+%\nobibliography*
+
+\newcommand\bibentry[1]{\cite{#1}}
 
 % Configuration des couleurs et interactivité des liens
 \hypersetup{
