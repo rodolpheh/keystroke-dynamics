@@ -5,8 +5,14 @@
 \usepackage[francais]{babel}
 \usepackage{color}
 \usepackage{hyperref}
-\usepackage{cite} 
+\usepackage{cite}
+\usepackage{bibentry}
 
+% Je cite la doc du package bibentry:
+% \nobibliography*: tells bibentry to (re)use the bibliographic data from the standard BibTeX setup
+\nobibliography*
+
+% Configuration des couleurs et interactivité des liens
 \hypersetup{
   colorlinks=true,
   linkcolor=blue,
@@ -15,4 +21,5 @@
   linktoc=all
 }
 
+% On créé une commande pour que lorsqu'on utilise \includesynthese{}, ça aille faire un include directe depuis papers/ 
 \newcommand\includesynthese[1]{\include{./papers/#1}}
