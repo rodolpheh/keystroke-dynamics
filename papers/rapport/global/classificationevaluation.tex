@@ -2,23 +2,21 @@
 Une fois l'acquisition des données utilisateur réalisée, il reste à produire un système de vérification capable de discriminer un imposteur par rapport à un ou plusieurs utilisateurs authentiques. Les algorithmes et méthodologies utilisées varient en fonction des objectifs recherchés.
 
 \subsection{Méthodologies de classification}
-Types de classificateurs :
+La première étape est de construire un modèle de vérification en classant les données disponibles en plusieurs "classe" de profils. Plusieurs méthodes possibles existent pour classer les données :
 \begin{itemize}
 	\item
 	Méthode statistique ;
 	\item
-	Algorithmes de \textit{Machine Learning} ;
+	Algorithmes de \textit{Machine Learning} \bibentry{Hu2008};
 	\item
 	Réseaux de neurones. À proprement parler il s'agit aussi de \textit{Machine Learning} mais la littérature a tendance à les séparer du reste car ils ont des propriétés propres et requièrent des performances bien plus importantes que les algorithmes classiques.
 \end{itemize}
 
-Objectifs
+Les méthodes utilisées varient aussi en fonction de l'objectif que l'on veut faire remplir au modèle de vérification :
 
 \begin{itemize}
-	\item
-	Une seule classe : détection des imposteurs
-	\item
-	Une classe par utilisateur : identification de l'utilisateur parmi plusieurs
+	\item une seule classe : détection des imposteurs \bibentry{killourhy2009};
+	\item ne classe par utilisateur : identification de l'utilisateur parmi plusieurs \bibentry{monrose1997}.
 \end{itemize}
 
 \subsection{Métriques}

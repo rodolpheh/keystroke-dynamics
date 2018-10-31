@@ -26,16 +26,16 @@ Les auteurs font une revue de la littérature sur la frappe au clavier et liste 
 
 \subsection{Méthodologie}
 
-Le matériel utilisé est, en termes de performances et d'après les standards actuels, plutôt faible. Nous n'allons donc pas décrire l'ensemble de la méthodologie qui concerne surtout le matériel et le logiciel utilisé. Nous retiendrons que les classificateurs utilisés sont des algorithmes basés sur la distance Euclidienne, la distance de Mahalanobis et un réseau de neurones de type Feed-Forward Multi-Layered Perceptron (autrement dit, le type de réseau de neurones le plus basique et le plus courant).\\
+Le matériel utilisé est, en termes de performances et d'après les standards actuels, plutôt faible. Nous n'allons donc pas décrire l'ensemble de la méthodologie qui concerne surtout le matériel et le logiciel utilisé. Nous retiendrons que les classificateurs utilisés sont des algorithmes basés sur la distance euclidienne, la distance de Mahalanobis et un réseau de neurones de type Feed-Forward Multi-Layered Perceptron (autrement dit, le type de réseau de neurones le plus basique et le plus courant).\\
 
-L'expérience commence par la prise de 20 mesures par utilisateur, pour les données d'entraînement, et de 10 mesures supplémentaires pour les données de test.
+L'expérience commence par la prise de vingt mesures par utilisateur, pour les données d'entraînement, et de dix mesures supplémentaires pour les données de test.
 
 \subsection{Résultats}
 
-Les auteurs observent un rapport de 10 entre les temps d'enregistrements des différents algorithmes (2 secondes pour la distance de Mahalanobis contre 210 secondes pour un réseau de neurones simples). Le temps de vérification est quasi-instantané avec les distances Euclidienne et de Mahalanobis. Les FAR et FRR sont biens meilleurs lorsqu'on utilise tout le clavier alphanumérique plutôt que juste le clavier numérique. La différence entre les méthodes par distance Euclidienne et distance de Mahalanobis n'est pas assez significative pour en tirer une conclusion. Pour des raisons de performances, le réseau de neurones n'a pas été évalué.
+Les auteurs observent un rapport de dix entre les temps d'enregistrements des différents algorithmes (deux secondes pour la distance de Mahalanobis contre 210 secondes pour un réseau de neurones simples). Le temps de vérification est quasi-instantané avec les distances Euclidienne et de Mahalanobis. Les FAR et FRR sont biens meilleurs lorsqu'on utilise tout le clavier alphanumérique plutôt que juste le clavier numérique. La différence entre les méthodes par distance euclidienne et distance de Mahalanobis n'est pas assez significative pour en tirer une conclusion. Pour des raisons de performances, le réseau de neurones n'a pas été évalué.
 
 \subsection{Conclusion}
 
 Les auteurs concluent qu'il est possible d'implémenter une authentification combinant mot de passe et frappe au clavier, à condition d'utiliser tous les caractères (pas d'approche par code PIN). Aujourd'hui, les performances des téléphones pourraient permettre de refaire l'étude et de la compléter avec des résultats sur l'utilisation d'un réseau de neurones.\\
 
-Cette étude nous intéresse dans notre cas parce qu'elle précise les données significatives (temps de latence et hold-time) et montre qu'il est possible d'implémenter un algorithme d'authentification par dynamique de frappe sur une plateforme mobile, qui est un des sujets que nous souhaitions étudier.
+Cette étude nous intéresse dans notre cas parce qu'elle précise les données significatives (temps de latence et \textit{hold-time}) et montre qu'il est possible d'implémenter un algorithme d'authentification par dynamique de frappe sur une plateforme mobile, qui est un des sujets que nous souhaitions étudier.
