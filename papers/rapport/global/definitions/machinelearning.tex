@@ -1,30 +1,15 @@
 \subsection{\textit{Machine Learning}}
 
-Le \textit{machine learning} est un ensemble d'algorithme d'analyses statistiques qui ont la particularité d'améliorer leurs performances à résoudre une tâche sans avoir été programmés pour résoudre cette tâche en particulier.\\
+Le \textit{machine learning} est un ensemble d'algorithme d'analyses statistiques qui ont la particularité d'améliorer leurs performances à résoudre une tâche sans avoir été programmés pour résoudre cette tâche en particulier.
 
-Au plus haut niveau, les algorithmes de \textit{machine learning} peuvent être divisés en deux types : \textbf{supervisés} et \textbf{non-supervisés}. D'autres types tels que les algorithmes semi-supervisés existent mais ne sont pas couverts par ce document car réservé à des emplois bien spécifiques.\\
+Au plus haut niveau, les algorithmes de \textit{machine learning} peuvent être divisés en deux types : \textbf{supervisés} et \textbf{non-supervisés}. D'autres types tels que les algorithmes semi-supervisés existent mais ne sont pas couverts par ce document car réservé à des emplois bien spécifiques.
 
-Les algorithmes supervisés peuvent eux-même être divisés en algorithmes de \textbf{classification} et en algorithmes de \textbf{régression}. Nous nous intéresserons ici qu'aux algorithmes de classification qui consistent à associer une classe à une donnée inconnue (par exemple reconnaître un objet dans une image). À ce titre, le \textit{machine learning} est particulièrement adapté pour des tâches d'authentification par classification.\\
+Les algorithmes supervisés peuvent eux-même être divisés en algorithmes de \textbf{classification} et en algorithmes de \textbf{régression}. Nous nous intéresserons ici qu'aux algorithmes de classification qui consistent à associer une classe à une donnée inconnue (par exemple reconnaître un objet dans une image). À ce titre, le \textit{machine learning} est particulièrement adapté pour des tâches d'authentification par classification.
 
-Les algorithmes supervisés prennent en entrée des échantillons dont on connaît la classe et à laquelle on souhaite appliquer une frontière de décision qui permettra de prédire la classe associée à une nouvelle donnée. Dans le cadre d'une authentification, l'algorithme de \textit{machine learning} aura comme classes les utilisateurs (une classe par utilisateur) et comme attributs les données mesurées (il peut s'agir des temps entre les pressions sur les touches\cite{giotGREYC} ou des temps de frappe des n-graphes\cite{Hu2008,bergadano2002,gunetti2005}).\\
+Les algorithmes supervisés prennent en entrée des échantillons dont on connaît la classe et à laquelle on souhaite appliquer une frontière de décision qui permettra de prédire la classe associée à une nouvelle donnée. Dans le cadre d'une authentification, l'algorithme de \textit{machine learning} aura comme classes les utilisateurs (une classe par utilisateur) et comme attributs les données mesurées (il peut s'agir des temps entre les pressions sur les touches\cite{giotGREYC} ou des temps de frappe des n-graphes\cite{Hu2008,bergadano2002,gunetti2005}).
 
-Les algorithmes non-supervisés prennent en entrée des échantillons auxquels on n'attache aucune valeur autre que les attributs, que l'on cherche à constituer en groupes afin d'en déduire une valeur commune et pour pouvoir prédire quelle valeur sera rattaché à une nouvelle donnée. Un exemple typique est la recherche de visages semblables dans une collection de photos où les personnes ne sont pas identifiées, afin d'identifier de manière unique les différentes personnes présentes dans ces photos.\\
+Les algorithmes non-supervisés prennent en entrée des échantillons auxquels on n'attache aucune valeur autre que les attributs, que l'on cherche à constituer en groupes afin d'en déduire une valeur commune et pour pouvoir prédire quelle valeur sera rattaché à une nouvelle donnée. Un exemple typique est la recherche de visages semblables dans une collection de photos où les personnes ne sont pas identifiées, afin d'identifier de manière unique les différentes personnes présentes dans ces photos.
 
-Parmi les publications que nous avons étudiées, nous avons pu lire que dans la majorité des cas, les algorithmes à base de \textit{machine learning} sont plus performantes que les méthodes statistiques, autant sur le plan des ressources processeurs\cite{Hu2008} que sur le plan de la fiabilité en termes biométriques\cite{giotBenchmark}.\\
+Parmi les publications que nous avons étudiées, nous avons pu lire que dans la majorité des cas, les algorithmes à base de \textit{machine learning} sont plus performantes que les méthodes statistiques, autant sur le plan des ressources processeurs\cite{Hu2008} que sur le plan de la fiabilité en termes biométriques\cite{giotBenchmark}.
 
 À travers toute la variété des systèmes d'analyse biométriques on peut remarquer une particularité en commun. Les résultats sont toujours dépendants de la qualité des données d'entrée. Ce paramétre peut jouer sur les détails, mais il peut aussi décider de l'utilité d'un système en entier. Seul un modèle conçu correctement peut garantir le succès d'un traitement. Afin d'obtenir des résultats fiables et reproductibles, il est donc nécessaire de s'intéresser aux méthodes d'acquisition des données.
-
-%En définitive les méthodes d'identification orbitent autour de deux catégories :
-
-%* Méthodologie statistique: pour tout échantillon à évaluer, on calcule des
-%caractéristiques statistiques de la donnée d'entrée et on parcourt toute la base
-%d'échantillons enregistrés pour trouver celui qui s'en rapproche le plus ;
-%* Utilisation d'algorithmes de Machine Learning : pour tout échantillon à
-%évaluer, on le traite pour le transformer en vecteur et le modèle va le
-%rapprocher de la classe correspondante.
-
-%Attention : les deux méthodes ne sont pas exclusives. Après tout les algorithmes
-%de classification en Machine Learning sont d'abord et avant tout des méthodes
-%statistiques automatisées. De plus, on peut utiliser des échantillons traités au
-%moyen de la statistique pour "entraîner" son modèle de Machine Learning.
-%[Hu, Ginrich]
