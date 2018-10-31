@@ -11,3 +11,26 @@ Cependant, il est tout de même utile de souligner qu'il reste encore beaucoup �
 De plus, et afin de mettre en place un protocole d'acquisition de la donnée dans une application concrète, il faut avoir à l'esprit les enjeux soulignés tout au long de \bibentry{giotBenchmark}
 
 L'état de l'art du domaine nous permet aussi d'établir qu'il existe des métriques pour évaluer le résultat de l'acquistion des données \cite{giotWeb}.
+
+Afin d'avoir un système "\textit{Keystroke Dynamics}" efficace et fiable (c'est à dire laissant entrer les bon utilisateurs lors de l'analyse et restreignant l'accès à des imposteurs), il est indispensable de traiter et filtrer la donnée en amont. Il est également nécessaire d'établir des critères et de filtres afin de  limiter les erreurs. Nous allons donc ici nous intéresser aux critères a regarder afin d'obtenir une donnée pertinente.
+
+\subsubsection{Qualité de la donnée}
+Un des débats revenant le plus souvent est l'acceptation de l'erreur lors de l'acquisition de la donnée. En effet, selon le document de Romain Giot sur les benchmark (\cite{giotBenchmark}), la correction d'une erreur change la manière de taper un texte, vu qu'il faut  prendre en compte les \textit{inputs} nécessaire pour rectifier le texte erroné. Par conséquent, la majorité des base de données du domaine ne permettent pas l'erreur lors de l'acquisition: l'utilisateur se voit donc forcer de reprendre l'acquisition de zéro en cas d'erreur. Néanmoins, cette particularité reste un champ de recherche possible pour l'amélioration de la technologie.
+
+Une autre question récurrente dans le domaine des \textit{Keystroke Dynamics} concerne les mots de passes : doit-on forcement utiliser un unique mot de passe/une unique paraphrase pour tous les utilisateurs de la phase d'acquisition. Dans la majorité des base de données, une paraphrase ou un mot de passe unique est pré défini et utilisée par les utilisateurs. Cette méthode a l'avantage d'être peu couteux en terme de temps et moins complexe à gérer au niveau des bases de données (l'information de réussite dans la frappe de cette paraphrase est une valeur booléenne). Néanmoins cette pratique reste peu réaliste par rapport à l'utilisation que l'on voudrait en faire (permettre une double authentification, afin d'accroitre la sécurité lors d'une connexion). De plus, l'utilisateur doit donc apprendre une chaine de caractères ce qui prend du temps et entraine une évolution de la frappe au fil des acquisitions.
+Des tests ont cependant été effectués par le laboratoire du Greyc (\cite{giotWeb}) par le biais d'une application web (Un contexte plus réaliste à la mise en pratique de cette technologie). Il s'avère par le biais de ces expériences comparatives, qu'il n'y ait pas de différence notable de fiabilité et de performance entre un mot de passe unique et un mot de passe choisi par l'utilisateur.
+En conclusion de cela, il n'est pas nécessaire d'utiliser un mot de passe unique pour les tests, mais reste fortement recommandé dans une souci de simplicité.
+
+Les données de tests doivent néanmoins se plier à certains critères précis :
+
+\begin{itemize}
+	\item L'entropie de la donnée
+	\item La taille de la donnée
+	\item La complexité de la donnée
+\end{itemize}
+
+\subsection{Critères propre à l'utilisateur et à l'environnement d'acquisition}
+
+
+
+\subsection{Importance des bases de données publiques}
