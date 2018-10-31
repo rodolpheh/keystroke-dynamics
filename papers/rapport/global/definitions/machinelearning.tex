@@ -21,15 +21,7 @@ Les algorithmes de \textit{machine learning} supervisés qui font de la classifi
 
 Les algorithmes de type \textit{one-vs-one} sont utilisés lorsqu'on possède des données ayant une prépondérance d'une classe sur une autre (par exemple, une classe qui serait représentée par 80\% des échantillons), au risque d'utiliser plus de ressources processeur.\\
 
-Parmis les publications que nous avons étudié, nous avons pu lire que dans la majorité des cas, les algorithmes à base de \textit{machine learning} sont plus performantes que les méthodes statistiques, autant sur le plan des ressources processeurs\cite{Hu2008} que sur le plan de la fiabilité en termes biométriques\cite{giotBenchmark}. Parmis les algorithmes à base de \textit{machine learning} aperçus dans la littérature, nous pouvons citer :\\
-
-\begin{description}
-  \item[kNN\cite{Hu2008} (\textit{k-Nearest Neighbors})]
-  \item[SVM\cite{giotSVM} (\textit{State Vector Machine})] : il s'agit d'un algorithme de classification qui généralisation des classifieurs linéaires dont les particularités sont la transformation de l'espace de représentation lorsque les données ne sont pas linéairement séparables et la maximisation de la marge au niveau des échantillons les plus proches de la frontière de décision afin de redéfinir une frontière de décision plus précise.
-  \item[ANN (\textit{Artificial Neural Network})] : il s'agit d'un algorithme comprenant une couche de neurones d'entrée, une couche de neurones de sortie et une ou plusieurs couches de neurones intermédiaires. Les neurones intermédiaires agissent comme des coefficients qui sont appliqués dans une équation dont les paramètres d'entrée sont les neurones d'entrée et la sortie, la classe correspondante aux données entrée. Sa construction se révèle très simple et permet de résoudre des problèmes très complexes. Son efficacité sur des jeux de données comprenant un grand nombre d'attributs ( 50) en fait un outil de choix pour la discrimination de schémas complexes tels que des enregistrements de frappe au clavier. Il a comme désavantage d'être très gourmand en mémoire et en ressources processeurs, tant pour l'entraînement que pour la prédiction.
-  \item[One-class SVM\cite{oneclassSVM}] : il s'agit d'une SVM non-supervisée. Elle est utilisée pour des tâches d'\textit{outlier detection}, c'est-à-dire la détection de données anormales, n'appartenant pas au groupe de données initial. Pour être utilisée, elle ne nécessite qu'un groupe de données appartenant à une seule classe. Elle est donc parfaitement adaptée à la détection d'un seul utilisateur en absence de données d'imposteurs.
-\end{description}
-
+Parmis les publications que nous avons étudié, nous avons pu lire que dans la majorité des cas, les algorithmes à base de \textit{machine learning} sont plus performantes que les méthodes statistiques, autant sur le plan des ressources processeurs\cite{Hu2008} que sur le plan de la fiabilité en termes biométriques\cite{giotBenchmark}.
 
 %En définitive les méthodes d'identification orbitent autour de deux catégories :
 
