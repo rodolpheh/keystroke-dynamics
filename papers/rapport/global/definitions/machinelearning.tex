@@ -10,18 +10,7 @@ Les algorithmes supervisés prennent en entrée des échantillons dont on conna�
 
 Les algorithmes non-supervisés prennent en entrée des échantillons auxquels on n'attache aucune valeur autre que les attributs, que l'on cherche à constituer en groupes afin d'en déduire une valeur commune et pour pouvoir prédire quelle valeur sera rattaché à une nouvelle donnée. Un exemple typique est la recherche de visages semblables dans une collection de photos où les personnes ne sont pas identifiées, afin d'identifier de manière unique les différentes personnes présentes dans ces photos.\\
 
-Les algorithmes de \textit{machine learning} supervisés qui font de la classification multi-classe (c'est-à-dire une classification entre trois classes ou plus) sont divisés en deux types :\\
-
-%http://scikit-learn.org/stable/modules/svm.html#multi-class-classification
-
-\begin{description}
-  \item[\textit{one-vs-one}] : pour chaque couple de classe, on créé un classifieur binaire. Pour classifier une nouvelle donnée, on effectue une prédiction avec tous les classifieurs et on récupère la classe ayant été la plus prédite parmis tous les classifieurs.
-  \item[\textit{one-vs-rest}] : pour chaque classe, on créé un classifieur binaire dont la tâche sera de distinguer la classe concernée de toutes les autres données (qui sont alors regroupées dans une classe "autre"). Lorsqu'on veut classifier une nouvelle donnée, on effectue une prédiction avec tous les classifieurs et on récupère la classe qui n'aura pas été classifiée comme étant "autre".\\
-\end{description}
-
-Les algorithmes de type \textit{one-vs-one} sont utilisés lorsqu'on possède des données ayant une prépondérance d'une classe sur une autre (par exemple, une classe qui serait représentée par 80\% des échantillons), au risque d'utiliser plus de ressources processeur.\\
-
-Parmis les publications que nous avons étudié, nous avons pu lire que dans la majorité des cas, les algorithmes à base de \textit{machine learning} sont plus performantes que les méthodes statistiques, autant sur le plan des ressources processeurs\cite{Hu2008} que sur le plan de la fiabilité en termes biométriques\cite{giotBenchmark}.
+Parmi les publications que nous avons étudié, nous avons pu lire que dans la majorité des cas, les algorithmes à base de \textit{machine learning} sont plus performantes que les méthodes statistiques, autant sur le plan des ressources processeurs\cite{Hu2008} que sur le plan de la fiabilité en termes biométriques\cite{giotBenchmark}.
 
 %En définitive les méthodes d'identification orbitent autour de deux catégories :
 
