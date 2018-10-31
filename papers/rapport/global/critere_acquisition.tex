@@ -15,10 +15,14 @@ En conclusion de cela, il n'est pas nécessaire d'utiliser un mot de passe uniqu
 Les données de tests doivent néanmoins se plier à certains critères précis :
 
 \begin{itemize}
-\item L'entropie de la donnée
-\item La taille de la donnée
-\item La complexité de la donnée
+\item L'entropie de la donnée : L'entropie d'une donnée / d'un mot de passe correspond à la capacité de ne pas prédire la chaine de caractères composant la donnée. L'entropie ne concerne pas forcement la variété des caractères utilisés (il s'agit plus d'une notion de complexité dans ce cas) mais plus le fait d'eviter les chaines simples/avec du sens (par exemple avec la chaine "azertyuiop"). L'entropie a une influence sur les performances d'un système \textit{Keystroke Dynamics}(\cite{giotWeb}) : la valeur d'\textit{ERR} (Equal Error Rate) est plus importante si l'information d'entropie est croisée.\\
+
+\item La taille de la donnée : La taille de la donnée/du mot de passe, a également un impact sur la performance d'un system \textit{KD}.\\
+
+\item La complexité de la donnée : la complexité de la donnée / d'un mot de passe est un indicateur de sécurité. Plus un mot de passe est complexe (utilisation de caractères spéciaux, enchainement non logique de caractères, etc...), plus le mot de passe sera dur à casser. Selon Romain Giot (\cite{giotWeb}), la complexité du mot de passe n'influe en rien sur les performances d'un système de \textit{Keystroke Dynamics}. Il s'agit plus d'un paramètre de sécurité utile pour bloquer le cassage de mot de passe.\\
+
 \end{itemize}
+En vue de ces paramètres, il est plus que nécessaire de bien calibrer et sélectionner sa donnée (mot de passe) afin d'optimiser la performance de la base et du système \textit{Keystroke Dynamics}
 
 \subsection{Critères propre à l'utilisateur et à l'environnement d'acquisition}
 
