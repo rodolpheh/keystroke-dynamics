@@ -1,13 +1,30 @@
 \subsection{Dynamique de frappe}
+\label{subsec:ddf}
 
-Les \textit{keystroke dynamics}, ou en français la \textbf{dynamique de frappe au clavier} est une méthode biométrique comportementale. Depuis le début de la recherche dans ce domaine\cite{rand}, l'intérêt de cette méthode a été de proposer une identification peu coûteuse en matériel et en traitement \cite{monrose1997}. La donnée en la matière est théoriquement abondante, et l'acquisition des données est transparente pour les utilisateurs. La littérature distingue deux types de systèmes biométriques utilisant la dynamique de frappe.\\
+Les \textit{keystroke dynamics}, ou en français la \textbf{dynamique de frappe au clavier} est une méthode biométrique comportementale. Depuis le début de la recherche dans ce domaine\cite{rand}, l'intérêt de cette méthode a été de proposer une identification peu coûteuse en matériel et en traitement \cite{monrose1997}. La donnée en la matière est théoriquement abondante, et l'acquisition des données est transparente pour les utilisateurs.\\
 
-%\input{global/definitions/dynamiquefrappe/statique}
-%\input{global/definitions/dynamiquefrappe/dynamique}
+La littérature distingue deux types de systèmes biométriques utilisant la dynamique de frappe :\\
+
 
 \begin{description}
   \item[Statique] Il s'agit de l'identification ou de l'authentification d'un utilisateur à l'aide d'un mot de passe fixe choisi par l'utilisateur (ou l'expérimentateur dans le cas des recherches). Cela permet par exemple de faire de l'authentification bi-factorielle combinant un mot de passe et la dynamique de frappe.
   \item[Dynamique] Il s'agit de l'identification ou de l'authentification d'un utilisateur sur du texte libre. Cela permet par exemple de faire du \textit{monitoring} de l'identité de l'utilisateur et de verrouiller le système lorsqu'un utilisateur non autorisé est détecté.\\
 \end{description}
 
-La dynamique de frappe au clavier va se baser sur une multitude de grandeurs mesurées pour constituer un profil qui soit unique par utilisateur\cite{giotThese,Hu2008,gunetti2005,bergadano2002}.
+D'après Romain Giot \cite{giotBenchmark}, un système de \textit{keystroke dynamics} est toujours composé de deux modules :\\
+
+\begin{itemize}
+	\item Un module d'enregistrement (\textit{enrollment}) des utilisateurs ;
+	\item Un module de vérification.\\
+\end{itemize}
+
+Le module d'enregistrement est ce qui permet de capter la donnée de frappe au clavier. Le logiciel développé à l'intention va capter les \textbf{événements claviers} émis par la frappe de l'utilisateur.
+
+En ce qui concerne le module de vérification, il se base en général sur un \textbf{classificateur}, qui peut faire partie de plusieurs catégories : 
+
+\begin{itemize}
+	\item une seule classe : détection des imposteurs \bibentry{killourhy2009};
+	\item une classe par utilisateur : identification de l'utilisateur parmi plusieurs \bibentry{monrose1997}.
+\end{itemize}
+
+

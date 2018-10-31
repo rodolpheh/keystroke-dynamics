@@ -21,18 +21,6 @@ Parmis les algorithmes à base de \textit{machine learning} aperçus dans la lit
   \item[One-class SVM\cite{oneclassSVM}] Il s'agit d'une SVM non-supervisée. Elle est utilisée pour des tâches d'\textit{outlier detection}, c'est-à-dire la détection de données anormales, n'appartenant pas au groupe de données initial. Pour être utilisée, elle ne nécessite qu'un groupe de données appartenant à une seule classe. Elle est donc parfaitement adaptée à la détection d'un seul utilisateur en absence de données d'imposteurs.
 \end{description}
 
-% RODOLPHE: je suis pas sûr de ce passage, on aurait déjà dû dire qu'on s'intéresse uniquement à l'authentification et on a donc pas à décrire la différence authentification/identification
-
-%Les méthodes utilisées varient aussi en fonction de l'objectif que l'on veut faire remplir au modèle de vérification :
-
-%\begin{itemize}
-%	\item une seule classe : détection des imposteurs \bibentry{killourhy2009};
-%	\item une classe par utilisateur : identification de l'utilisateur parmi plusieurs \bibentry{monrose1997}.
-%\end{itemize}
-
-\subsection{Métriques}
-FAR / FRR
-
 \subsection{Ordre de grandeur des systèmes développés}
 
 Jusqu'ici les systèmes développés sont adaptés à quelques dizaines ou une centaines d'utilisateurs mais guère plus. Cependant dans la vraie vie, il n'est pas rare que les systèmes d'authentification contrôlent l'accès à des services pour des millions d'utilisateurs tous différents. Le problème est que certains algorithmes de classifications présentent une baisse très importantes de la fiabilité avec l'augmentation du nombre d'utilisateurs \cite{panasiuk2016}. Il y a donc un problème de ces méthodes de classification car elles ne permettent pas de développer des systèmes d'authentification qui sont adaptés à différents ordres de grandeur. C'est la raison pour laquelle nous avons choisi d'orienter notre travail sur l'authentification d'une personne unique sur un ordinateur personnel. En effet, l'essentiel des travaux du domaine proposent des systèmes éprouvés sur un nombre restreint d'utilisateurs, nous pourrons donc nous appuyer sur ces travaux. Par ailleurs, il est beaucoup plus difficile d'évaluer les performances d'un système développé pour des millions d'utilisateurs, notamment parce qu'il n'existe pas de bases de données permettant de l'éprouver.

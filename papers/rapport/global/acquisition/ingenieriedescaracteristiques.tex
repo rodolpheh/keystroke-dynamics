@@ -1,5 +1,17 @@
 \subsection{Ingénierie des caractéristiques}
+\label{subsec:featureengineering}
 
 Dans sa thèse \cite{giotThese}, Romain Giot fait l'inventaire des méthodes utilisées dans le domaine des \textit{keystroke dynamics} pour préparer la donnée avant de l'utiliser dans un modèle. Diverses méthodologies peuvent être utilisées pour formaliser les données. On a des exemples de calculs de moyennes de certaines caractéristiques de la donnée. D'autres proposent la constructions de \textit{timing vectors}\cite{killourhy2009}, soit la constitution d'un vecteur multidimensionnel dont les coordonnées correspondent à des données temporelles qui décrivent la rythmique de la frappe de l'individu.\\
 
 Certains des algorithmes de \textit{Machine Learning} utilisés procèdent eux-mêmes à un traitement préalable des données pour affiner la discrimination entre les différentes classes à discriminer.
+
+Mais d'une manière générale, les traitements les plus courants sur les données de frappe au clavier sont le calcul de données de frappes \textbf{calculées} depuis la donnée brute :
+
+\begin{description}
+	\item[\textit{Seek/Flight time}] : le temps entre le relâchement d'une touche et le début de la pression sur une autre touche ;
+	\item[\textit{Hold/Dwell time}] : le temps entre le début de la pression d'une touche et son relâchement. \cite{kobojekRNN}
+\end{description}
+
+Souvent les données sont aussi traitées pour l'analyse des digraphes et des trigraphes (généralisable aux n-graphes \cite{Hu2008}). Il s'agit de l'étude des \textit{timings} sur des groupes de deux, trois ou n caractères. Cette technique intervient beaucoup dans la \textbf{méthodologie dynamique} \ref{subsec:ddf}. Dans ce contexte les chercheurs ont tendance à sélectionner les n-graphes au préalable en fonction de leur importance. Par exemple, le trigraphe "\textit{-ing}" sera plus intéressant à examiner pour un utilisateur anglophone que francophone du fait de la fréquence de cette séquence de lettres en Anglais.
+
+Après avoir calculé toutes les caractéristiques jugées nécessaires au traitement, l'échantillon est mis en forme. En \textit{machine learning} cela prend la forme d'un \textbf{vecteur}, soit les coordonnées d'un point en dimension n, avec n le nombre de caractéristiques retenues, brutes ou dérivées.

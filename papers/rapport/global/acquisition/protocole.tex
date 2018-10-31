@@ -1,18 +1,19 @@
 \subsection{Protocole d'acquisition}
 
-Romain Giot \textit{et al.}\cite{giotGREYC} soulignent la difficulté de constituer une base de données conséquente pour la recherche en \textit{keystroke dynamics}. En effet, de nombreux paramètres sont susceptibles d'ajouter du bruit dans la donnée captée, voire de la rendre inutilisables. Cependant la littérature n'est pas unanime quant au fait que des erreurs de saisie viendraient renforcer la fiabilité des modèles ou la diminuer.\\
+Afin d'avoir un système "\textit{Keystroke Dynamics}" efficace et fiable (c'est à dire laissant entrer les bon utilisateurs lors de l'analyse et restreignant l'accès à des imposteurs), il est indispensable de traiter et filtrer la donnée en amont. Il est également nécessaire d'établir des critères et de filtres afin de  limiter les erreurs. Nous allons donc ici nous intéresser aux critères à regarder afin d'obtenir une donnée pertinente.
 
-Romain Giot \textit{et al.} \cite{giotGREYC} ainsi que Killourhy et Maxion \cite{killourhy2009} ont donc tenté de répondre à cette problématique en constituant des bases de données conséquentes, basées sur un protocole d'acquisition et un formatage documentés.\\
+\subsubsection{Grandeurs mesurées}
+La dynamique de frappe au clavier va se baser sur une multitude de grandeurs mesurées pour constituer un profil qui soit unique par utilisateur\cite{giotThese,Hu2008,gunetti2005,bergadano2002}.
 
-Ces travaux nous permettent de nous insérer dans un ensemble de publications réutilisant ces données pour rendre les résultats comparables, ce qui n'était pas vraiment possible avant 2009.\\
+Dans les données qu'on peut chercher à capter, on peut citer :
 
-Cependant, il est tout de même utile de souligner qu'il reste encore beaucoup à faire en la matière, notamment en comparaison des autres champs d'étude du \textit{Machine Learning}, qui disposent de bases de données de millions d'images pour la reconnaissance des visages, par exemple.\\
+\begin{itemize}
+	\item[\textit{Press event}] : événement de clavier associant un \textit{timestamp} et un code de touche de clavier, permettant d'indentifier l'instant auquel l'utilisateur a commencé à appuyer sur la touche.
+	\item[\textit{Release event}] : même type d'événement pour l'instant auquel l'utilisateur a relaché la touche.
+	\item[Pression] : les travaux portant sur l'adaptation des \textit{keystrokes dynamics} à des smartphones vont parfois proposer la donnée concernant la pression de la frappe sur le clavier tactile.
+\end{itemize}
 
-De plus, et afin de mettre en place un protocole d'acquisition de la donnée dans une application concrète, il faut avoir à l'esprit les enjeux soulignés lors de la constitution de la base de données GREYC\cite{giotGREYC}.\\
-
-L'état de l'art du domaine nous permet aussi d'établir qu'il existe des métriques pour évaluer le résultat de l'acquistion des données \cite{giotWeb}.\\
-
-Afin d'avoir un système "\textit{Keystroke Dynamics}" efficace et fiable (c'est à dire laissant entrer les bon utilisateurs lors de l'analyse et restreignant l'accès à des imposteurs), il est indispensable de traiter et filtrer la donnée en amont. Il est également nécessaire d'établir des critères et de filtres afin de  limiter les erreurs. Nous allons donc ici nous intéresser aux critères a regarder afin d'obtenir une donnée pertinente.
+Une fois ces données \textbf{brutes} captées, le protocole implique souvent de calculer des données dérivées (cf. \ref{subsec:featureengineering}).
 
 \subsubsection{Qualité de la donnée}
 
@@ -43,4 +44,12 @@ En vue de ces paramètres, il est plus que nécessaire de bien calibrer et séle
 
 \subsubsection{Importance des bases de données publiques}
 
-% What ? On en parle pas déjà avant ?
+Romain Giot \textit{et al.}\cite{giotGREYC} soulignent la difficulté de constituer une base de données conséquente pour la recherche en \textit{keystroke dynamics}. En effet, de nombreux paramètres sont susceptibles d'ajouter du bruit dans la donnée captée, voire de la rendre inutilisables. Cependant la littérature n'est pas unanime quant au fait que des erreurs de saisie viendraient renforcer la fiabilité des modèles ou la diminuer.\\
+
+Romain Giot \textit{et al.} \cite{giotGREYC} ainsi que Killourhy et Maxion \cite{killourhy2009} ont donc tenté de répondre à cette problématique en constituant des bases de données conséquentes, basées sur un protocole d'acquisition et un formatage documentés.\\
+
+Ces travaux nous permettent de nous insérer dans un ensemble de publications réutilisant ces données pour rendre les résultats comparables, ce qui n'était pas vraiment possible avant 2009.\\
+
+Cependant, il est tout de même utile de souligner qu'il reste encore beaucoup à faire en la matière, notamment en comparaison des autres champs d'étude du \textit{Machine Learning}, qui disposent de bases de données de millions d'images pour la reconnaissance des visages, par exemple.\\
+
+De plus, et afin de mettre en place un protocole d'acquisition de la donnée dans une application concrète, il faut avoir à l'esprit les enjeux soulignés lors de la constitution de la base de données GREYC\cite{giotGREYC}.\\
