@@ -1,0 +1,20 @@
+\section{Évaluation du système}
+
+En biométrie, l'évaluation du système doit se faire avec beaucoup de données. C'est à cet effet qu'ont été créées les bases de donnée publiques tels que DSM2009\cite{killourhy2009} et GREYC Keystroke\cite{giotGREYC}, à l'instar des bases de données déjà existantes concernant des données d'empreintes digitales ou d'iris dans les domaines de la biométrie morphologique. La composition de ces bases de données nous permet d'entraîner ou de tester un algorithme sur un utilisateur unique de la base de données avant d'utiliser le reste des données pour simuler des tentatives d'authentification par des imposteurs.
+
+L'évaluation du système s'effectue en testant toutes les données contenues dans la base de données en authentification et on relève :
+
+\begin{itemize}
+  \item Le nombre de tentatives provenant d'un utilisateur légitime
+  \item Le nombre de tentatives provenant d'un imposteur
+  \item Le nombre de rejets lorsque l'utilisateur est légitime
+  \item Le nombre de confirmations lorsque l'utilisateur est légitime
+  \item Le nombre de rejets lorsque l'utilisateur est un imposteur
+  \item Le nombre de confirmations lorsque l'utilisateur est un imposteur
+\end{itemize}
+
+Le FRR s'obtient en divisant le nombre de rejets lorsque l'utilisateur est légitime sur le nombre de tentatives provenant d'un utilisateur légitime. Il indique à quel point le système est restrictif (plus le FRR est bas, plus le système est restrictif).
+
+Le FAR s'obtient en divisant le nombre de confirmations lorsque l'utilisateur est un imposteur sur le nombre de tentatives provenant d'un imposteur. Il indique à quel point le système est sécurisé (plus le FAR est bas, plus le système est sécurisé).
+
+Ces deux métriques sont les plus significatives pour juger des performances d'un système d'authentification par biométrie et doivent se situer en dessous des seuils définies par la norme européenne EN-50133-1
