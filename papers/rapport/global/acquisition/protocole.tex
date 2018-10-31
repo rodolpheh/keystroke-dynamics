@@ -17,35 +17,54 @@ Une fois ces données \textbf{brutes} captées, le protocole implique souvent de
 
 \subsubsection{Qualité de la donnée}
 
-Un des débats revenant le plus souvent est l'acceptation de l'erreur lors de l'acquisition de la donnée. En effet, selon le document de Romain Giot sur les benchmark\cite{giotBenchmark}, la correction d'une erreur change la manière de taper un texte, vu qu'il faut  prendre en compte les \textit{inputs} nécessaire pour rectifier le texte erroné. Par conséquent, la majorité des base de données du domaine ne permettent pas l'erreur lors de l'acquisition: l'utilisateur se voit donc forcer de reprendre l'acquisition de zéro en cas d'erreur. Néanmoins, cette particularité reste un champ de recherche possible pour l'amélioration de la technologie.\\
+Un des débats revenant le plus souvent est l'acceptation de l'erreur lors de l'acquisition de la donnée. En effet, selon le document de Romain Giot sur les benchmark\cite{giotBenchmark}, la correction d'une erreur change la manière de taper un texte, vu qu'il faut  prendre en compte les \textit{inputs} nécessaire pour rectifier le texte erroné. Par conséquent, la majorité des base de données du domaine ne permettent pas l'erreur lors de l'acquisition: l'utilisateur se voit donc forcer de reprendre l'acquisition de zéro en cas d'erreur. Néanmoins, cette particularité reste un champ de recherche possible pour l'amélioration de la technologie.
 
-Une autre question récurrente dans le domaine des \textit{Keystroke Dynamics} concerne les mots de passes : doit-on forcement utiliser un unique mot de passe pour tous les utilisateurs de la phase d'acquisition ? Dans la majorité des base de données, une un mot de passe unique est pré-défini et utilisée par les utilisateurs. Cette méthode a l'avantage d'être peu coûteuse en terme de temps et moins complexe à gérer au niveau des bases de données (l'information de réussite dans la frappe de ce mot de passe est une valeur booléenne). Néanmoins cette pratique reste peu réaliste par rapport à l'utilisation que l'on voudrait en faire (permettre une double authentification, afin d'accroitre la sécurité lors d'une connexion). De plus, l'utilisateur doit donc apprendre une chaine de caractères ce qui prend du temps et entraine une évolution de la frappe au fil des acquisitions.\\
+Une autre question récurrente dans le domaine des \textit{Keystroke Dynamics} concerne les mots de passes : doit-on forcement utiliser un unique mot de passe pour tous les utilisateurs de la phase d'acquisition ? Dans la majorité des base de données, une un mot de passe unique est pré-défini et utilisée par les utilisateurs. Cette méthode a l'avantage d'être peu coûteuse en terme de temps et moins complexe à gérer au niveau des bases de données (l'information de réussite dans la frappe de ce mot de passe est une valeur booléenne). Néanmoins cette pratique reste peu réaliste par rapport à l'utilisation que l'on voudrait en faire (permettre une double authentification, afin d'accroitre la sécurité lors d'une connexion). De plus, l'utilisateur doit donc apprendre une chaine de caractères ce qui prend du temps et entraine une évolution de la frappe au fil des acquisitions.
 
-Des tests ont cependant été effectués par le laboratoire du GREYC\cite{giotWeb} par le biais d'une application web (Un contexte plus réaliste à la mise en pratique de cette technologie). Il s'avère par le biais de ces expériences comparatives, qu'il n'y ait pas de différence notable de fiabilité et de performance entre un mot de passe unique et un mot de passe choisi par l'utilisateur.\\
+Des tests ont cependant été effectués par le laboratoire du GREYC\cite{giotWeb} par le biais d'une application web (Un contexte plus réaliste à la mise en pratique de cette technologie). Il s'avère par le biais de ces expériences comparatives, qu'il n'y ait pas de différence notable de fiabilité et de performance entre un mot de passe unique et un mot de passe choisi par l'utilisateur.
 
-En conclusion de cela, il n'est pas nécessaire d'utiliser un mot de passe unique pour les tests, mais reste fortement recommandé dans une souci de simplicité.\\
+En conclusion de cela, il n'est pas nécessaire d'utiliser un mot de passe unique pour les tests, mais reste fortement recommandé dans une souci de simplicité.
 
-Les mots de passe doivent néanmoins se plier à certains critères précis :\\
+Les mots de passe doivent néanmoins se plier à certains critères précis :
 
 \begin{itemize}
-\item L'entropie correspond à la capacité de ne pas prédire la chaine de caractères composant la donnée. L'entropie ne concerne pas forcement la variété des caractères utilisés (il s'agit plus d'une notion de complexité dans ce cas) mais plus le fait d'eviter les chaines simples/avec du sens (par exemple avec la chaine "azertyuiop"). L'entropie a une influence sur les performances d'un système \textit{Keystroke Dynamics}(\cite{giotWeb}) : la valeur d'\textit{ERR} (Equal Error Rate) est plus importante si l'information d'entropie est croisée.\\
+\item L'entropie correspond à la capacité de ne pas prédire la chaine de caractères composant la donnée. L'entropie ne concerne pas forcement la variété des caractères utilisés (il s'agit plus d'une notion de complexité dans ce cas) mais plus le fait d'eviter les chaines simples/avec du sens (par exemple avec la chaine "azertyuiop"). L'entropie a une influence sur les performances d'un système \textit{Keystroke Dynamics}(\cite{giotWeb}) : la valeur d'\textit{ERR} (Equal Error Rate) est plus importante si l'information d'entropie est croisée.
 
-\item La taille du mot de passe, a également un impact sur la performance d'un système \textit{KD}.\\
+\item La taille du mot de passe, a également un impact sur la performance d'un système \textit{KD}.
 
-\item La complexité du mot de passe est un indicateur de sécurité. Plus un mot de passe est complexe (utilisation de caractères spéciaux, enchainement non logique de caractères, etc...), plus le mot de passe sera dur à casser. Selon Romain Giot (\cite{giotWeb}), la complexité du mot de passe n'influe en rien sur les performances d'un système de \textit{Keystroke Dynamics}. Il s'agit plus d'un paramètre de sécurité utile pour bloquer le cassage de mot de passe.\\
+\item La complexité du mot de passe est un indicateur de sécurité. Plus un mot de passe est complexe (utilisation de caractères spéciaux, enchainement non logique de caractères, etc...), plus le mot de passe sera dur à casser. Selon Romain Giot (\cite{giotWeb}), la complexité du mot de passe n'influe en rien sur les performances d'un système de \textit{Keystroke Dynamics}. Il s'agit plus d'un paramètre de sécurité utile pour bloquer le cassage de mot de passe.
 
 \end{itemize}
 
-En vue de ces paramètres, il est plus que nécessaire de bien calibrer et sélectionner sa donnée (mot de passe) afin d'optimiser la performance de la base et du système \textit{Keystroke Dynamics}\\
+En vue de ces paramètres, il est plus que nécessaire de bien calibrer et sélectionner son mot de passe afin d'optimiser la performance de la base et du système \textit{Keystroke Dynamics}
+
+D'autres caractéristiques sont également à prendre en compte afin d'effectuer les expérimentations dans les meilleures conditions. Il s'agit des caractéristiques "environnementales" et des caractéristiques liées à l'acquisition.
+
+Il est nécessaire de bien définir le matériel et les standards utilisés, dans la mesure où ceux-ci peuvent influer sur la performance et sur l'acquisition. Cela passe tout d'abord, par un aspect "environnementale" :
+
+\begin{itemize}
+\item La forme du clavier ainsi que son type, influe sur les performances. Cela est principalement due à la variation sur le mouvements des doigts, en fonction de la disposition du clavier (AZERTY, QWERTY, ...) et du type de mécanisme du clavier (la réponse ne demandera pas la même impulsion sur un clavier mécanique, que sur un clavier à membrane par exemple). L'auteur préconise de garder le même clavier entre la phase d'enregistrement et le phase de test.
+
+\item Le système d'exploitation choisi, aura également une influence, notamment sur la précision de mesures des timings de frappes(\cite{giotBenchmark}).
+
+\item Cela est evident, mais le calme de l'environnement influe enormement sur l'acquisition (selon Giot \cite{giotBenchmark}, un environnement relativement stable et calme permet de fournir de meilleures performances qu'un environnement bruyant)
+
+\item Enfin, une autre évidence concerne la calibration et la précision du chronomètre utilisé pour les mesures de timing.
+
+\end{itemize}
+
+Il existe ensuite, quelques paramètres systématiquement indiqués dans la littérature, et ayant une influence notable sur la fiabilité et sur les performances d'un système de \textit{Keystroke Dynamics} : il s'agit notamment du nombre d'échantillons par utilisateurs, du nombre de sessions d'enregistrements ainsi que du délai minimum inter-session.
+
+On se rend vite compte, que de nombreux paramètres doivent être réfléchis et prise en compte afin de garantir la qualité de la donnée. Malgré cela, la donnée peut comporter des lacunes sur plusieurs points, la rendant ainsi incomplète et moins pertinente. Il y a donc une importance à porter sur les bases de données de recherches publiques déjà existantes, afin d'apporter une base comparative supplémentaire.
 
 \subsubsection{Importance des bases de données publiques}
 
-Romain Giot \textit{et al.}\cite{giotGREYC} soulignent la difficulté de constituer une base de données conséquente pour la recherche en \textit{keystroke dynamics}. En effet, de nombreux paramètres sont susceptibles d'ajouter du bruit dans la donnée captée, voire de la rendre inutilisables. Cependant la littérature n'est pas unanime quant au fait que des erreurs de saisie viendraient renforcer la fiabilité des modèles ou la diminuer.\\
+Romain Giot \textit{et al.}\cite{giotGREYC} soulignent la difficulté de constituer une base de données conséquente pour la recherche en \textit{keystroke dynamics}. En effet, de nombreux paramètres sont susceptibles d'ajouter du bruit dans la donnée captée, voire de la rendre inutilisables. Cependant la littérature n'est pas unanime quant au fait que des erreurs de saisie viendraient renforcer la fiabilité des modèles ou la diminuer.
 
-Romain Giot \textit{et al.} \cite{giotGREYC} ainsi que Killourhy et Maxion \cite{killourhy2009} ont donc tenté de répondre à cette problématique en constituant des bases de données conséquentes, basées sur un protocole d'acquisition et un formatage documentés.\\
+Romain Giot \textit{et al.} \cite{giotGREYC} ainsi que Killourhy et Maxion \cite{killourhy2009} ont donc tenté de répondre à cette problématique en constituant des bases de données conséquentes, basées sur un protocole d'acquisition et un formatage documentés.
 
-Ces travaux nous permettent de nous insérer dans un ensemble de publications réutilisant ces données pour rendre les résultats comparables, ce qui n'était pas vraiment possible avant 2009.\\
+Ces travaux nous permettent de nous insérer dans un ensemble de publications réutilisant ces données pour rendre les résultats comparables, ce qui n'était pas vraiment possible avant 2009.
 
-Cependant, il est tout de même utile de souligner qu'il reste encore beaucoup à faire en la matière, notamment en comparaison des autres champs d'étude du \textit{Machine Learning}, qui disposent de bases de données de millions d'images pour la reconnaissance des visages, par exemple.\\
+Cependant, il est tout de même utile de souligner qu'il reste encore beaucoup à faire en la matière, notamment en comparaison des autres champs d'étude du \textit{Machine Learning}, qui disposent de bases de données de millions d'images pour la reconnaissance des visages, par exemple.
 
-De plus, et afin de mettre en place un protocole d'acquisition de la donnée dans une application concrète, il faut avoir à l'esprit les enjeux soulignés lors de la constitution de la base de données GREYC\cite{giotGREYC}.\\
+De plus, et afin de mettre en place un protocole d'acquisition de la donnée dans une application concrète, il faut avoir à l'esprit les enjeux soulignés lors de la constitution de la base de données GREYC\cite{giotGREYC}.
