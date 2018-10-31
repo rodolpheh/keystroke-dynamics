@@ -34,15 +34,15 @@ La dynamique de signature se concentre sur les gestes effectués lors de la sign
 
 La dynamique de frappe au clavier repose sur un principe similaire, mais au lieu d'observer les gestes, on mesure les temps de pression et de relâchement des différentes touches\cite{giotGREYC} ou l'ordre des n-graphes qui sont tapés\cite{bergadano2002,gunetti2005}.
 
-\subsubsection{Analyse des performances}
+\subsubsection{Analyse des performances d'un système biométrique}
 
-Pour évaluer l'efficacité des différents systèmes biométriques nous pouvons considérer trois facteurs majeur :\\
+Pour évaluer l'efficacité des différents systèmes biométriques nous pouvons considérer trois facteurs majeur\cite{elabedThese} :\\
 
-\begin{itemize}
-\item la performance - analyse des données statistiques sur le performance du système, comme EER, FTE, FTA ou temps de traitement
-\item l'acceptabilité - les informations sur la perception et l'acceptation par l'utilisateur 
-\item sécurité - quantifie la sécurité du système, par example combien de fraudes un imposteur peut utiliser\\
-\end{itemize}
+\begin{description}
+\item[Performance] mesure de l'efficacité en termes d'erreur comme le taux d'échec à l'acquisition (FTA)
+\item[Acceptabilité] les informations sur la perception et l'acceptation par l'utilisateur lors de l'utilisation du système. Cela peut concerner la phase d'enregistrement de l'utilisateur\cite{giotSVM} ou la phase d'authentification 
+\item[Sécurité] mesure de la robustesse d'un système biométrique contre la fraude. La sécurité algorithmique peut être mesurée à l'aide d'indicateurs tels que le FAR et le FRR\\
+\end{description}
 
 Ces trois caractéristiques doivent être prises en compte simultanément pour juger la performance d'un système biométrique. Un niveau bas de fausses identifications ne pourra pas être significatif si le taux de refus des utilisateurs légitimes est élevé. Dans se cas la solution sera condamnée à ne pas être utilisée.
 
