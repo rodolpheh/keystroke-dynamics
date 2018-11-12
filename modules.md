@@ -11,12 +11,15 @@ Une fois qu'il est validé on utilise Python et Scikit-learn avec ses algorithme
 Si on ne connaît pas le mdp et qu'on le capture à l'aveugle, comment on fait
 pour capturer des échantillons sans erreurs (avec des events backspace) ?
 
+=> on ignore les tentatives avec backspace.
+
 Si on favorise la capture de frappe exacte (uniquement le minimum d'évenements
 clavier) alors on exclut les tentatives légèrement ratées dans l'utilisation
 quotidienne -> moins agréable
 Si on accepte aussi les mdp valides mais avec des events surnuméraires
 (backspace), alors c'est plus dur à traiter et avoir des meilleures perfs mais
-c'est plus pratique d'utilisation.
+c'est plus pratique d'utilisation. => on essaye sans d'abord et on verra ensuite
+
 
 ## Stockage du profil
 BDD ? Comment qu'on fait ? Chiffrer. Sécurité importante etc.
@@ -29,7 +32,7 @@ Est-ce que c'est possible ?
 Qui doit le faire ? Le système ou nous ? Si c'est nous :
 
 ### Stockage du mdp
-Hashage du mdp
+Hashage du mdp AES 256 avec le mdp de l'utilisateur.
 
 ## Module de vérification du profil
 
