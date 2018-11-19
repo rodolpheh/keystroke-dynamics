@@ -1,6 +1,7 @@
 .ipynb_checkpoints
 GREYC-keystroke
 *.pdf
+revealjs/res/*.svg
 
 # macOS generated files #
 ######################
