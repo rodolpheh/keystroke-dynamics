@@ -241,6 +241,22 @@
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
 				]
 			});
+
+			// Shows the slide number using default formatting
+			Reveal.configure({ slideNumber: true });
+
+			// Slide number formatting can be configured using these variables:
+			//  "h.v": 	horizontal . vertical slide number (default)
+			//  "h/v": 	horizontal / vertical slide number
+			//    "c": 	flattened slide number
+			//  "c/t": 	flattened slide number / total slides
+			Reveal.configure({ slideNumber: 'c/t' });
+
+			// Control which views the slide number displays on using the "showSlideNumber" value:
+			//     "all": show on all views (default)
+			// "speaker": only show slide numbers on speaker notes view
+			//   "print": only show slide numbers when printing to PDF
+			Reveal.configure({ showSlideNumber: 'all' });
 		</script>
 	</body>
 </html>
