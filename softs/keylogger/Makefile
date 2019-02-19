@@ -1,15 +1,28 @@
-CC=gcc
-CFLAGS=-c -Wall -pedantic -Wextra
-LDFLAGS=
-EXEC=keylogger
+BIN = keylogger.bit
 
-all: $(EXEC)
+SRCS = keylogger.c
 
-keylogger: keylogger.o
-	$(CC) $(LDFLAGS) $^ -o $@
+OBJS = $(SRCS:.c=.o)
+DEPS = $(SRCS:.c=.d)
 
-%.o: %.c
-	$(CC) $(CFLAGS) $<
+CC = gcc
 
+CFLAGS = -Wshadow -Wall -pedantic -Wextra -g -O3 -flto -march=native
+
+LDLIBS = -lm
+
+LDFLAGS =
+
+$(BIN): $(OBJS) $(DEPS)
+	$(CC) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $(BIN)
+
+%.o : %.c %.d Makefile
+	$(CC) $(CFLAGS) -MMD -MP -MT $@ -MF $*.d -c $<
+
+-include *.d
+
+%.d : ;
+
+.PHONY: clean
 clean:
-	rm -rf *.o
+	rm -f $(BIN) $(OBJS) $(DEPS)

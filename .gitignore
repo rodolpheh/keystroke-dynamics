@@ -37,3 +37,12 @@ Thumbs.db
 # Bibtex temps
 *.bbl
 *.blg
+
+
+# C shit
+
+*.o
+*.d
+*a.out
+*keylogger.bit
+*dump*

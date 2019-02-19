@@ -1,34 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <linux/input.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <termios.h>
-#include <string.h>
-#include <time.h>
-
-typedef struct _sample {
-	time_t seconds;
-	long nsec;
-	unsigned int code;
-	int state;
-} sample;
-
-void intHandler(int dummy);
-void saveToFile();
-void printSample(sample theSample);
-
-static int keepRunning = 1;
-static sample samples[2000];
-static struct timeval times[2000];
-static int count = 0;
-static int kbdFile;
+#include "keylogger.h"
 
 void intHandler(int dummy) {
-	printf("Killed\n");
+	printf("Killed [%d]\n", dummy);
 	fflush(stdout);
     keepRunning = 0;
 	saveToFile();
@@ -38,9 +11,9 @@ void saveToFile() {
 	FILE * dump = fopen("./dump.csv", "w");
 	for (int i = 0 ; i < count; i++) {
 		sample toReg = samples[i];
-		char * sample = (char *)malloc(42 * sizeof(char));
-		sprintf(sample, "%011ld%09ld,%03d,%d\n", toReg.seconds, toReg.nsec, toReg.code, toReg.state);
-		fwrite(sample, sizeof(char), 27, dump);
+		char * aSample = (char *) malloc(42 * sizeof(char));
+		sprintf(aSample, "%011ld%09ld,%03d,%d\n", toReg.seconds, toReg.nsec, toReg.code, toReg.state);
+		fwrite(aSample, sizeof(char), 27, dump);
 	}
 	fclose(dump);
 }
@@ -54,7 +27,7 @@ void replaySamples() {
 	struct timeval startTime;
 	gettimeofday(&startTime, NULL);
 	int sampleCount = 0;
-	
+
 	while (sampleCount < count) {
 		struct timeval endTime;
 		gettimeofday(&endTime, NULL);
@@ -90,11 +63,11 @@ void replaySamples() {
 			sampleCount++;
 		}
 	}
-	
+
 	printf("Replay done\n");
 }
 
-int main(int argc, char ** args) {
+int main() {
 	struct input_event ev;
 	struct timespec spec;
 	struct timeval prevTime = {0, 0};
@@ -117,7 +90,7 @@ int main(int argc, char ** args) {
 		clock_gettime(CLOCK_REALTIME, &spec);
 
 		if (ev.type == 1) {
-			if (record == 1 && ev.code < 59) {
+			if (record == 1 && ev.code < KEY_F1) {
 				if (count == 0 && ev.value == 0) {}
 				else {
 					sample newSample = { ev.time.tv_sec, ev.time.tv_usec, ev.code, ev.value };
@@ -144,7 +117,7 @@ int main(int argc, char ** args) {
 			}
 
 			if (ev.code == 59 && ev.value == 1) {
-				printf(record == 1 ? "Stopping " : "Starting ");				
+				printf(record == 1 ? "Stopping " : "Starting ");
 				printf("recording...\n");
 				record = record == 1 ? 0 : 1;
 				if (record == 0) {
