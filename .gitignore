@@ -40,9 +40,12 @@ Thumbs.db
 
 
 # C shit
-
 *.o
 *.d
 *a.out
 *keylogger.bit
 *dump*
+
+# Python and python's environment
+data/env
+__pycache__
