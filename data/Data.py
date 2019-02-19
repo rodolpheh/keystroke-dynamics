@@ -1,17 +1,19 @@
 import sqlite3
 import numpy as np
+import pandas as pd
 
 
-class Data(object):
+class Data:
     """docstring for Data."""
-    def __init__(self):
-        super(Data, self).__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         self.samples = []
         self.targets = []
         self.description = "A database of keystrokes"
         self.headers = []
         self.headersMask = []
+        self.table = None
         self.rrTime = True
         self.ppTime = False
         self.rpTime = False
@@ -23,14 +25,31 @@ class Data(object):
     def retrieveData(self):
         conn = sqlite3.connect("./keystroke.db")
         c = conn.cursor()
-        c.execute('''
+
+        query = '''
         SELECT kd.user_id, rrTime, ppTime, rpTime, prTime, time_to_type, vector
         FROM keystroke_datas as kd, keystroke_typing as kt
         WHERE kt.keystroke_datas_id == kd.id
         AND kt.success == TRUE
         AND kt.keyboard_number == 1
         AND kd.password == 'greyc laboratory'
-        ''')
+        '''
+
+        c.execute(query)
+
+        self.table = pd.read_sql_query(query, conn)
+        toDivide = ["rrTime", "ppTime", "rpTime", "prTime"]
+
+        for name in toDivide:
+            column = self.table[name]
+            columns = column.str.split(' ', expand=True)
+            columns = columns.drop(columns=[0, 16]).astype('int64')
+            columns.columns = ["{}{}".format(name, i) for i in range(15)]
+            self.table.drop(columns=[name], inplace=True)
+            self.table = pd.concat([self.table, columns], axis=1)
+            
+        self.table.drop(columns=["vector"], inplace=True)
+        self.table[["time_to_type", "user_id"]] = self.table[["time_to_type", "user_id"]].astype('int64')
 
         self.headers = []
         self.headers.extend([("rrTime" + str(index)) for index in range(15)])
