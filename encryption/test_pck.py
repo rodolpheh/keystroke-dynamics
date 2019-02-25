@@ -3,8 +3,8 @@ import random
 from Crypto.Cipher import AES
 import string
 letters = "ABCDEFGHIJKLMNOP" #Doit etre un multiple de 16bits #list(string.ascii_letters)
-key = 'This is a key123'
-iv = 'This is an IV456'
+key = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(16))
+iv = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(16))
 print(iv)
 aes = AES.new(key, AES.MODE_CBC, iv)
 print(letters)
