@@ -2,7 +2,6 @@ import sqlite3
 import numpy as np
 import pandas as pd
 
-
 class Data:
     """docstring for Data."""
     def __init__(self, *args, **kwargs):
@@ -87,3 +86,12 @@ class Data:
 
     def getHeaders(self):
         return self.headers[self.headersMask]
+    
+    @property
+    def usersCounts(self):
+        unique, counts = np.unique(self.table["user_id"], return_counts=True)
+        return sorted(list(zip(unique, counts)), key=lambda el : el[1])[::-1]
+            
+    def printUsersCounts(self):
+        for count in self.usersCounts:
+            print("User {:<3} - {:3} records".format(count[0], count[1]))
