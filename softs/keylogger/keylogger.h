@@ -12,10 +12,10 @@
 #include <linux/input-event-codes.h>
 
 typedef struct _sample {
-	time_t seconds;
-	long nsec;
-	unsigned int code;
-	int state;
+    time_t seconds;
+    long nsec;
+    unsigned int code;
+    int state;
 } sample;
 
 void intHandler(int dummy);
