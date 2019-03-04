@@ -91,6 +91,10 @@ class Data:
     def usersCounts(self):
         unique, counts = np.unique(self.table["user_id"], return_counts=True)
         return sorted(list(zip(unique, counts)), key=lambda el : el[1])[::-1]
+    
+    @property
+    def users(self):
+        return np.unique(self.table["user_id"])
             
     def printUsersCounts(self):
         for count in self.usersCounts:
