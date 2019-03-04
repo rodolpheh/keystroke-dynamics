@@ -10,6 +10,17 @@
 #include <string.h>
 #include <time.h>
 #include <linux/input-event-codes.h>
+#include <stdbool.h>
+
+#ifndef EV_KEY_PRESSED
+#define EV_KEY_PRESSED 1
+#endif
+
+#ifndef EV_KEY_RELEASED
+#define EV_KEY_RELEASED 0
+#endif
+
+#define MAX_KEY_EV_SAMPLES 2000
 
 typedef struct _sample {
     time_t seconds;
@@ -44,7 +55,7 @@ void printSample(sample theSample);
  */
 void replaySamples();
 
-static sample samples[2000];
-static struct timeval times[2000];
+static sample samples[MAX_KEY_EV_SAMPLES];
+static struct timeval times[MAX_KEY_EV_SAMPLES];
 static int count = 0;
 static int kbdFile;

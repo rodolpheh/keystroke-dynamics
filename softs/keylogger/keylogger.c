@@ -1,13 +1,7 @@
 #include "keylogger.h"
 
-static int random_event_type_counter = 1;
-
-
 void intHandler(int dummy) {
     printf("Killed [%d]\n", dummy);
-    printf(
-        "Random event number event type detected : [%d]\n", random_event_type_counter
-     );
     fflush(stdout);
     saveToFile();
     exit(dummy);
@@ -25,7 +19,9 @@ void saveToFile() {
 }
 
 void printSample(sample theSample) {
-    const char * state = theSample.state == 2 ? "REPEATED" : (theSample.state == 1 ? "PRESSED " : "RELEASED");
+    const char * state = theSample.state == 2 ? "REPEATED" : (
+        theSample.state ? "PRESSED " : "RELEASED"
+    );
     printf("%ld%09ld %03d %s\n", theSample.seconds, theSample.nsec, theSample.code, state);
 }
 
@@ -82,7 +78,7 @@ int main() {
     struct timespec spec;
     struct timeval prevTime = {0, 0};
 
-    int record = 0;
+    _Bool record = false;
 
     /* Disables keyboard events echo in console */
     struct termios termInfo;
@@ -95,15 +91,16 @@ int main() {
         "/dev/input/by-path/platform-i8042-serio-0-event-kbd", O_RDWR
     );
 
-    int random_event_type = -1;
+    printf("EV_SYN is [%d]\n", EV_SYN);
     while(keepRunning) {
         read(kbdFile, &ev, sizeof (struct input_event));
         clock_gettime(CLOCK_REALTIME, &spec);
 
+        if (ev.type == EV_KEY) {
+            if (record && ev.code < KEY_F1) {
 
-        if (ev.type == 1) {
-            if (record == 1 && ev.code < KEY_F1) {
-                if (count == 0 && ev.value == 0) {
+                // If the first event is a key release, discard it
+                if (count == 0 && ev.value == EV_KEY_RELEASED) {
                 } else {
                     sample newSample = { ev.time.tv_sec, ev.time.tv_usec, ev.code, ev.value };
                     samples[count] = newSample;
@@ -112,53 +109,45 @@ int main() {
                     if (count == 0) {
                         timeDiff.tv_sec = 0;
                         timeDiff.tv_usec = 0;
-                    }
-                    else {
+                    } else {
                         timeDiff.tv_sec = ev.time.tv_sec - samples[count - 1].seconds;
                         timeDiff.tv_usec = ev.time.tv_usec - samples[count - 1].nsec;
                     }
                     times[count] = timeDiff;
 
                     count++;
-                    if (count >= 20) {
-                        printf("More than 20 samples, killing it");
+                    // Fixed size array guard
+                    if (count >= MAX_KEY_EV_SAMPLES) {
+                        printf("More than max samples, killing it\n");
                         exit(1);
                     }
                 }
                 gettimeofday(&prevTime, NULL);
             }
 
-            if (ev.code == KEY_F1 && ev.value == 1) {
-                printf(record == 1 ? "Stopping " : "Starting ");
+            // Control sequences for start / stop / replay
+            if (ev.code == KEY_F2 && ev.value == EV_KEY_PRESSED) {
+                printf(record ? "Stopping " : "Starting ");
                 printf("recording...\n");
-                record = record == 1 ? 0 : 1;
-                if (record == 0) {
+                record = record ? false : true;
+                if (!record) {
                     saveToFile();
                 }
-            } else if (ev.code == 60 && ev.value == 1) {
+            } else if (ev.code == KEY_F3 && ev.value == EV_KEY_PRESSED) {
                 printf("Replaying\n");
                 replaySamples();
-            } else if (ev.code == 61 && ev.value == 1) {
-                exit(0);
-            } else {
-                printf(
-                    "What is this : [ev.code = %d, ev.value = %d] ??",
-                    ev.code,
-                    ev.value
-                );
+            } else if (
+                !record &&
+                ev.code == KEY_F12 &&
+                ev.value == EV_KEY_PRESSED
+            ) {
+                for (int i = 0 ; i < count ; i++) {
+                    printSample(samples[i]);
+                }
+
             }
-        } else if (random_event_type != -1 && ev.type != random_event_type) {
-            printf("Unexpected ev.type : [%d]\n", ev.type);
-        } else if (random_event_type == -1) {
-            printf("Random ev.type : [%d]\n", ev.type);
-            random_event_type = ev.type;
-        } else if (random_event_type != -1 && ev.type == random_event_type) {
-            random_event_type_counter++;
-        } else {
-            printf("What on earth is this edge case !!!\n");
-            printf("ev.type : [%d]\n", ev.type);
-        }
-        //printf("I should always print\n");
+        } // End if record && ev.code < KEY_F1
+
         fflush(stdout);
     } // End of while loop
 }
