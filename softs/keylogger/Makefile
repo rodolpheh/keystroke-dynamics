@@ -24,5 +24,6 @@ $(BIN): $(OBJS) $(DEPS)
 %.d : ;
 
 .PHONY: clean
+
 clean:
 	rm -f $(BIN) $(OBJS) $(DEPS)

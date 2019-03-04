@@ -1,7 +1,13 @@
 #include "keylogger.h"
 
+static int random_event_type_counter = 1;
+
+
 void intHandler(int dummy) {
     printf("Killed [%d]\n", dummy);
+    printf(
+        "Random event number event type detected : [%d]\n", random_event_type_counter
+     );
     fflush(stdout);
     saveToFile();
     exit(dummy);
@@ -89,9 +95,11 @@ int main() {
         "/dev/input/by-path/platform-i8042-serio-0-event-kbd", O_RDWR
     );
 
+    int random_event_type = -1;
     while(keepRunning) {
         read(kbdFile, &ev, sizeof (struct input_event));
         clock_gettime(CLOCK_REALTIME, &spec);
+
 
         if (ev.type == 1) {
             if (record == 1 && ev.code < KEY_F1) {
@@ -120,24 +128,37 @@ int main() {
                 gettimeofday(&prevTime, NULL);
             }
 
-            if (ev.code == 59 && ev.value == 1) {
+            if (ev.code == KEY_F1 && ev.value == 1) {
                 printf(record == 1 ? "Stopping " : "Starting ");
                 printf("recording...\n");
                 record = record == 1 ? 0 : 1;
                 if (record == 0) {
                     saveToFile();
                 }
-            }
-
-            if (ev.code == 60 && ev.value == 1) {
+            } else if (ev.code == 60 && ev.value == 1) {
                 printf("Replaying\n");
                 replaySamples();
-            }
-
-            if (ev.code == 61 && ev.value == 1) {
+            } else if (ev.code == 61 && ev.value == 1) {
                 exit(0);
+            } else {
+                printf(
+                    "What is this : [ev.code = %d, ev.value = %d] ??",
+                    ev.code,
+                    ev.value
+                );
             }
+        } else if (random_event_type != -1 && ev.type != random_event_type) {
+            printf("Unexpected ev.type : [%d]\n", ev.type);
+        } else if (random_event_type == -1) {
+            printf("Random ev.type : [%d]\n", ev.type);
+            random_event_type = ev.type;
+        } else if (random_event_type != -1 && ev.type == random_event_type) {
+            random_event_type_counter++;
+        } else {
+            printf("What on earth is this edge case !!!\n");
+            printf("ev.type : [%d]\n", ev.type);
         }
+        //printf("I should always print\n");
         fflush(stdout);
-    }
+    } // End of while loop
 }
