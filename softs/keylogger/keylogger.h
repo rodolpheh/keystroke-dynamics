@@ -18,11 +18,32 @@ typedef struct _sample {
     int state;
 } sample;
 
+/**
+ * Handle interrupt signals
+ */
 void intHandler(int dummy);
+
+/**
+ * Save in-memory sample to a CSV file
+ */
 void saveToFile();
+
+/**
+ * Print a sample
+ *
+ * Utility function to print a sample.
+ */
 void printSample(sample theSample);
 
-static int keepRunning = 1;
+/**
+ * Replay a sample sequence
+ *
+ * Emit the keyboard events corresponding to a list of samples.
+ * The events will correspond as closely as possible to the original
+ * recorded sequence (release/press, press/release, etc).
+ */
+void replaySamples();
+
 static sample samples[2000];
 static struct timeval times[2000];
 static int count = 0;

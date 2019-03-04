@@ -3,8 +3,8 @@
 void intHandler(int dummy) {
     printf("Killed [%d]\n", dummy);
     fflush(stdout);
-    keepRunning = 0;
     saveToFile();
+    exit(dummy);
 }
 
 void saveToFile() {
@@ -68,22 +68,26 @@ void replaySamples() {
 }
 
 int main() {
+    int keepRunning = 1;
+    // Registring shutdown hook for C^C shutdown command-line.
+    signal(SIGINT, intHandler);
+
     struct input_event ev;
     struct timespec spec;
     struct timeval prevTime = {0, 0};
 
     int record = 0;
 
-    kbdFile = open("/dev/input/by-path/platform-i8042-serio-0-event-kbd", O_RDWR);
-
-    /* Binds the function intHandler to the Ctrl+C signal */
-    signal(SIGINT, intHandler);
-
-    /* Disables echo in console */
+    /* Disables keyboard events echo in console */
     struct termios termInfo;
     tcgetattr(0, &termInfo);
     termInfo.c_lflag &= ~ECHO;
     tcsetattr(0, 0, &termInfo);
+
+    // Opening keyboard input file
+    kbdFile = open(
+        "/dev/input/by-path/platform-i8042-serio-0-event-kbd", O_RDWR
+    );
 
     while(keepRunning) {
         read(kbdFile, &ev, sizeof (struct input_event));
@@ -91,8 +95,8 @@ int main() {
 
         if (ev.type == 1) {
             if (record == 1 && ev.code < KEY_F1) {
-                if (count == 0 && ev.value == 0) {}
-                else {
+                if (count == 0 && ev.value == 0) {
+                } else {
                     sample newSample = { ev.time.tv_sec, ev.time.tv_usec, ev.code, ev.value };
                     samples[count] = newSample;
 
@@ -107,10 +111,10 @@ int main() {
                     }
                     times[count] = timeDiff;
 
-                    //printSample(samples[count]);
                     count++;
-                    if (count >= 2000) {
-                        intHandler(1);
+                    if (count >= 20) {
+                        printf("More than 20 samples, killing it");
+                        exit(1);
                     }
                 }
                 gettimeofday(&prevTime, NULL);
