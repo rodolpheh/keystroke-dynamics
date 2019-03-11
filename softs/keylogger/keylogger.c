@@ -1,6 +1,6 @@
 #include "keylogger.h"
 
-void saveToFile(int sampleCount, sample * loggedSamples) {
+void exportToCSV(int sampleCount, sample * loggedSamples) {
     FILE * dump = fopen("./dump.csv", "w");
     for (int i = 0 ; i < sampleCount; i++) {
         sample toReg = loggedSamples[i];
@@ -28,6 +28,8 @@ void printSample(sample theSample) {
 void replaySamples(
     int sampleNb,
     sample * loggedSamples) {
+
+    // Open keyboard device event
     int kbdFileHandle = open(
         "/dev/input/by-path/platform-i8042-serio-0-event-kbd", O_WRONLY
     );
@@ -38,17 +40,33 @@ void replaySamples(
     int sampleCount = 0;
 
     while (sampleCount < sampleNb) {
+        sample keyEvt = loggedSamples[sampleCount];
+
         struct timeval endTime;
         gettimeofday(&endTime, NULL);
 
-        long int concat1 = (endTime.tv_sec * 1000000) + endTime.tv_usec;
-        long int concat2 = (startTime.tv_sec * 1000000) + startTime.tv_usec;
-        long int concat3 = (loggedSamples[sampleCount].timeDiff.tv_sec * 1000000)
-            + loggedSamples[sampleCount].timeDiff.tv_usec;
+        // Reconstructing time deltas of input events to replay
+        struct timeval timeDiff;
+        if (sampleCount == 0) {
+            timeDiff.tv_sec = 0;
+            timeDiff.tv_usec = 0;
+        } else {
+            timeDiff.tv_sec =
+            keyEvt.seconds - loggedSamples[sampleCount - 1].seconds;
+            timeDiff.tv_usec =
+            keyEvt.nsec - loggedSamples[sampleCount - 1].nsec;
+        }
 
-        if (concat1 - concat2 > concat3) {
-            sample keyEvt = loggedSamples[sampleCount];
+        // Control sequence
+        long int endTimestamp =
+            (endTime.tv_sec * 1000000) + endTime.tv_usec;
+        long int startTimestamp =
+            (startTime.tv_sec * 1000000) + startTime.tv_usec;
+        long int diffTimestamp =
+            (timeDiff.tv_sec * 1000000) + timeDiff.tv_usec;
 
+        // Replay keyboard event if the time delta has been observed
+        if (endTimestamp - startTimestamp > diffTimestamp) {
             struct input_event forcedKey;
 
             // Write key event to device event file
@@ -112,16 +130,7 @@ void keylogSession() {
                 // If the first event is a key release, discard it
                 if (sampleNb == 0 && ev.value == EV_KEY_RELEASED) {
                 } else {
-                    struct timeval timeDiff;
-                    if (sampleNb == 0) {
-                        timeDiff.tv_sec = 0;
-                        timeDiff.tv_usec = 0;
-                    } else {
-                        timeDiff.tv_sec = ev.time.tv_sec - loggedSamples[sampleNb - 1].seconds;
-                        timeDiff.tv_usec = ev.time.tv_usec - loggedSamples[sampleNb - 1].nsec;
-                    }
-
-                    sample newSample = { ev.time.tv_sec, ev.time.tv_usec, ev.code, ev.value, timeDiff };
+                    sample newSample = { ev.time.tv_sec, ev.time.tv_usec, ev.code, ev.value};
                     loggedSamples[sampleNb] = newSample;
 
                     sampleNb++;
@@ -140,8 +149,8 @@ void keylogSession() {
                 printf("recording...\n");
                 isRecording = isRecording ? false : true;
                 if (!isRecording) {
-                    printf("Saving samples to file");
-                    saveToFile(sampleNb, loggedSamples);
+                    printf("Saving samples to file\n");
+                    exportToCSV(sampleNb, loggedSamples);
                 }
             } else if (ev.code == KEY_F3 && ev.value == EV_KEY_PRESSED) {
                 printf("Replaying\n");
@@ -156,7 +165,7 @@ void keylogSession() {
 } // End of keylogSession() function
 
 int main() {
-    printf("Keylogger started\n");
+    printf("Keylogger program\nInsert menu interactions here\n");
     keylogSession();
 
     return 0;

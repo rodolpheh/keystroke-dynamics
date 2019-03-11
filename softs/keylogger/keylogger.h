@@ -27,18 +27,12 @@ typedef struct _sample {
     long nsec;
     unsigned int code;
     int state;
-    struct timeval timeDiff;
 } sample;
-
-/**
- * Handle interrupt signals
- */
-void intHandler(int dummy);
 
 /**
  * Save in-memory sample to a CSV file
  */
-void saveToFile();
+void exportToCSV();
 
 /**
  * Print a sample
