@@ -6,7 +6,8 @@ void intHandler(int dummy) {
     saveToFile();
     exit(dummy);
 }
-
+// TODO: add filename argument
+// TODO: pass data as Sample*
 void saveToFile() {
     FILE * dump = fopen("./dump.csv", "w");
     for (int i = 0 ; i < count; i++) {
@@ -24,19 +25,21 @@ void printSample(sample theSample) {
     );
     printf("%ld%09ld %03d %s\n", theSample.seconds, theSample.nsec, theSample.code, state);
 }
-
+// TODO: add pass sample list as argument
 void replaySamples() {
     struct timeval startTime;
     gettimeofday(&startTime, NULL);
     int sampleCount = 0;
 
+    // count is global variable
     while (sampleCount < count) {
         struct timeval endTime;
         gettimeofday(&endTime, NULL);
 
         long int concat1 = (endTime.tv_sec * 1000000) + endTime.tv_usec;
         long int concat2 = (startTime.tv_sec * 1000000) + startTime.tv_usec;
-        long int concat3 = (times[sampleCount].tv_sec * 1000000) + times[sampleCount].tv_usec;
+        long int concat3 = (times[sampleCount].tv_sec * 1000000)
+            + times[sampleCount].tv_usec;
 
         if (concat1 - concat2 > concat3) {
             sample keyEvt = samples[sampleCount];
@@ -69,16 +72,13 @@ void replaySamples() {
     printf("Replay done\n");
 }
 
-int main() {
-    int keepRunning = 1;
-    // Registring shutdown hook for C^C shutdown command-line.
-    signal(SIGINT, intHandler);
+void keylogSession() {
 
     struct input_event ev;
     struct timespec spec;
     struct timeval prevTime = {0, 0};
 
-    _Bool record = false;
+    _Bool isRecording = false;
 
     /* Disables keyboard events echo in console */
     struct termios termInfo;
@@ -91,13 +91,15 @@ int main() {
         "/dev/input/by-path/platform-i8042-serio-0-event-kbd", O_RDWR
     );
 
-    printf("EV_SYN is [%d]\n", EV_SYN);
-    while(keepRunning) {
+        while(true) {
+        // Reading one event from input file
         read(kbdFile, &ev, sizeof (struct input_event));
+        // Saving time of event
         clock_gettime(CLOCK_REALTIME, &spec);
 
+        // TODO: cannot record again. Must free previous memory and restart
         if (ev.type == EV_KEY) {
-            if (record && ev.code < KEY_F1) {
+            if (isRecording && ev.code < KEY_F1) {
 
                 // If the first event is a key release, discard it
                 if (count == 0 && ev.value == EV_KEY_RELEASED) {
@@ -127,17 +129,17 @@ int main() {
 
             // Control sequences for start / stop / replay
             if (ev.code == KEY_F2 && ev.value == EV_KEY_PRESSED) {
-                printf(record ? "Stopping " : "Starting ");
+                printf(isRecording ? "Stopping " : "Starting ");
                 printf("recording...\n");
-                record = record ? false : true;
-                if (!record) {
+                isRecording = isRecording ? false : true;
+                if (!isRecording) {
                     saveToFile();
                 }
             } else if (ev.code == KEY_F3 && ev.value == EV_KEY_PRESSED) {
                 printf("Replaying\n");
                 replaySamples();
             } else if (
-                !record &&
+                !isRecording &&
                 ev.code == KEY_F12 &&
                 ev.value == EV_KEY_PRESSED
             ) {
@@ -146,8 +148,17 @@ int main() {
                 }
 
             }
-        } // End if record && ev.code < KEY_F1
+        } // End if isRecording && ev.code < KEY_F1
 
         fflush(stdout);
     } // End of while loop
+}
+
+int main() {
+    // Registring shutdown hook for C^C shutdown command-line.
+    signal(SIGINT, intHandler);
+
+    keylogSession();
+
+    printf("Keylogger started\n");
 }
