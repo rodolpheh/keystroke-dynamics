@@ -27,12 +27,12 @@ void printSample(sample theSample) {
 
 void replaySamples(
     int sampleNb,
-    sample * loggedSamples,
-    struct timeval * loggedTimes
-) {
+    sample * loggedSamples) {
     int kbdFileHandle = open(
         "/dev/input/by-path/platform-i8042-serio-0-event-kbd", O_WRONLY
     );
+
+    // Start timestamp for first event to write
     struct timeval startTime;
     gettimeofday(&startTime, NULL);
     int sampleCount = 0;
@@ -43,32 +43,29 @@ void replaySamples(
 
         long int concat1 = (endTime.tv_sec * 1000000) + endTime.tv_usec;
         long int concat2 = (startTime.tv_sec * 1000000) + startTime.tv_usec;
-        long int concat3 = (loggedTimes[sampleCount].tv_sec * 1000000)
-            + loggedTimes[sampleCount].tv_usec;
+        long int concat3 = (loggedSamples[sampleCount].timeDiff.tv_sec * 1000000)
+            + loggedSamples[sampleCount].timeDiff.tv_usec;
 
         if (concat1 - concat2 > concat3) {
             sample keyEvt = loggedSamples[sampleCount];
 
             struct input_event forcedKey;
 
-            forcedKey.type = EV_MSC;
-            forcedKey.value = keyEvt.code;
-            forcedKey.code = 16;
-            gettimeofday(&forcedKey.time, NULL);
-            write(kbdFileHandle, &forcedKey, sizeof(struct input_event));
-
+            // Write key event to device event file
             forcedKey.type = EV_KEY;
             forcedKey.value = keyEvt.state;
             forcedKey.code = keyEvt.code;
             gettimeofday(&forcedKey.time, NULL);
             write(kbdFileHandle, &forcedKey, sizeof(struct input_event));
 
+            // Add event separator to device event file (REQUIRED)
             forcedKey.type = EV_SYN;
             forcedKey.value = 0;
             forcedKey.code = 0;
             gettimeofday(&forcedKey.time, NULL);
             write(kbdFileHandle, &forcedKey, sizeof(struct input_event));
 
+            // Save start time for next event
             gettimeofday(&startTime, NULL);
             sampleCount++;
         }
@@ -102,12 +99,6 @@ void keylogSession() {
     sample * loggedSamples;
     loggedSamples = (sample *) calloc(MAX_KEY_EV_SAMPLES, sizeof(sample));
 
-    struct timeval * loggedTimes;
-    loggedTimes = (struct timeval *) calloc(
-        MAX_KEY_EV_SAMPLES,
-        sizeof(struct timeval)
-    );
-
     while(true) {
         // Reading one event from input file
         read(kbdFileHandle, &ev, sizeof (struct input_event));
@@ -121,9 +112,6 @@ void keylogSession() {
                 // If the first event is a key release, discard it
                 if (sampleNb == 0 && ev.value == EV_KEY_RELEASED) {
                 } else {
-                    sample newSample = { ev.time.tv_sec, ev.time.tv_usec, ev.code, ev.value };
-                    loggedSamples[sampleNb] = newSample;
-
                     struct timeval timeDiff;
                     if (sampleNb == 0) {
                         timeDiff.tv_sec = 0;
@@ -132,7 +120,9 @@ void keylogSession() {
                         timeDiff.tv_sec = ev.time.tv_sec - loggedSamples[sampleNb - 1].seconds;
                         timeDiff.tv_usec = ev.time.tv_usec - loggedSamples[sampleNb - 1].nsec;
                     }
-                    loggedTimes[sampleNb] = timeDiff;
+
+                    sample newSample = { ev.time.tv_sec, ev.time.tv_usec, ev.code, ev.value, timeDiff };
+                    loggedSamples[sampleNb] = newSample;
 
                     sampleNb++;
                     // Fixed size array guard
@@ -155,7 +145,7 @@ void keylogSession() {
                 }
             } else if (ev.code == KEY_F3 && ev.value == EV_KEY_PRESSED) {
                 printf("Replaying\n");
-                replaySamples(sampleNb, loggedSamples, loggedTimes);
+                replaySamples(sampleNb, loggedSamples);
             }
         } // End if ev.type == EV_KEY. All other events are ignored
 

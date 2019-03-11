@@ -27,6 +27,7 @@ typedef struct _sample {
     long nsec;
     unsigned int code;
     int state;
+    struct timeval timeDiff;
 } sample;
 
 /**
@@ -52,11 +53,7 @@ void printSample(sample theSample);
  * Emit the keyboard events corresponding to a list of samples.
  * The events will correspond as closely as possible to the original
  * recorded sequence (release/press, press/release, etc).
- *
- * 
  */
 void replaySamples(
     int sampleNb,
-    sample * loggedSamples,
-    struct timeval * loggedTimes
-    );
+    sample * loggedSamples);
