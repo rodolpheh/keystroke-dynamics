@@ -29,6 +29,12 @@ typedef struct _kbEvt {
     int state;
 } kbEvt;
 
+
+typedef struct _sample {
+    size_t sampleSize;
+    struct _kbEvt * kbEvts;
+} sample;
+
 /**
  * Save in-memory sample to a CSV file
  */
@@ -53,6 +59,4 @@ void keylogSession();
  * The events will correspond as closely as possible to the original
  * recorded sequence (release/press, press/release, etc).
  */
-void replaySample(
-    int kbEvtNb,
-    kbEvt * loggedkbEvts);
+void replaySample(sample * mySample);
