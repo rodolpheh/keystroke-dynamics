@@ -20,14 +20,14 @@
 #define EV_KEY_RELEASED 0
 #endif
 
-#define MAX_KEY_EV_SAMPLES 2000
+#define MAX_KBEVTS 2000
 
-typedef struct _sample {
+typedef struct _kbEvt {
     time_t seconds;
     long nsec;
     unsigned int code;
     int state;
-} sample;
+} kbEvt;
 
 /**
  * Save in-memory sample to a CSV file
@@ -35,19 +35,24 @@ typedef struct _sample {
 void exportToCSV();
 
 /**
- * Print a sample
+ * Print a kbEvt
  *
- * Utility function to print a sample.
+ * Utility function to print a kbEvt.
  */
-void printSample(sample theSample);
+void printkbEvt(kbEvt thekbEvt);
 
 /**
- * Replay a sample sequence
+ * Capture keylog sample
+ */
+void keylogSession();
+
+/**
+ * Replay a sample
  *
- * Emit the keyboard events corresponding to a list of samples.
+ * Emit the keyboard events sequence corresponding to a sample.
  * The events will correspond as closely as possible to the original
  * recorded sequence (release/press, press/release, etc).
  */
-void replaySamples(
-    int sampleNb,
-    sample * loggedSamples);
+void replaySample(
+    int kbEvtNb,
+    kbEvt * loggedkbEvts);

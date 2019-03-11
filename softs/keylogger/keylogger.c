@@ -1,33 +1,33 @@
 #include "keylogger.h"
 
-void exportToCSV(int sampleCount, sample * loggedSamples) {
+void exportToCSV(int kbEvtCount, kbEvt * loggedKbEvts) {
     FILE * dump = fopen("./dump.csv", "w");
-    for (int i = 0 ; i < sampleCount; i++) {
-        sample toReg = loggedSamples[i];
-        char * aSample = (char *) malloc(27 * sizeof(char));
+    for (int i = 0 ; i < kbEvtCount; i++) {
+        kbEvt toReg = loggedKbEvts[i];
+        char * aKbEvt = (char *) malloc(27 * sizeof(char));
         sprintf(
-            aSample,
+            aKbEvt,
             "%011ld%09ld,%03d,%d\n",
             toReg.seconds,
             toReg.nsec,
             toReg.code,
             toReg.state
         );
-        fwrite(aSample, sizeof(char), 27, dump);
+        fwrite(aKbEvt, sizeof(char), 27, dump);
     }
     fclose(dump);
 }
 
-void printSample(sample theSample) {
-    const char * state = theSample.state == 2 ? "REPEATED" : (
-        theSample.state ? "PRESSED " : "RELEASED"
+void printKbEvt(kbEvt theKbEvt) {
+    const char * state = theKbEvt.state == 2 ? "REPEATED" : (
+        theKbEvt.state ? "PRESSED " : "RELEASED"
     );
-    printf("%ld%09ld %03d %s\n", theSample.seconds, theSample.nsec, theSample.code, state);
+    printf("%ld%09ld %03d %s\n", theKbEvt.seconds, theKbEvt.nsec, theKbEvt.code, state);
 }
 
-void replaySamples(
-    int sampleNb,
-    sample * loggedSamples) {
+void replaySample(
+    int kbEvtNb,
+    kbEvt * loggedKbEvts) {
 
     // Open keyboard device event
     int kbdFileHandle = open(
@@ -37,24 +37,24 @@ void replaySamples(
     // Start timestamp for first event to write
     struct timeval startTime;
     gettimeofday(&startTime, NULL);
-    int sampleCount = 0;
+    int kbEvtCount = 0;
 
-    while (sampleCount < sampleNb) {
-        sample keyEvt = loggedSamples[sampleCount];
+    while (kbEvtCount < kbEvtNb) {
+        kbEvt keyEvt = loggedKbEvts[kbEvtCount];
 
         struct timeval endTime;
         gettimeofday(&endTime, NULL);
 
         // Reconstructing time deltas of input events to replay
         struct timeval timeDiff;
-        if (sampleCount == 0) {
+        if (kbEvtCount == 0) {
             timeDiff.tv_sec = 0;
             timeDiff.tv_usec = 0;
         } else {
             timeDiff.tv_sec =
-            keyEvt.seconds - loggedSamples[sampleCount - 1].seconds;
+            keyEvt.seconds - loggedKbEvts[kbEvtCount - 1].seconds;
             timeDiff.tv_usec =
-            keyEvt.nsec - loggedSamples[sampleCount - 1].nsec;
+            keyEvt.nsec - loggedKbEvts[kbEvtCount - 1].nsec;
         }
 
         // Control sequence
@@ -85,7 +85,7 @@ void replaySamples(
 
             // Save start time for next event
             gettimeofday(&startTime, NULL);
-            sampleCount++;
+            kbEvtCount++;
         }
     }
 
@@ -99,9 +99,9 @@ void keylogSession() {
     struct timespec spec;
     struct timeval prevTime = {0, 0};
 
-    _Bool isRecording = false;
+    _Bool isRecording = true;
 
-    int sampleNb = 0;
+    int kbEvtNb = 0;
 
     /* Disables keyboard events echo in console */
     struct termios termInfo;
@@ -114,8 +114,8 @@ void keylogSession() {
         "/dev/input/by-path/platform-i8042-serio-0-event-kbd", O_RDONLY
     );
 
-    sample * loggedSamples;
-    loggedSamples = (sample *) calloc(MAX_KEY_EV_SAMPLES, sizeof(sample));
+    kbEvt * loggedKbEvts;
+    loggedKbEvts = (kbEvt *) calloc(MAX_KBEVTS, sizeof(kbEvt));
 
     while(true) {
         // Reading one event from input file
@@ -125,18 +125,18 @@ void keylogSession() {
 
         // TODO: cannot record again. Must free previous memory and restart
         if (ev.type == EV_KEY) {
-            if (isRecording && ev.code < KEY_F1) {
+            if (isRecording && ev.code != KEY_ENTER) {
 
                 // If the first event is a key release, discard it
-                if (sampleNb == 0 && ev.value == EV_KEY_RELEASED) {
+                if (kbEvtNb == 0 && ev.value == EV_KEY_RELEASED) {
                 } else {
-                    sample newSample = { ev.time.tv_sec, ev.time.tv_usec, ev.code, ev.value};
-                    loggedSamples[sampleNb] = newSample;
+                    kbEvt newKbEvt = { ev.time.tv_sec, ev.time.tv_usec, ev.code, ev.value};
+                    loggedKbEvts[kbEvtNb] = newKbEvt;
 
-                    sampleNb++;
+                    kbEvtNb++;
                     // Fixed size array guard
-                    if (sampleNb >= MAX_KEY_EV_SAMPLES) {
-                        printf("More than max samples, killing it\n");
+                    if (kbEvtNb >= MAX_KBEVTS) {
+                        printf("More than max kbEvts, killing it\n");
                         exit(1);
                     }
                 }
@@ -144,17 +144,17 @@ void keylogSession() {
             }
 
             // Control sequences for start / stop / replay
-            if (ev.code == KEY_F2 && ev.value == EV_KEY_PRESSED) {
+            if (ev.code == KEY_ENTER && ev.value == EV_KEY_PRESSED) {
                 printf(isRecording ? "Stopping " : "Starting ");
                 printf("recording...\n");
                 isRecording = isRecording ? false : true;
                 if (!isRecording) {
-                    printf("Saving samples to file\n");
-                    exportToCSV(sampleNb, loggedSamples);
+                    printf("Saving kbEvts to file\n");
+                    exportToCSV(kbEvtNb, loggedKbEvts);
                 }
             } else if (ev.code == KEY_F3 && ev.value == EV_KEY_PRESSED) {
                 printf("Replaying\n");
-                replaySamples(sampleNb, loggedSamples);
+                replaySample(kbEvtNb, loggedKbEvts);
             }
         } // End if ev.type == EV_KEY. All other events are ignored
 
