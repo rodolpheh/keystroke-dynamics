@@ -52,10 +52,11 @@ void printSample(sample theSample);
  * Emit the keyboard events corresponding to a list of samples.
  * The events will correspond as closely as possible to the original
  * recorded sequence (release/press, press/release, etc).
+ *
+ * 
  */
-void replaySamples();
-
-static sample samples[MAX_KEY_EV_SAMPLES];
-static struct timeval times[MAX_KEY_EV_SAMPLES];
-static int count = 0;
-static int kbdFile;
+void replaySamples(
+    int sampleNb,
+    sample * loggedSamples,
+    struct timeval * loggedTimes
+    );
