@@ -26,7 +26,6 @@ void printKbEvt(kbEvt theKbEvt) {
 }
 
 void replaySample(sample * mySample) {
-
     int kbEvtNb = mySample->sampleSize;
     kbEvt * loggedKbEvts = mySample->kbEvts;
 
@@ -89,10 +88,7 @@ void replaySample(sample * mySample) {
             kbEvtCount++;
         }
     }
-
     close(kbdFileHandle);
-
-    printf("Replay done\n");
 }
 
 void keylogSession(sample * emptySample) {
@@ -102,20 +98,10 @@ void keylogSession(sample * emptySample) {
 
     int kbEvtNb = 0;
 
-    /* Disables keyboard events echo in console */
-    struct termios termInfo;
-    tcgetattr(0, &termInfo);
-    termInfo.c_lflag &= ~ECHO;
-    tcsetattr(0, 0, &termInfo);
-
     // Opening keyboard input file
     int kbdFileHandle = open(
         "/dev/input/by-path/platform-i8042-serio-0-event-kbd", O_RDONLY
     );
-
-    // Local event buffer allocation (freed at the end of the function)
-    kbEvt * loggedKbEvts;
-    loggedKbEvts = (kbEvt *) calloc(MAX_KBEVTS, sizeof(kbEvt));
 
     while(isRecording) {
         // Reading one event from input file
@@ -129,8 +115,10 @@ void keylogSession(sample * emptySample) {
                 if (kbEvtNb == 0 && ev.value == EV_KEY_RELEASED) {
                 } else {
                     kbEvt newKbEvt = { ev.time.tv_sec, ev.time.tv_usec, ev.code, ev.value};
-                    loggedKbEvts[kbEvtNb] = newKbEvt;
-
+                    emptySample->kbEvts[kbEvtNb].seconds = newKbEvt.seconds;
+                    emptySample->kbEvts[kbEvtNb].nsec = newKbEvt.nsec;
+                    emptySample->kbEvts[kbEvtNb].code = newKbEvt.code;
+                    emptySample->kbEvts[kbEvtNb].state = newKbEvt.state;
                     kbEvtNb++;
                     // Fixed size array guard
                     if (kbEvtNb >= MAX_KBEVTS) {
@@ -144,30 +132,17 @@ void keylogSession(sample * emptySample) {
             if (ev.code == KEY_ENTER && ev.value == EV_KEY_PRESSED) {
                 isRecording = isRecording ? false : true;
                 if (!isRecording) {
-                    emptySample->kbEvts = calloc(kbEvtNb, sizeof(kbEvt));
                     emptySample->sampleSize = kbEvtNb;
-
-                    for (int i = 0 ; i < kbEvtNb ; i++) {
-                        kbEvt anEvt = loggedKbEvts[i];
-                        emptySample->kbEvts[i].seconds = anEvt.seconds;
-                        emptySample->kbEvts[i].nsec = anEvt.nsec;
-                        emptySample->kbEvts[i].code = anEvt.code;
-                        emptySample->kbEvts[i].state = anEvt.state;
-                    }
                 }
-            } else if (ev.code == KEY_F3 && ev.value == EV_KEY_PRESSED) {
-                printf("Replaying\n");
-                replaySample(emptySample);
             }
         } // End if ev.type == EV_KEY. All other events are ignored
 
         fflush(stdout);
+        fflush(stdin);
     } // End of while loop
 
     // TODO : close file sooner
     close(kbdFileHandle);
-
-    free(loggedKbEvts);
 } // End of keylogSession() function
 
 int main() {
@@ -175,7 +150,10 @@ int main() {
     struct input_event ev;
 
     printf("Keylogger program\nInsert menu interactions here\n");
+    //kbEvt * kbEvts = (kbEvt * ) calloc(MAX_KBEVTS, sizeof(kbEvt));
     sample mySample;
+    //mySample.kbEvts = kbEvts;
+
     printf(
         "Start sample capture session [Press enter when done with capture]\n"
     );
@@ -193,6 +171,8 @@ int main() {
         if (ev.code == KEY_F3 && ev.value == EV_KEY_PRESSED) {
                 printf("Replaying\n");
                 replaySample(&mySample);
+                printf("\nReplay done\n");
+
         }
     }
 

@@ -32,7 +32,7 @@ typedef struct _kbEvt {
 
 typedef struct _sample {
     size_t sampleSize;
-    struct _kbEvt * kbEvts;
+    struct _kbEvt kbEvts[MAX_KBEVTS];
 } sample;
 
 /**
@@ -50,7 +50,7 @@ void printkbEvt(kbEvt thekbEvt);
 /**
  * Capture keylog sample
  */
-void keylogSession();
+void keylogSession(sample * emptySample);
 
 /**
  * Replay a sample
