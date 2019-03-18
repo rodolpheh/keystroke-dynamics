@@ -11,33 +11,55 @@ class KbEvt(Structure):
         ("state", c_int)
     ]
 
+    def __str__(self):
+        return "{:011d}{:09d}:{:03d}:{}".format(self.seconds, self.nsec, self.code, "Release" if (self.state == 0) else "Press")
+
+    def __repr__(self):
+        return 'KbEvt: ' + str(self)
+
 class Sample(Structure):
     _fields_ = [
-        ("sampleSize", c_int),
-        ("kbEvts", (KbEvt * MAX_KBEVTS))
+        ("size", c_int),
+        ("kb_evts", (KbEvt * MAX_KBEVTS))
     ]
 
+    def __str__(self):
+        str_repr = "["
+        for i in range(len(self)):
+            str_repr += "{},\n".format(self.kb_evts[i])
+
+        str_repr = str_repr[:-2] + "]"
+        return str_repr
+
+    def __repr__(self):
+        return 'Sample: ' + str(self)
+
+    def __len__(self) -> int:
+        return self.size
+
+def char_sequence(sample: Sample) -> str:
+    """Returns the character sequence corresponding to a Sample"""
+    pass
+
 if __name__ == "__main__":
+
     print("Start sample collecting program")
 
     keylogger = cdll.LoadLibrary("./keylogger.so")
 
     # Declaring empty sample for memory allocation in Python
-    myEmptySample = Sample()
+    empty_sample = Sample()
 
     # Call to extern function
-    keylogger.keylogSession(byref(myEmptySample));
-    print("Recovered sample size : {}".format(myEmptySample.sampleSize))
+    keylogger.keylogSession(byref(empty_sample))
 
-    for i in range(myEmptySample.sampleSize):
-        print("{};{};{};{}".format(
-            myEmptySample.kbEvts[i].seconds,
-            myEmptySample.kbEvts[i].nsec,
-            myEmptySample.kbEvts[i].code,
-            myEmptySample.kbEvts[i].state
-            )
-        )
+    # Stupid but just to prove that data is in local scope
+    collected_sample = empty_sample
+    del empty_sample
 
+    print(collected_sample)
+
+    # Loop to replay evts with the help of the library
     # Empty stdin from previous keystrokes
     input();
     res = "rubbishplaceholder"
@@ -51,7 +73,7 @@ if __name__ == "__main__":
             )
 
         if (res[-1] is "y"):
-            keylogger.replaySample(byref(myEmptySample))
+            keylogger.replaySample(byref(collected_sample))
             # Add newline char
             print("")
 
