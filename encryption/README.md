@@ -139,12 +139,14 @@ file_name = file_dump(crypt)
 
 After the execution of this script, we obtain this test in a terminal : 
 
-*python script.py     
+```
+python script.py     
 Data : AStringToEncrypt     
 Encrypted data      
 b's\xb5x\x95\xfe|\xe6\x8a\x8bX\x12,R%\xf3\x1f'      
 File Name to save : test        
-Saved Successfully*
+Saved Successfully
+```
 
 ## 3 - Decryption of a data
 
@@ -161,9 +163,11 @@ print(decrypt)
 ```
 After the exection of this script, we obtain this result in a terminal : 
 
-*String Read        
-b'\xbc\x0c\x8f6\n\x98^\x16K\xef\x94\xc2~r%O'       
+```
+String Read        
+b'\xbc\x0c\x8f6\n\x98^\x16K\xef\x94\xc2\~r%O'       
 Crypted data :      
-b'\xbc\x0c\x8f6\n\x98^\x16K\xef\x94\xc2~r%O'        
+b'\xbc\x0c\x8f6\n\x98^\x16K\xef\x94\xc2\~r%O'        
 Decrypted Data      
-b'AStringToEncrypt'*
+b'AStringToEncrypt'
+```
