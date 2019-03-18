@@ -1,4 +1,4 @@
-#Manual
+# Manual
 
 *The file will evolve with the differents add of features   
 Please, take care to read this file in order to understand the library working*
@@ -11,8 +11,8 @@ Please, take care to read this file in order to understand the library working*
 
 ### a) string_gen Function
 
-- **Arguments : **None
-- **Return : ** String *key*
+- **Arguments :** None
+- **Return :** String *key*
 
 Make a random generation of a string
 
@@ -31,8 +31,8 @@ print(key) # '98iuy76Tr43eZ21a'
 
 ### b) encrypt_parameters Function
 
-- **Arguments : **None
-- **Return : ** List *aesParam* = [iv, key]
+- **Arguments :** None
+- **Return :** List *aesParam* = [iv, key]
 
 Make a list generation.     
 This list contains an encrytion key and an Initialisation Vector (IV), which are necessary for the AES256 encryption.   
@@ -47,8 +47,8 @@ print(params) # ['a12Ze34rT67yui89','98iuy76Tr43eZ21a']
 
 ### c) file_dump Function
 
-- **Arguments : ** String *crypt*, String *file_name (optional argument)*
-- **Return : ** String file_name
+- **Arguments :** String *crypt*, String *file_name (optional argument)*
+- **Return :** String file_name
 
 Write a content in a file.      
 The user give a message in argument of the function in order to write it in a file.     
@@ -65,8 +65,8 @@ file_dump('Read the Manual')# Enter the file name
 
 ### d) file_read Function
 
-- **Arguments : ** String *file_name*
-- **Return : ** List / String *binary_lines*
+- **Arguments :** String *file_name*
+- **Return :** List / String *binary_lines*
 
 Read a file content and store it into a variable.   
 This function returns a variable with differents types available (it depends of the kind of data read) (example : Bytes, String, List of String).
@@ -79,8 +79,8 @@ print(test) # 'Some String'
 
 ### e) aes_gen Function
 
-- **Arguments : ** String *iv*, String *key*
-- **Return : ** AES *aes*
+- **Arguments :** String *iv*, String *key*
+- **Return :** AES *aes*
 
 Make a generation of the AES256.        
 This function takes in arguments a key and an Initialisation Vector (IV).       
@@ -94,8 +94,8 @@ print(aes) #'<Crypto.Cipher.AES.AESCipher object at 0x7f6fc47156a0>'
 
 ### f) encryption Function
 
-- **Arguments : ** String *message*, AES *aes*
-- **Return : ** Bytes String *encrypted_message*
+- **Arguments :** String *message*, AES *aes*
+- **Return :** Bytes String *encrypted_message*
 
 Make an encryption of a message.        
 The function takes in arguments, an AES (generated before) and a message, encoded on a multiple of 16 bytes.        
@@ -109,8 +109,8 @@ print(crypt) # "b'\x99\xff\xb9\x9c\xdf\xfd\xc4\x91\xa5\xe4\xb3\xc6t\xc6\x0b\x19"
 
 ### g) decryption Function
 
-- **Arguments : ** String *message*, AES *aes*
-- **Return : ** Bytes String *decrypted_message*
+- **Arguments :** String *message*, AES *aes*
+- **Return :** Bytes String *decrypted_message*
 
 Make an decryption of a message.        
 The function takes in arguments, an AES (generated before) and a message, encoded on a multiple of 16 bytes.        
@@ -124,7 +124,7 @@ print(decrypt) # "My decrypted string"
 
 ## 2 - Encrytion of a data
 
-*In order to encrypt a string, there is a list of command to execute : *
+*In order to encrypt a string, there is a list of command to execute :*
 
 ```python
 letters = "AStringToEncrypt"
@@ -148,7 +148,7 @@ Saved Successfully*
 
 ## 3 - Decryption of a data
 
-*In order to decrypt a string, there is a list of command to execute too. For this demonstration, let's start with the previous results*
+*In order to decrypt a string, there is a list of command to execute too. For this demonstration, let's start with the previous results :*
 
 ```python
 binary_lines = file_read(file_name)
