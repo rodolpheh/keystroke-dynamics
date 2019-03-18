@@ -1,10 +1,10 @@
-import keylogger_api
+import keylogger as klg
 
 if __name__ == "__main__":
 
     print("Start sample collecting program")
 
-    collected_sample = keylogger_api.keylog_session()
+    collected_sample = klg.keylog_session()
 
     # Loop to replay evts with the help of the library
     # Empty stdin from previous keystrokes
@@ -20,7 +20,7 @@ if __name__ == "__main__":
             )
 
         if (res[-1] is "y"):
-            keylogger_api.replay_sample(collected_sample)
+            klg.replay_sample(collected_sample)
             # Add newline char
             print("")
 

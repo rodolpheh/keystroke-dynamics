@@ -14,7 +14,7 @@ LDLIBS = -lm
 LDFLAGS =
 
 dll : keylogger.c Makefile
-	$(CC) $(CFLAGS) -shared -Wl,-soname,keylogger -o keylogger.so -fPIC keylogger.c
+	$(CC) $(CFLAGS) -shared -Wl,-soname,keylogger -o keylogger_dll.so -fPIC keylogger.c
 
 $(BIN): $(OBJS) $(DEPS)
 	$(CC) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $(BIN)

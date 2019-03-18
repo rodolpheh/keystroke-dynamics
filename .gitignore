@@ -49,3 +49,6 @@ Thumbs.db
 # Python and python's environment
 data/env
 __pycache__
+
+# DLLs
+*.so
