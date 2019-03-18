@@ -26,6 +26,9 @@ class Sample(Structure):
         ("kb_evts", (KbEvt * MAX_KBEVTS))
     ]
 
+    def __init__(self):
+        self.current_pos = 0
+
     def __str__(self):
         str_repr = "["
         for i in range(len(self)):
@@ -40,9 +43,20 @@ class Sample(Structure):
     def __len__(self) -> int:
         return self.size
 
-def char_sequence(sample: Sample) -> str:
-    """Returns the character sequence corresponding to a Sample"""
-    pass
+    def __iter__(self):
+        for i in range(len(self)):
+            yield self.kb_evts[i]
+
+    @staticmethod
+    def char_sequence(sample) -> str:
+        """Returns the character sequence corresponding to a Sample"""
+        res = ""
+
+        for evt in sample:
+            res += str(evt.code)
+
+        return res
+
 
 def keylog_session() -> Sample:
     # Declaring empty sample for memory allocation in Python
