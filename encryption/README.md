@@ -1,16 +1,27 @@
-# Manual
+# Encryption/Decryption Package Manual
 
-*The file will evolve with the differents add of features   
+*The file will evolve with the differents add of features       
 Please, take care to read this file in order to understand the library working*
 
 - **1 : Install**
-- **1 : Function List**
-- **2 : Encrytion of a data**
-- **3 : Decryption of a data**
+- **2 : Function List**
+- **3 : How to use this package**
+- **4 : Encrytion of a data**
+- **5 : Decryption of a data**
 
 ## 1 - Install
 
-For the installation, you just need do execute the "deploy.sh" file. It will create a Python environnement and it will install the needed packages, in order to use some features like the *AES 256*.     
+*Before the installation, make sure you correctly put the differents files in the right folder (your projet folder)*
+For the installation, you just need do give the good rights and execute the "deploy.sh" file.   
+
+```bash
+cd ~/myprojectfolder/
+cp ~/encryption/* .
+chmod +x deploy.sh
+./deploy.sh
+```
+
+It will create a Python environnement and it will install the needed packages, in order to use some features like the *AES 256*.     
 The main packages are *"Pickle"* and *"PyCrypto"*.      
 *Pickle* is used to open/close files and to read/write into that files. It is useful to save some data (*AES* parameters for exemple).        
 *PyCrypto* will import all the necessary features in order to process to an encryption and a decryption. It includes the AES encrytion.     
@@ -135,7 +146,21 @@ decrypt = decryption(crypt, aes)
 print(decrypt) # "My decrypted string"
 ```
 
-## 3 - Encrytion of a data
+## 3 How to use it
+
+To use the package, you need to import it into your python script.
+
+```python
+from test_pck import *
+```
+
+After that, each function can be called in your script with the following syntax : 
+
+```python
+params = encrypt_parameters()
+```
+
+## 4 - Encrytion of a data
 
 *In order to encrypt a string, there is a list of command to execute :*
 
@@ -161,7 +186,7 @@ File Name to save : test
 Saved Successfully
 ```
 
-## 4 - Decryption of a data
+## 5 - Decryption of a data
 
 *In order to decrypt a string, there is a list of command to execute too. For this demonstration, let's start with the previous results :*
 
