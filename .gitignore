@@ -56,3 +56,9 @@ __pycache__
 
 # DLLs
 *.so
+
+# JetBrains IDE
+.idea/
+
+# sample files
+*.smp
