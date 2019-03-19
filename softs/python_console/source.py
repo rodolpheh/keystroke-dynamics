@@ -7,7 +7,9 @@ from examples import custom_style_2
 import glob, os, datetime, re
 from typing import List
 
-from Sample import Sample
+from keylogger import Sample, keylog_session
+
+from io import StringIO
 
 # Void, print logo from logo file
 def print_logo():
@@ -72,9 +74,19 @@ def get_intro_message() -> str:
     return "\nYou are about to begin a new record.\nType the text sample you want to record.\nFor now, this sample will be displayed as is so avoid secrets like passwords."
 
 def get_single_sample() -> Sample:
-    ##### Todo replace by true get input
-    user_entry = Sample(input("\tRecording... : ").replace("\n", ""))
-    ##### Todo end
+    print("Recording ... : ", end="")
+    sys.stdout.flush()
+
+    orig_out = sys.stdout
+    sys.stdout = StringIO()
+    user_entry = keylog_session()
+    sys.stdout = orig_out
+
+    str_pw = input()
+    user_entry.string = str_pw
+
+    print(user_entry)
+
     return user_entry
 
 def get_first_input() -> Sample:
@@ -83,7 +95,7 @@ def get_first_input() -> Sample:
     user_entry = False
     while not user_satisfied:
         user_entry = get_single_sample()
-        print(user_entry.get_string_value())
+        print(user_entry.string)
 
         user_satisfied = get_validation(
             "Do you want to keep this sample ?", True
@@ -93,20 +105,20 @@ def get_first_input() -> Sample:
 
 def capture_n_samples(reference: str) -> List[Sample]:
     output = []
-    # reference = sequence[0].get_string_value()
+    # reference = sequence[0].string
     while True:
         local_sample = get_single_sample()
-        if local_sample.get_string_value() == reference:
+        if local_sample.string == reference:
             output.append(local_sample)
-            print(local_sample.get_string_value())
+            print(local_sample.string)
         else:
-            if local_sample.get_string_value() == "":
+            if local_sample.string == "":
                 print(">> END")
                 break
             else:
                 print(
                     "\"" +
-                    local_sample.get_string_value() +
+                    local_sample.string +
                     "\" mismatch the reference: " +
                     reference
                 )
@@ -122,8 +134,8 @@ def get_sequence_from_file(file_name) -> List[Sample]:
     # TODO replace by true loader function
     samples = []
     f = open(get_path() + "/" + file_name, "r")
-    for line in f:
-        samples.append(Sample(line.replace("\n", "")))
+    #for line in f:
+        # samples.append(Sample(line.replace("\n", "")))
     f.close()
     return samples
     # TODO end
@@ -132,7 +144,7 @@ def save_to_file(file_name : str, sequence : List[Sample]):
     # TODO replace by true saver finction
     f = open(get_path()+"/sequence/"+file_name, "a+")
     for sample in sequence:
-        f.write(sample.get_string_value()+"\n")
+        f.write(sample.string+"\n")
     f.close()
 
 
@@ -155,7 +167,8 @@ if __name__ == '__main__':
         # Ask user to choose existing one
         targetFileName = get_existing_file_name(existingFiles)
         theSequence = get_sequence_from_file(targetFileName)
-        print("\tSequence loaded, reference sample is: '"+theSequence[0].get_string_value()+"'")
+        print(
+            "\tSequence loaded, reference sample is: '"+theSequence[0].string+"'")
     else:
         # Ask user for a new one
         targetFileName = get_custom_file_name(existingFiles)
@@ -168,7 +181,7 @@ if __name__ == '__main__':
         if not get_validation(str(len(theSequence)) + " sample(s) in this sequence. Do you want to add another sample ?", True):
             break
         theSequence = theSequence + capture_n_samples(
-            theSequence[0].get_string_value()
+            theSequence[0].string
         )
 
     print("Saving sequence... ", end="")
