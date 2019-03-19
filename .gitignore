@@ -46,8 +46,12 @@ Thumbs.db
 *keylogger.bit
 *dump*
 
+# VSCode shits
+.vscode
+
 # Python and python's environment
 data/env
+encryption/env
 __pycache__
 
 # DLLs
