@@ -208,7 +208,7 @@ if __name__ == '__main__':
             break
         sequence = sequence + get_n_samples(sequence[0].string)
 
-    # Saving only new part of sequence to file
+    # Append only new part of sequence to file
     print("Saving sequence... ", end="")
     save_to_file(target_filename, sequence[init_seq_size:])
     print("saved!")
