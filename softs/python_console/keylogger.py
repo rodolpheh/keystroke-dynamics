@@ -22,14 +22,6 @@ class KbEvt(Structure):
     def __repr__(self):
         return 'KbEvt: ' + str(self)
 
-    @property
-    def string(self):
-        return self.string
-
-    @string.setter
-    def string(self, value):
-        self._string = value
-
 class Sample(Structure):
     """Representation of an array of KbEvt
 
@@ -63,6 +55,22 @@ class Sample(Structure):
     def __iter__(self):
         for i in range(len(self)):
             yield self.kb_evts[i]
+
+    @property
+    def string(self):
+        return self._string
+
+    @string.setter
+    def string(self, value):
+        self._string = value
+
+    @property
+    def impostor(self):
+        return self._impostor
+
+    @impostor.setter
+    def impostor(self, is_impostor: bool):
+        self._impostor = is_impostor
 
 def keylog_session() -> Sample:
     """Capture a Sample from keyboard events

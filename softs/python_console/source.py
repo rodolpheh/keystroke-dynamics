@@ -20,7 +20,9 @@ def print_logo():
     f.close()
 
 def get_intro_message() -> str:
-    return "\nYou are about to begin a new record.\nType the text sample you want to record.\nFor now, this sample will be displayed as is so avoid secrets like passwords."
+    return """You are about to begin a new record.
+Type the text sample you want to record.
+This first sample MUST be typed by the real user (no impostor data)."""
 
 def get_file_list() -> List[str]:
     """Get the list of candidate files in `sequence/` dir"""
@@ -30,7 +32,7 @@ def get_file_list() -> List[str]:
         filenames.append(file.replace("sequence/", ""))
     return filenames
 
-def get_binary_validation(message, default = True) -> bool:
+def get_binary_validation(message: str, default: bool = True) -> bool:
     """Validation on a binary alternative"""
     questions = [
         {
@@ -64,7 +66,7 @@ def get_default_filename() -> str:
     """Generate default filename based on timestamp"""
     return datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-def get_custom_filename(existing_files) -> str:
+def get_custom_filename(existing_files: List[str]) -> str:
     """Prompt user for new filename"""
     questions = [
         {
@@ -73,7 +75,9 @@ def get_custom_filename(existing_files) -> str:
             'message': 'Name your new sample :',
             'default': get_default_filename(),
             'validate': lambda text: (
-                (len(re.findall(r'^[A-Za-z0-9_\-.]{3,40}$', text)) > 0 and text+'.smp' not in existing_files) or
+                (len(re.findall(r'^[A-Za-z0-9_\-.]{3,40}$', text)) > 0
+                    and text+'.smp' not in existing_files
+                ) or
                 'Typed file name contains illegal characters or already exist'
             )
         }
@@ -90,42 +94,43 @@ def get_single_sample() -> Sample:
     sys.stdout = StringIO()
 
     # Recording key events
-    user_entry = keylog_session()
+    sample = keylog_session()
 
     # After recording, restore stdout
     sys.stdout = orig_out
 
     str_pw = input()
-    user_entry.string = str_pw
+    sample.string = str_pw
 
-    print(user_entry)
-
-    return user_entry
+    return sample
 
 def get_first_sample() -> Sample:
     """Record the first sample of a file"""
-
     print(get_intro_message())
+
     user_satisfied = False
     while not user_satisfied:
-        user_entry = get_single_sample()
-        print(user_entry.string)
+        sample = get_single_sample()
 
+        print("Sample recorded : \"" + sample.string + "\"")
         user_satisfied = get_binary_validation(
             "Do you want to keep this sample ?", True
         )
 
-    return user_entry
+    sample.impostor = False
+
+    return sample
 
 def get_n_samples(reference: str) -> List[Sample]:
     """Record multiple samples sequentially"""
     output = []
-    # reference = sequence[0].string
+
+    is_impostor = get_binary_validation("Are you an impostor ?", False)
     while True:
         local_sample = get_single_sample()
+        local_sample.impostor = is_impostor
         if local_sample.string == reference:
             output.append(local_sample)
-            print(local_sample.string)
         else:
             if local_sample.string == "":
                 print(">> END")
@@ -143,7 +148,7 @@ def get_path() -> str:
     """Path of current dir"""
     return os.path.dirname(os.path.realpath(__file__))
 
-def get_sequence_from_file(filename) -> List[Sample]:
+def get_sequence_from_file(filename: str) -> List[Sample]:
     """Recover sequence of samples from file"""
     samples = []
 
@@ -196,12 +201,14 @@ if __name__ == '__main__':
 
     while True:
         if not get_binary_validation(
-            str(len(sequence)) +
-            " sample(s) in this sequence. Do you want to add another sample ?", True
+            (str(len(sequence)) +
+            " sample(s) in this sequence. Do you want to add another sample ?"),
+            True
         ):
             break
         sequence = sequence + get_n_samples(sequence[0].string)
 
+    # Saving only new part of sequence to file
     print("Saving sequence... ", end="")
     save_to_file(target_filename, sequence[init_seq_size:])
     print("saved!")
