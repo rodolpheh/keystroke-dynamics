@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function, unicode_literals
 
 import sys
+import pickle
 from PyInquirer import prompt
 from examples import custom_style_2
 import glob, os, datetime, re
@@ -15,7 +15,7 @@ from io import StringIO
 def print_logo():
     f = open('logo.txt')
     for line in f:
-        print (line, end="")
+        print(line, end="")
     f.close()
 
 # Array of string, .smp file names in sequence folder
@@ -133,19 +133,17 @@ def get_sequence_from_file(file_name) -> List[Sample]:
     """Recover sequence of samples from file"""
     # TODO replace by true loader function
     samples = []
-    f = open(get_path() + "/" + file_name, "r")
-    #for line in f:
-        # samples.append(Sample(line.replace("\n", "")))
-    f.close()
+
+    with open(get_path() + "/" + file_name, "rb") as file:
+        samples = pickle.load(file)
     return samples
     # TODO end
 
 def save_to_file(file_name : str, sequence : List[Sample]):
     # TODO replace by true saver finction
-    f = open(get_path()+"/sequence/"+file_name, "a+")
-    for sample in sequence:
-        f.write(sample.string+"\n")
-    f.close()
+
+    with open(get_path()+"/sequence/"+file_name, "ab+") as file:
+        pickle.dump(sequence, file, pickle.HIGHEST_PROTOCOL)
 
 
 #### == program start == ####
