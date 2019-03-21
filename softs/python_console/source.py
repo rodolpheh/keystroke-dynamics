@@ -1,33 +1,37 @@
 # -*- coding: utf-8 -*-
 
-import sys
-import pickle
-from PyInquirer import prompt
-from examples import custom_style_2
-import glob, os, datetime, re
 from typing import List
-
-from keylogger import Sample, keylog_session
-
+import sys
+import glob, os, datetime, re
+import pickle
 from io import StringIO
 
-# Void, print logo from logo file
+# CLI style imports
+from PyInquirer import prompt
+from examples import custom_style_2
+
+# Custom C library wrapped
+from keylogger import Sample, keylog_session
+
 def print_logo():
     f = open('logo.txt')
     for line in f:
         print(line, end="")
     f.close()
 
-# Array of string, .smp file names in sequence folder
-def get_files_list():
-    file_names = []
+def get_intro_message() -> str:
+    return "\nYou are about to begin a new record.\nType the text sample you want to record.\nFor now, this sample will be displayed as is so avoid secrets like passwords."
+
+def get_file_list() -> List[str]:
+    """Get the list of candidate files in `sequence/` dir"""
+    filenames = []
     os.makedirs("sequence", exist_ok=True)
     for file in glob.glob("sequence/*.smp"):
-        file_names.append(file.replace("sequence/", ""))
-    return file_names
+        filenames.append(file.replace("sequence/", ""))
+    return filenames
 
-# Boolean, True = confirmed
-def get_validation(message, default = True):
+def get_binary_validation(message, default = True) -> bool:
+    """Validation on a binary alternative"""
     questions = [
         {
             'type': 'confirm',
@@ -38,48 +42,57 @@ def get_validation(message, default = True):
     ]
     return prompt(questions, style=custom_style_2)["confirmed"]
 
-# String, file name chosen from list
-def get_existing_file_name(existing_files):
+def get_existing_filename(existing_files: List[str]) -> str:
+    """Choose file name from a list of filenames"""
+
+    # Ask user which file only if there are multiple files
+
+    if len(existing_files) == 1:
+        return existing_files[0]
+
     questions = [
         {
             'type': 'list',
-            'name': 'target_file_name',
+            'name': 'target_filename',
             'message': 'Which file do you want to load ?',
             'choices': existing_files
         }
     ]
-    return prompt(questions, style=custom_style_2)["target_file_name"]
+    return prompt(questions, style=custom_style_2)["target_filename"]
 
-def get_default_file_name() -> str:
+def get_default_filename() -> str:
     """Generate default filename based on timestamp"""
     return datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-def get_custom_file_name(existing_files) -> str:
+def get_custom_filename(existing_files) -> str:
     """Prompt user for new filename"""
     questions = [
         {
             'type': 'input',
-            'name': 'custom_file_name',
+            'name': 'custom_filename',
             'message': 'Name your new sample :',
-            'default': get_default_file_name(),
+            'default': get_default_filename(),
             'validate': lambda text: (
                 (len(re.findall(r'^[A-Za-z0-9_\-.]{3,40}$', text)) > 0 and text+'.smp' not in existing_files) or
                 'Typed file name contains illegal characters or already exist'
             )
         }
     ]
-    return prompt(questions, style=custom_style_2)['custom_file_name']+'.smp'
-
-def get_intro_message() -> str:
-    return "\nYou are about to begin a new record.\nType the text sample you want to record.\nFor now, this sample will be displayed as is so avoid secrets like passwords."
+    return prompt(questions, style=custom_style_2)['custom_filename']+'.smp'
 
 def get_single_sample() -> Sample:
+    """Record a single sample"""
     print("Recording ... : ", end="")
     sys.stdout.flush()
 
+    # Mute stdout while recording events to avoid double output
     orig_out = sys.stdout
     sys.stdout = StringIO()
+
+    # Recording key events
     user_entry = keylog_session()
+
+    # After recording, restore stdout
     sys.stdout = orig_out
 
     str_pw = input()
@@ -89,21 +102,23 @@ def get_single_sample() -> Sample:
 
     return user_entry
 
-def get_first_input() -> Sample:
+def get_first_sample() -> Sample:
+    """Record the first sample of a file"""
+
     print(get_intro_message())
     user_satisfied = False
-    user_entry = False
     while not user_satisfied:
         user_entry = get_single_sample()
         print(user_entry.string)
 
-        user_satisfied = get_validation(
+        user_satisfied = get_binary_validation(
             "Do you want to keep this sample ?", True
         )
 
     return user_entry
 
-def capture_n_samples(reference: str) -> List[Sample]:
+def get_n_samples(reference: str) -> List[Sample]:
+    """Record multiple samples sequentially"""
     output = []
     # reference = sequence[0].string
     while True:
@@ -119,7 +134,7 @@ def capture_n_samples(reference: str) -> List[Sample]:
                 print(
                     "\"" +
                     local_sample.string +
-                    "\" mismatch the reference: " +
+                    "\" mismatches the reference: " +
                     reference
                 )
     return output
@@ -128,12 +143,11 @@ def get_path() -> str:
     """Path of current dir"""
     return os.path.dirname(os.path.realpath(__file__))
 
-# Array of samples, representing existing sequence content
-def get_sequence_from_file(file_name) -> List[Sample]:
+def get_sequence_from_file(filename) -> List[Sample]:
     """Recover sequence of samples from file"""
     samples = []
 
-    with open(get_path() + "/sequence/" + file_name, "rb") as file:
+    with open(get_path() + "/sequence/" + filename, "rb") as file:
         while True:
             try:
                 samples.append(pickle.load(file))
@@ -141,12 +155,12 @@ def get_sequence_from_file(file_name) -> List[Sample]:
                 break
     return samples
 
-def save_to_file(file_name : str, sequence : List[Sample]):
+def save_to_file(filename : str, sequence : List[Sample]):
+    """Save a sequence of Sample to a file"""
 
-    with open(get_path() + "/sequence/" + file_name, "ab+") as file:
+    with open(get_path() + "/sequence/" + filename, "ab+") as file:
         for sample in sequence:
             pickle.dump(sample, file, pickle.HIGHEST_PROTOCOL)
-
 
 #### == program start == ####
 if __name__ == '__main__':
@@ -154,12 +168,13 @@ if __name__ == '__main__':
     print("--=== Welcome to kStrokes sequence manager ! ===--\n")
 
     init_seq_size = 0
-    # Get list of files in samples folder
-    existingFiles = get_files_list()
 
-    # If a file exist then ask user if he want to use an existing file
-    if len(existingFiles) > 0:
-        use_existing_file = get_validation(
+    # Get list of files in `sequence/` directory
+    existing_files = get_file_list()
+
+    # If a file exist then ask user if he wants to use an existing file
+    if len(existing_files) > 0:
+        use_existing_file = get_binary_validation(
             "Do you want to use an existing sequence (file) ?", False
         )
     else:
@@ -167,25 +182,25 @@ if __name__ == '__main__':
 
     # Choose/define a file name
     if use_existing_file:
-        # Ask user to choose existing one
-        target_filename = get_existing_file_name(existingFiles)
-        print("Filename recovered : " + target_filename)
+        target_filename = get_existing_filename(existing_files)
         sequence = get_sequence_from_file(target_filename)
         print(
             "\tSequence loaded, reference sample is: '"+sequence[0].string+"'")
         init_seq_size = len(sequence)
     else:
         # Ask user for a new one
-        target_filename = get_custom_file_name(existingFiles)
+        target_filename = get_custom_filename(existing_files)
         # Start sequence container with the first sample
-        sequence = [get_first_input()]
+        sequence = [get_first_sample()]
         print("\tThe first sequence has been successfully recorded !")
 
-
     while True:
-        if not get_validation(str(len(sequence)) + " sample(s) in this sequence. Do you want to add another sample ?", True):
+        if not get_binary_validation(
+            str(len(sequence)) +
+            " sample(s) in this sequence. Do you want to add another sample ?", True
+        ):
             break
-        sequence = sequence + capture_n_samples(sequence[0].string)
+        sequence = sequence + get_n_samples(sequence[0].string)
 
     print("Saving sequence... ", end="")
     save_to_file(target_filename, sequence[init_seq_size:])
