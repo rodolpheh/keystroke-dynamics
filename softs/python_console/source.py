@@ -23,7 +23,7 @@ def get_files_list():
     file_names = []
     os.makedirs("sequence", exist_ok=True)
     for file in glob.glob("sequence/*.smp"):
-        file_names.append(file)
+        file_names.append(file.replace("sequence/", ""))
     return file_names
 
 # Boolean, True = confirmed
@@ -131,19 +131,21 @@ def get_path() -> str:
 # Array of samples, representing existing sequence content
 def get_sequence_from_file(file_name) -> List[Sample]:
     """Recover sequence of samples from file"""
-    # TODO replace by true loader function
     samples = []
 
-    with open(get_path() + "/" + file_name, "rb") as file:
-        samples = pickle.load(file)
+    with open(get_path() + "/sequence/" + file_name, "rb") as file:
+        while True:
+            try:
+                samples.append(pickle.load(file))
+            except EOFError:
+                break
     return samples
-    # TODO end
 
 def save_to_file(file_name : str, sequence : List[Sample]):
-    # TODO replace by true saver finction
 
-    with open(get_path()+"/sequence/"+file_name, "ab+") as file:
-        pickle.dump(sequence, file, pickle.HIGHEST_PROTOCOL)
+    with open(get_path() + "/sequence/" + file_name, "ab+") as file:
+        for sample in sequence:
+            pickle.dump(sample, file, pickle.HIGHEST_PROTOCOL)
 
 
 #### == program start == ####
@@ -151,37 +153,40 @@ if __name__ == '__main__':
     print_logo()
     print("--=== Welcome to kStrokes sequence manager ! ===--\n")
 
+    init_seq_size = 0
     # Get list of files in samples folder
     existingFiles = get_files_list()
 
     # If a file exist then ask user if he want to use an existing file
     if len(existingFiles) > 0:
-        useExistingFile = get_validation("Do you want to use an existing sequence (file) ?", False)
+        use_existing_file = get_validation(
+            "Do you want to use an existing sequence (file) ?", False
+        )
     else:
-        useExistingFile = False
+        use_existing_file = False
 
     # Choose/define a file name
-    if useExistingFile:
+    if use_existing_file:
         # Ask user to choose existing one
-        targetFileName = get_existing_file_name(existingFiles)
-        theSequence = get_sequence_from_file(targetFileName)
+        target_filename = get_existing_file_name(existingFiles)
+        print("Filename recovered : " + target_filename)
+        sequence = get_sequence_from_file(target_filename)
         print(
-            "\tSequence loaded, reference sample is: '"+theSequence[0].string+"'")
+            "\tSequence loaded, reference sample is: '"+sequence[0].string+"'")
+        init_seq_size = len(sequence)
     else:
         # Ask user for a new one
-        targetFileName = get_custom_file_name(existingFiles)
+        target_filename = get_custom_file_name(existingFiles)
         # Start sequence container with the first sample
-        theSequence = [get_first_input()]
+        sequence = [get_first_input()]
         print("\tThe first sequence has been successfully recorded !")
 
 
     while True:
-        if not get_validation(str(len(theSequence)) + " sample(s) in this sequence. Do you want to add another sample ?", True):
+        if not get_validation(str(len(sequence)) + " sample(s) in this sequence. Do you want to add another sample ?", True):
             break
-        theSequence = theSequence + capture_n_samples(
-            theSequence[0].string
-        )
+        sequence = sequence + capture_n_samples(sequence[0].string)
 
     print("Saving sequence... ", end="")
-    save_to_file(targetFileName, theSequence)
+    save_to_file(target_filename, sequence[init_seq_size:])
     print("saved!")
