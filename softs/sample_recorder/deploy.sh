@@ -1,15 +1,17 @@
 #! /usr/bin/env bash
 
 # Test requirements
-command -v gcc >/dev/null 2>&1 || { echo >&2 "I require gcc but it's not installed.  Aborting."; exit 1; }
-command -v make >/dev/null 2>&1 || { echo >&2 "I require make but it's not installed.  Aborting."; exit 1; }
-command -v python3 >/dev/null 2>&1 || { echo >&2 "I require python3 (ubuntu name) but it's not installed.  Aborting."; exit 1; }
+command -v apt >/dev/null 2>&1 || { echo >&2 "I require apt but it's not installed.  Aborting."; exit 1; }
+
+sudo apt update && apt upgrade
+
+sudo apt install -y python3-venv python3-dev make gcc
 
 # Create the needed C library
 make dll
 
 # Activate a virtual environment
-python -m venv env
+python3 -m venv env
 source env/bin/activate
 
 # Download the needed packages
