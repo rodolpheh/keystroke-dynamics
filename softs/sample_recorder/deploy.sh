@@ -11,8 +11,8 @@ sudo apt install -y python3-venv python3-dev make gcc
 make dll
 
 # Activate a virtual environment
-python3 -m venv .
-source ./bin/activate
+python3 -m venv env
+source env/bin/activate
 
 # Download the needed packages
 pip install --upgrade pip
