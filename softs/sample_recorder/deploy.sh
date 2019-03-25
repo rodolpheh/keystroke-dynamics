@@ -11,11 +11,15 @@ sudo apt install -y python3-venv python3-dev make gcc
 make dll
 
 # Activate a virtual environment
-python3 -m venv env
-source env/bin/activate
+python3 -m venv .
+source ./bin/activate
 
 # Download the needed packages
 pip install --upgrade pip
 pip install -r requirements.txt
+
+echo "Adding user to input group"
+
+sudo usermod -aG input $USER
 
 echo "Don't forget to source env/bin/activate everytime you need this software !"
