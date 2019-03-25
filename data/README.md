@@ -1,6 +1,8 @@
 # Installing and using the Jupyter notebooks
 
-Install Python
+**This is a detailed description of the steps to obtain a working environment. For a quick start, execute the `deploy.sh` scrip**
+
+Install Python 3.
 
 Go into the wanted folder and type:
 
@@ -17,7 +19,7 @@ source env/bin/activate
 Install Jupyter lab:
 
 ```bash
-pip install jupyter-lab
+pip install jupyterlab
 ```
 
 Install matplotlib and widgets (nodejs will be necessary):
@@ -34,4 +36,4 @@ Now we have initialised a basic environment with Jupyter (with widgets support).
 pip install pandas scikit-learn
 ```
 
-That's all we need (it seems for now, scikit haven't been tested with this guide). You can start Jupyter lab with `jupyter-lab`
+That's all we need. You can start Jupyter lab with `jupyter lab`

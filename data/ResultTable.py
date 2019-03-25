@@ -1,15 +1,42 @@
 import pandas as pd
 import numpy as np
 
+
 class ResultTable:
 
     def __init__(self, *args, **kwargs):
-        self.columns = ["User","TP", "TN", "FP", "FN", "Best f1", "Accuracy", "Precision", "Recall", "Gamma", "Nu", "Grade"]
+        self.columns = [
+            "User",
+            "TP",
+            "TN",
+            "FP",
+            "FN",
+            "Best f1",
+            "Accuracy",
+            "Precision",
+            "Recall",
+            "Gamma",
+            "Nu",
+            "Grade"
+        ]
         self.table = pd.DataFrame(columns=self.columns)
 
-    def append(self, user, TP, TN, FP, FN, f1, accuracy, precision, recall, gamma, nu):
+    def append(
+        self, user, TP, TN, FP, FN, f1, accuracy, precision, recall, gamma, nu
+    ):
         self.table.loc[self.table.size] = [
-            user, TP, TN, FP, FN, f1, accuracy, precision, recall, gamma, nu, (f1 + recall) / 2
+            user,
+            TP,
+            TN,
+            FP,
+            FN,
+            f1,
+            accuracy,
+            precision,
+            recall,
+            gamma,
+            nu,
+            (f1 + recall) / 2
         ]
         self.format()
 
@@ -40,4 +67,3 @@ class ResultTable:
 
     def _repr_html_(self):
         return self.table._repr_html_()
-
