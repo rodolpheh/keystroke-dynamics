@@ -1,25 +1,28 @@
 # -*- coding: utf-8 -*-
 
-from typing import List
-import sys
-import glob, os, datetime, re
+import datetime
+import glob
+import os
 import pickle
+import re
+import sys
 from io import StringIO
+from typing import List
 
 # CLI style imports
 from PyInquirer import prompt
 from examples import custom_style_2
-
 # Custom C library wrapped
 from keylogger import Sample, keylog_session
 
 def print_logo():
-    f = open('logo.txt')
-    for line in f:
-        print(line, end="")
-    f.close()
+    """Displays the text logo as the program starts"""
+    with open('logo.txt', 'r') as file:
+        for line in file:
+            print(line)
 
 def get_intro_message() -> str:
+    """Holds a message for the beginning of a new sequence"""
     return """You are about to begin a new record.
 Type the text sample you want to record.
 This first sample MUST be typed by the real user (no impostor data)."""
@@ -76,7 +79,7 @@ def get_custom_filename(existing_files: List[str]) -> str:
             'default': get_default_filename(),
             'validate': lambda text: (
                 (len(re.findall(r'^[A-Za-z0-9_\-.]{3,40}$', text)) > 0
-                    and text+'.smp' not in existing_files
+                 and text+'.smp' not in existing_files
                 ) or
                 'Typed file name contains illegal characters or already exist'
             )
@@ -160,15 +163,15 @@ def get_sequence_from_file(filename: str) -> List[Sample]:
                 break
     return samples
 
-def save_to_file(filename : str, sequence : List[Sample]):
+def save_to_file(filename: str, sequence: List[Sample]):
     """Save a sequence of Sample to a file"""
 
     with open(get_path() + "/sequence/" + filename, "ab+") as file:
         for sample in sequence:
             pickle.dump(sample, file, pickle.HIGHEST_PROTOCOL)
 
-#### == program start == ####
-if __name__ == '__main__':
+def sample_recorder():
+    """Main program"""
     print_logo()
     print("--=== Welcome to kStrokes sequence manager ! ===--\n")
 
@@ -178,7 +181,7 @@ if __name__ == '__main__':
     existing_files = get_file_list()
 
     # If a file exist then ask user if he wants to use an existing file
-    if len(existing_files) > 0:
+    if existing_files:
         use_existing_file = get_binary_validation(
             "Do you want to use an existing sequence (file) ?", False
         )
@@ -201,9 +204,10 @@ if __name__ == '__main__':
 
     while True:
         if not get_binary_validation(
-            (str(len(sequence)) +
-            " sample(s) in this sequence. Do you want to add another sample ?"),
-            True
+                (str(len(sequence)) +
+                 " sample(s) in this sequence." +
+                 " Do you want to add another sample ?"),
+                True
         ):
             break
         sequence = sequence + get_n_samples(sequence[0].string)
@@ -212,3 +216,7 @@ if __name__ == '__main__':
     print("Saving sequence... ", end="")
     save_to_file(target_filename, sequence[init_seq_size:])
     print("saved!")
+
+#### == program start == ####
+if __name__ == '__main__':
+    sample_recorder()
