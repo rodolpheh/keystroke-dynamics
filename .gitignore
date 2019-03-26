@@ -66,3 +66,5 @@ softs/model/env
 
 # mypy stuffs
 .mypy*
+
+*.code-workspace

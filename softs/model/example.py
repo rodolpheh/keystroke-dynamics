@@ -5,7 +5,8 @@ from sklearn.model_selection import train_test_split
 According to:
 
 Eude, T & Chang, Chuan. (2017).
-One-class SVM for biometric authentication by keystroke dynamics for remote evaluation.
+One-class SVM for biometric authentication by keystroke dynamics for
+remote evaluation.
 Computational Intelligence. 34. 10.1111/coin.12122.
 
 The model can be trained and optimized by using only positive data.
@@ -19,11 +20,22 @@ won't need to evaluate the final model, we can use the whole data.
 
 def getUserData():
     # Just a placeholder
-    return [[0, 1, 2], [1, 2, 0], [1, 1, 2], [1, 0, 0], [0, 1, 0], [1, 2, 2], [2, 1, 2], [0, 2, 0]]
+    return [
+        [0, 1, 2],
+        [1, 2, 0],
+        [1, 1, 2],
+        [1, 0, 0],
+        [0, 1, 0],
+        [1, 2, 2],
+        [2, 1, 2],
+        [0, 2, 0]
+    ]
+
 
 def getImpostorData():
     # Just a placeholder
     return [[1, 3, 2], [1, -1, 0]]
+
 
 if __name__ == "__main__":
     # Create the model
