@@ -1,211 +1,176 @@
 # Encryption/Decryption Package Manual
 
-*The file will evolve with the differents add of features       
+> *The file will evolve along the new features.
 Please, take care to read this file in order to understand the library working*
 
-- **1 : Install**
-- **2 : Function List**
-- **3 : How to use this package**
-- **4 : Encrytion of a data**
-- **5 : Decryption of a data**
+## Contents
+
+- [**1 - Install**](#1---Install)
+- [**2 - Function List**](#2---Function-List)
+- [**3 - How to use this package**](#3---How-to-use-this-package)
+- [**4 - Encryption of data**](#4---Encryption-of-data)
+- [**5 - Decryption of data**](#5---Decryption-of-data)
 
 ## 1 - Install
 
-*Before the installation, make sure you correctly put the differents files in the right folder (your projet folder)*
-For the installation, you just need do give the good rights and execute the "deploy.sh" file.   
+*Before the installation, make sure you correctly put the differents files in the right folder (your projet folder)*.
+For the installation, you just need do add execution rigths to the script `deploy.sh`and execute it.
 
 ```bash
 cd ~/myprojectfolder/
 cp ~/encryption/* .
 chmod +x deploy.sh
-./deploy.sh
+source ./deploy.sh
 ```
 
-It will create a Python environnement and it will install the needed packages, in order to use some features like the *AES 256*.     
-The main packages are *"Pickle"* and *"PyCrypto"*.      
-*Pickle* is used to open/close files and to read/write into that files. It is useful to save some data (*AES* parameters for exemple).        
-*PyCrypto* will import all the necessary features in order to process to an encryption and a decryption. It includes the AES encrytion.     
+It will create a Python environement and it will install the needed packages, in order to use some features like the *AES 256*.
+
+The main packages are `Pickle` and `PyCrypto`.
+`Pickle` is used to open/close files and to read/write into that files. It is useful to save some data (*AES* parameters for exemple).
+`PyCrypto` will import all the necessary features in order to process to an encryption and a decryption. It includes the AES encrytion.
 
 ## 2 - Function List
 
-### a) string_gen Function
+### a) `string_gen`
 
-- **Arguments :** None
-- **Return :** String *key*
+Generation of a random string.
 
-Make a random generation of a string
+The string is encoded on 16 bytes.
+This function is used in order to generate an encryption key and an initialisation vector.
 
-The string is encoded in 16 bytes.      
-This function is used in order to generate an encrytion key and an Initialisation Vector (IV).
-
-How to use it :     
+Usage:
 
 ```python
-iv = string_gen()
+init_vector = string_gen()
 
 key = string_gen()
-print(iv) # 'a12Ze34rT67yui89'
-print(key) # '98iuy76Tr43eZ21a'
+print(init_vector) # e.g. 'a12Ze34rT67yui89'
+print(key) # e.g. '98iuy76Tr43eZ21a'
 ```
 
-### b) encrypt_parameters Function
+### b) `encrypt_parameters`
 
-- **Arguments :** None
-- **Return :** List *aesParam* = [iv, key]
+Generates a pair of random strings.
+This pair contains an encrytion key and an initialisation vector, which are necessary for the *AES256* encryption.
 
-Make a list generation.     
-This list contains an encrytion key and an Initialisation Vector (IV), which are necessary for the AES256 encryption.   
-This function also stores that data in a file (called "param" by default).
+Usage:
 
-How to use it :     
-
-```python
+```python3
 params = encrypt_parameters()
 print(params) # ['a12Ze34rT67yui89','98iuy76Tr43eZ21a']
 ```
 
-### c) file_dump Function
+### c) `file_dump`
 
-- **Arguments :** String *crypt*, String *file_name (optional argument)*
-- **Return :** String file_name
+Write a string to a file.
 
-Write a content in a file.      
-The user give a message in argument of the function in order to write it in a file.     
-The function also accepts a file name in argument, but this optional use is more recommanded for internals program processes (example : Store important data specific to a program).       
-By default, the user is asked to enter a file name, in order to define where the data, will be stored.      
-Defining a file name in argument, will bypass this ask.
-
-How to use it : 
+Usage:
 
 ```python
-file_dump(aesParam, 'param')# Writing parameters in 'param' file
-
-file_dump('Read the Manual')# Enter the file name
+file_dump(crypted, 'param')# Writing parameters in 'param' file
 ```
 
-### d) file_read Function
+### d) `file_read`
 
-- **Arguments :** String *file_name*
-- **Return :** List / String *binary_lines*
+Read binary string from a file
 
-Read a file content and store it into a variable.   
-This function returns a variable with differents types available (it depends of the kind of data read) (example : Bytes, String, List of String).
-
-How to use it :    
+Usage :
 
 ```python
-test = file_read('myFile')
+test = file_read('my _file')
 print(test) # 'Some String'
 ```
 
-### e) aes_gen Function
+### e) `aes_gen`
 
-- **Arguments :** String *iv*, String *key*
-- **Return :** AES *aes*
+Returns a AES object initialized with a key and an intialization vector.
 
-Make a generation of the AES256.        
-This function takes in arguments a key and an Initialisation Vector (IV).       
-It is necessary to encode that strings in 16 bytes, in order to don't have an error.
-
-How to use it :     
+Usage:
 
 ```python
-aes = aes_gen(iv, key)
+aes = aes_gen(init_v, key)
 print(aes) #'<Crypto.Cipher.AES.AESCipher object at 0x7f6fc47156a0>'
 ```
 
-### f) encryption Function
+### f) `encrypt`
 
-- **Arguments :** String *message*, AES *aes*
-- **Return :** Bytes String *encrypted_message*
+Encrypts a string.
 
-Make an encryption of a message.        
-The function takes in arguments, an AES (generated before) and a message, encoded on a multiple of 16 bytes.        
-The return will be the encrypted string.
-
-How to use it :   
+Usage:
 
 ```python
-crypt = encryption(myString, aes)
+crypt = encryption(a_string, aes)
 print(crypt) # "b'\x99\xff\xb9\x9c\xdf\xfd\xc4\x91\xa5\xe4\xb3\xc6t\xc6\x0b\x19"
 ```
 
-### g) decryption Function
+### g) `decrypt`
 
-- **Arguments :** String *message*, AES *aes*
-- **Return :** Bytes String *decrypted_message*
+Decrytps a string.
 
-Make an decryption of a message.        
-The function takes in arguments, an AES (generated before) and a message, encoded on a multiple of 16 bytes.        
-The return will be the decrypted string.
+The AES used for encryption should be **a newly generated `AES` object** with the **same parameters**. **DO NOT** use the same `AES` object, it won't work.
 
-How to use it :   
-  
+Usage:
+
 ```python
 decrypt = decryption(crypt, aes)
 print(decrypt) # "My decrypted string"
 ```
 
-## 3 How to use it
+## 3 - How to use this package
 
-To use the package, you need to import it into your python script.
-
-```python
-from test_pck import *
-```
-
-After that, each function can be called in your script with the following syntax : 
+### a) Import the package
 
 ```python
-params = encrypt_parameters()
+from cryption_pck import *
 ```
 
-## 4 - Encrytion of a data
-
-*In order to encrypt a string, there is a list of command to execute :*
+### b) Encryption of data
 
 ```python
 letters = "AStringToEncrypt"
-params = encrypt_parameters()
+print("To encrypt : {}".format(letters.encode('ascii')))
+key, init_v = encrypt_parameters()
+aes = aes_gen(init_v, key)
 
-aes = aes_gen(params[0], params[1])
-crypt = encryption(letters, aes)
-print("Encrypted data")
-print(crypt)
-file_name = file_dump(crypt)
+crypted = encrypt(letters, aes)
+print("Encrypted data : {}".format(crypted))
+file_name = file_dump(crypted)
+
+print("Data saved successfully to file \"{}\"".format(file_name))
+
+# Save the key for later
+aes_file = file_dump(str((init_v, key)), 'aes_key.key')
+print("Key saved to file \"{}\"".format(aes_file))
 ```
 
-After the execution of this script, we obtain this test in a terminal : 
+After the execution of this script, we obtain this test in a terminal :
 
-```
-python script.py     
-Data : AStringToEncrypt     
-Encrypted data      
-b's\xb5x\x95\xfe|\xe6\x8a\x8bX\x12,R%\xf3\x1f'      
-File Name to save : test        
-Saved Successfully
+```txt
+To encrypt : b'AStringToEncrypt'
+Encrypted data : b'q\x0e\xcf\xe3\x9d>\x15d\x88u\xbf\xad2/\x9b\x82'
+Data saved successfully to file "dump.dump"
+Key saved to file "aes_key.key"
 ```
 
-## 5 - Decryption of a data
+## 5 - Decryption of data
 
-*In order to decrypt a string, there is a list of command to execute too. For this demonstration, let's start with the previous results :*
+To decrypt a string, you must have the initalization vector and the key, and to create a new `AES` instance with the same parameters.
 
 ```python
-binary_lines = file_read(file_name)
-print("String Read")
-print(binary_lines)
-aes = aes_gen(params[0], params[1])
-decrypt = decryption(binary_lines, aes)
-print("Decrypted Data")
-print(decrypt)
-```
-After the exection of this script, we obtain this result in a terminal : 
+init_v_from_file, key_from_file = ast.literal_eval(file_read('aes_key.key'))
 
+from_file = file_read(file_name)
+print("Data loaded from file:")
+print(from_file)
+
+decrypted = decrypt(from_file, aes_gen(init_v_from_file, key_from_file))
+print("Decrypted: {}".format(decrypted))
 ```
-String Read        
-b'\xbc\x0c\x8f6\n\x98^\x16K\xef\x94\xc2\~r%O'       
-Crypted data :      
-b'\xbc\x0c\x8f6\n\x98^\x16K\xef\x94\xc2\~r%O'        
-Decrypted Data      
-b'AStringToEncrypt'
+
+After the exection of this script, we obtain this result in a terminal :
+
+```txt
+Data loaded from file:
+b'\x9e_v\xe2M\x1en\xa4\x05\xa8\xb1\x02\x11\xe4O]'
+Decrypted: b'AStringToEncrypt'
 ```
