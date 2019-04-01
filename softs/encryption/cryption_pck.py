@@ -100,4 +100,7 @@ def decrypt(message: str, aes: AES) -> str:
     Le déchiffrement est effectué à l'aide de l'AES, fourni au préalable.
     La fonction retourné donc la chaine déchiffré.
     """
-    return aes.decrypt(message)
+    encrypted = aes.decrypt(message).decode()
+    header = int(encrypted[0], 16)
+    decrypted = encrypted[1:(len(encrypted)-header)]
+    return decrypted
