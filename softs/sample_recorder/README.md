@@ -1,18 +1,46 @@
 # Sample recorder
 
-## Requirements
+## Using Docker
+
+### Requirements
+
+* `docker`
+* `docker-compose` (optional)
+
+### Build
+
+```bash
+docker build --rm -t sample_recorder:latest .
+```
+
+### Run with Docker
+
+```bash
+docker run --rm -it --device "/dev/input/by-path/platform-i8042-serio-0-event-kbd" --volume `pwd`/sequence:/root/project/sequence sample_recorder:latest
+```
+
+### Run with Docker-compose
+
+```bash
+# Much simpler isn't it ?
+docker-compose run --rm sampler
+```
+
+## Manual installation
+
+### Requirements
 
 * `gcc`
 * `make`
 * `python3`
 
-## Deployment (first launch)
+### Deployment (first launch)
 
 ```bash
 source deploy.sh
 ```
 
-## Usage
+### Usage
 
 ```bash
 # Step inside the virtual env
@@ -23,7 +51,7 @@ python3 sample_recorder.py
 deactivate
 ```
 
-## Gotcha
+### Gotcha
 
 The software needs access to an input file in `/dev/input` path. So we need to add the user to the `input` group.
 

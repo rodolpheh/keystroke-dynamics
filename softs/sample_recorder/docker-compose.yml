@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  sampler:
+    build: .
+    image: sample_recorder:latest
+    volumes:
+      - ./sequence:/root/project/sequence
+    devices:
+      - /dev/input/by-path/platform-i8042-serio-0-event-kbd
