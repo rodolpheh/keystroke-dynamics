@@ -50,10 +50,8 @@ Thumbs.db
 .vscode
 
 # Python and python's environment
-data/env
-encryption/env
+env/
 __pycache__
-softs/model/env
 
 # DLLs
 *.so
