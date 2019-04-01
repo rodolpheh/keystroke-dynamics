@@ -82,8 +82,10 @@ def trainer():
         sequence.extend(samples)
 
     for raw_sample in sequence:
-        sample = raw_sample.timings
-        print(sample)
+        # I'm sorry Rodolphe I cannot let you do that
+        # sample = raw_sample.timings
+        # print(sample)
+        pass
 
 
 if __name__ == '__main__':
