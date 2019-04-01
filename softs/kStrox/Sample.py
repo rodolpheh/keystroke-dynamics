@@ -1,10 +1,7 @@
-from ctypes import *
-import sys
-
-# Globally import external library
-keylogger = cdll.LoadLibrary("./keylogger_dll.so")
+from ctypes import Structure, c_int, c_long, c_uint
 
 MAX_KBEVTS = 2000
+
 
 class KbEvt(Structure):
     """Representation of a single keyboard event from device input
@@ -17,10 +14,16 @@ class KbEvt(Structure):
     ]
 
     def __str__(self):
-        return "{:011d}{:09d}:{:03d}:{}".format(self.seconds, self.nsec, self.code, "Release" if (self.state == 0) else "Press")
+        return "{:011d}{:09d}:{:03d}:{}".format(
+            self.seconds,
+            self.nsec,
+            self.code,
+            "Release" if (self.state == 0) else "Press"
+        )
 
     def __repr__(self):
         return 'KbEvt: ' + str(self)
+
 
 class Sample(Structure):
     """Representation of an array of KbEvt
@@ -72,27 +75,7 @@ class Sample(Structure):
     def impostor(self, is_impostor: bool):
         self._impostor = is_impostor
 
-def keylog_session() -> Sample:
-    """Capture a Sample from keyboard events
-
-    End the capture by pressing the Enter key
-    """
-    # Declaring empty sample for memory allocation in Python
-    empty_sample = Sample()
-
-    # Call to extern function
-    keylogger.keylogSession(byref(empty_sample))
-        # Stupid but just to prove that data is in local scope
-    collected_sample = empty_sample
-    del empty_sample
-
-    return collected_sample
-
-def replay_sample(sample: Sample):
-    """Replays a given Sample
-
-    Keyboard input events are written in the keyboard event file
-    """
-
-    # Call to extern function
-    keylogger.replaySample(byref(sample))
+    @property
+    def timings(self):
+        for event in self:
+            pass
