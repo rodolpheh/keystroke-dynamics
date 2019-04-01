@@ -80,14 +80,13 @@ def encrypt(message: str, aes: AES) -> str:
     length += 1
 
     if (length % 16 )!= 0:
-        complement = 16 - (length % 16)
+        complement_size = 16 - (length % 16)
     else:
-        complement = 0
-
+        complement_size = 0
 
     # print("Complement size : {}".format(complement))
-    header = hex(complement)[2]
-    complement = "0" * complement
+    header = hex(complement_size)[2]
+    complement = "0" * complement_size
     #print("adding : {}".format(complement))
     message = "".join([header, message, complement])
     length = len(message)
