@@ -74,7 +74,23 @@ def encrypt(message: str, aes: AES) -> str:
     Chiffrement d'une chaine codée sur un multiple de 16 octets.
     Le chiffrement est effectué à l'aide de l'AES, fourni au préalable.
     La fonction retourne donc la chaine chiffré.
+    Un Zero Padding est appliqué.
     """
+    length = len(message)
+    length += 1
+
+    if (length % 16 )!= 0:
+        complement = 16 - (length % 16)
+    else:
+        complement = 0
+
+
+    # print("Complement size : {}".format(complement))
+    header = hex(complement)[2]
+    complement = "0" * complement
+    #print("adding : {}".format(complement))
+    message = "".join([header, message, complement])
+    length = len(message)
     return aes.encrypt(message)
 
 
