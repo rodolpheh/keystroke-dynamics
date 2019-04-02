@@ -3,6 +3,7 @@ import random
 import string
 from typing import List
 from Crypto.Cipher import AES
+import binascii
 
 
 def string_gen() -> str:
@@ -33,7 +34,7 @@ def encrypt_parameters() -> List[str]:
     return aes
 
 
-def file_dump(encrypted_str: str, file_name: str = 'dump.dump'):
+def file_dump(encrypted: bytes, file_name: str = 'dump.dump'):
     """Sauve une chaine chiffré dans un fichier
 
     Ecriture de la chaine de caractère chiffrée dans un fichier.
@@ -43,7 +44,7 @@ def file_dump(encrypted_str: str, file_name: str = 'dump.dump'):
     Sert de manière générale pour ecrire un contenu dans un fichier
     """
     with open(file_name, 'wb') as dump_file:
-        pickle.dump(encrypted_str, dump_file)
+        pickle.dump(encrypted, dump_file)
         return file_name
 
 
@@ -58,7 +59,7 @@ def file_read(file_name: str):
     return binary_lines
 
 
-def aes_gen(init_vector: str, key: str) -> AES:
+def aes_gen(init_vector: str, key: str) -> AES.AESCipher:
     """Obtenir un nouveau objet AES
 
     Fonction prenant en entrée une clé de chiffrement
@@ -68,7 +69,7 @@ def aes_gen(init_vector: str, key: str) -> AES:
     return AES.new(key, AES.MODE_CBC, init_vector)
 
 
-def encrypt(message: str, aes: AES) -> str:
+def encrypt(message, aes: AES.AESCipher) -> bytes:
     """Chiffre un chaîne
 
     Chiffrement d'une chaine codée sur un multiple de 16 octets.
@@ -76,6 +77,9 @@ def encrypt(message: str, aes: AES) -> str:
     La fonction retourne donc la chaine chiffré.
     Un Zero Padding est appliqué.
     """
+    message = binascii.hexlify(pickle.dumps(message))
+    message = message.decode('ascii')
+
     length = len(message)
     length += 1
 
@@ -84,16 +88,14 @@ def encrypt(message: str, aes: AES) -> str:
     else:
         complement_size = 0
 
-    # print("Complement size : {}".format(complement))
-    header = hex(complement_size)[2]
+    header = hex(complement_size)[-1]
     complement = "0" * complement_size
-    #print("adding : {}".format(complement))
     message = "".join([header, message, complement])
     length = len(message)
     return aes.encrypt(message)
 
 
-def decrypt(message: str, aes: AES) -> str:
+def decrypt(message: bytes, aes: AES.AESCipher):
     """Déchiffre une chaîne
 
     Déchiffrement d'une chaine codée sur un multiple de 16 octets.
@@ -103,4 +105,5 @@ def decrypt(message: str, aes: AES) -> str:
     encrypted = aes.decrypt(message).decode()
     header = int(encrypted[0], 16)
     decrypted = encrypted[1:(len(encrypted)-header)]
-    return decrypted
+    decrypted_bytes = binascii.unhexlify(decrypted)
+    return pickle.loads(decrypted_bytes)
