@@ -108,10 +108,12 @@ class Model(BaseEstimator):
         y_pred_test = pipeline.predict(test)
         y_pred_outliers = pipeline.predict(outliers)
 
-        TP = y_pred_test[y_pred_test == 1].size
+        TP = y_pred_test[y_pred_test == 1].size + \
+            y_pred_train[y_pred_train == 1].size
         TN = y_pred_outliers[y_pred_outliers == -1].size
         FP = y_pred_outliers[y_pred_outliers == 1].size
-        FN = y_pred_test[y_pred_test == -1].size
+        FN = y_pred_test[y_pred_test == -1].size + \
+            y_pred_train[y_pred_train == -1].size
 
         return {
             "TP": TP,
