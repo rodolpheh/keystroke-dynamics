@@ -75,7 +75,3 @@ class Sample(Structure):
     def impostor(self, is_impostor: bool):
         self._impostor = is_impostor
 
-    @property
-    def timings(self):
-        for event in self:
-            pass
