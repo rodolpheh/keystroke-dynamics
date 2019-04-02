@@ -34,7 +34,7 @@ def encrypt_parameters() -> List[str]:
     return aes
 
 
-def file_dump(encrypted: bytes, file_name: str = 'dump.dump'):
+def file_dump(encrypted: bytes, file_name: str = 'dump.dump') -> str:
     """Sauve une chaine chiffré dans un fichier
 
     Ecriture de la chaine de caractère chiffrée dans un fichier.
@@ -44,18 +44,19 @@ def file_dump(encrypted: bytes, file_name: str = 'dump.dump'):
     Sert de manière générale pour ecrire un contenu dans un fichier
     """
     with open(file_name, 'wb') as dump_file:
-        pickle.dump(encrypted, dump_file)
-        return file_name
+        dump_file.write(encrypted)
+    return file_name
 
 
-def file_read(file_name: str):
+def file_read(file_name: str) -> bytes:
     """Extrait une chaine chiffrée d'un fichier
 
     Le fichier est ouvert pour extraire son contenu sous forme
     d'une chaine de caractère.
     """
     with open(file_name, 'rb') as saved_dump:
-        binary_lines = pickle.load(saved_dump)
+        binary_lines = saved_dump.read()
+
     return binary_lines
 
 
@@ -69,41 +70,69 @@ def aes_gen(init_vector: str, key: str) -> AES.AESCipher:
     return AES.new(key, AES.MODE_CBC, init_vector)
 
 
-def encrypt(message, aes: AES.AESCipher) -> bytes:
-    """Chiffre un chaîne
+def encrypt(message: bytes, aes: AES.AESCipher) -> bytes:
+    """Chiffre une chaine d'octets
 
     Chiffrement d'une chaine codée sur un multiple de 16 octets.
     Le chiffrement est effectué à l'aide de l'AES, fourni au préalable.
-    La fonction retourne donc la chaine chiffré.
+    La fonction retourne donc la chaine chiffrée.
     Un Zero Padding est appliqué.
     """
-    message = binascii.hexlify(pickle.dumps(message))
-    message = message.decode('ascii')
 
-    length = len(message)
+    # Convert eventual not-bytes object to bytes
+    message = pickle.dumps(message)
+    # Convert sequence of bytes to acii-compatible sequence of bytes
+    message = binascii.hexlify(message)
+
+    # Crypto.Cipher.AES.AESCipher needs an ASCII string to work on
+    message_str = message.decode('ascii')
+
+    # Section with zero-padding logic
+    length = len(message_str)
+    # Adding a position for the header value
     length += 1
 
-    if (length % 16 )!= 0:
+    # Calculating length of needed padding
+    if (length % 16) != 0:
         complement_size = 16 - (length % 16)
     else:
         complement_size = 0
 
-    header = hex(complement_size)[-1]
+    # Header holds the size of added padding
+    header = hex(complement_size)
+    # Stripping leading "0x" by keeping only last char
+    header = header[-1]
+
+    # Creating padding ASCII string with zeros
     complement = "0" * complement_size
-    message = "".join([header, message, complement])
-    length = len(message)
-    return aes.encrypt(message)
+
+    # Merging header message and padding
+    message_str = "".join([header, message_str, complement])
+
+    # Encrypt zero-padded message
+    return aes.encrypt(message_str)
 
 
-def decrypt(message: bytes, aes: AES.AESCipher):
-    """Déchiffre une chaîne
+def decrypt(message: bytes, aes: AES.AESCipher) -> bytes:
+    """Déchiffre une chaîne d'octets
 
     Déchiffrement d'une chaine codée sur un multiple de 16 octets.
     Le déchiffrement est effectué à l'aide de l'AES, fourni au préalable.
     La fonction retourné donc la chaine déchiffré.
     """
+
+    # Get ASCII string of decrypted data
     encrypted = aes.decrypt(message).decode()
+
+    # Retrieve size of padding by parsing header
     header = int(encrypted[0], 16)
+
+    # Retrieve only payload of encoded data by stripping header
+    # and padding
     decrypted = encrypted[1:(len(encrypted)-header)]
+
+    # Decoding data from ASCII binary representation
     decrypted_bytes = binascii.unhexlify(decrypted)
+
+    # Returning bytes after pickle unserialization
     return pickle.loads(decrypted_bytes)
