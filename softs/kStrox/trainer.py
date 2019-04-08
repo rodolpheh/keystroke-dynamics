@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# Pip 0563: https://www.python.org/dev/peps/pep-0563/
-from __future__ import annotations
 
 from Model import Model
 from Sample import Sample
@@ -219,6 +217,7 @@ def trainer():
 
     if save_model:
         filename = get_custom_filename(target_filenames)
+        os.makedirs("model", exist_ok=True)
         with open("model/" + filename, 'wb') as file:
             pickle.dump(params["model"], file, pickle.HIGHEST_PROTOCOL)
             print("Model saved in model/" + filename)

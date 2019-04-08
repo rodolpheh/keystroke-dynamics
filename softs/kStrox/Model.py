@@ -1,6 +1,3 @@
-# Pip 0563: https://www.python.org/dev/peps/pep-0563/
-from __future__ import annotations
-
 # Pip 484 : typing
 from typing import Dict
 
@@ -54,7 +51,7 @@ class Model(BaseEstimator):
             self.makePipeline()
             return self._pipeline
 
-    def fit(self, X: np.array, y: np.array = None) -> Model:
+    def fit(self, X: np.array, y: np.array = None):
         # Fit the pipeline
         self.pipeline.fit(X)
 

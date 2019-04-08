@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-# Pip 0563: https://www.python.org/dev/peps/pep-0563/
-from __future__ import annotations
+
 from typing import List
 
 # CLI style imports
