@@ -85,13 +85,43 @@ def tester():
     with open("model/" + target_filename['name'], 'rb') as file:
         model = pickle.load(file)
 
-    raw_sample = get_single_sample()
-    raw_sample.impostor = True
-    parser = SampleParser(raw_sample)
-    timings = parser.timings
-    timings = timings[:timings[-1]]
-    results = model.pipeline.predict([timings])
-    print(results)
+    is_running = True
+
+    while is_running:
+        raw_sample = get_single_sample()
+        raw_sample.impostor = True
+        parser = SampleParser(raw_sample)
+        timings = parser.timings
+        timings = timings[:timings[-1]]
+        try:
+            results = model.pipeline.predict([timings])
+            is_running = False
+            if results[0] == -1:
+                print('''\u001b[38;5;196m
+ █████▒▄▄▄       ██▓ ██▓    ▓█████ ▓█████▄ 
+▓██   ▒▒████▄    ▓██▒▓██▒    ▓█   ▀ ▒██▀ ██▌
+▒████ ░▒██  ▀█▄  ▒██▒▒██░    ▒███   ░██   █▌
+░▓█▒  ░░██▄▄▄▄██ ░██░▒██░    ▒▓█  ▄ ░▓█▄   ▌
+░▒█░    ▓█   ▓██▒░██░░██████▒░▒████▒░▒████▓ 
+ ▒ ░    ▒▒   ▓▒█░░▓  ░ ▒░▓  ░░░ ▒░ ░ ▒▒▓  ▒ 
+ ░       ▒   ▒▒ ░ ▒ ░░ ░ ▒  ░ ░ ░  ░ ░ ▒  ▒ 
+ ░ ░     ░   ▒    ▒ ░  ░ ░      ░    ░ ░  ░ 
+             ░  ░ ░      ░  ░   ░  ░   ░    
+                                     ░      
+                \u001b[0m''')
+            else:
+                print('''\u001b[38;5;76m
+███████╗██╗   ██╗ ██████╗ ██████╗███████╗███████╗███████╗
+██╔════╝██║   ██║██╔════╝██╔════╝██╔════╝██╔════╝██╔════╝
+███████╗██║   ██║██║     ██║     █████╗  ███████╗███████╗
+╚════██║██║   ██║██║     ██║     ██╔══╝  ╚════██║╚════██║
+███████║╚██████╔╝╚██████╗╚██████╗███████╗███████║███████║
+╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝╚══════╝╚══════╝╚══════╝
+                                                         
+                \u001b[0m''')
+        except ValueError:
+            print("It seems that you made a mistake, try again")
+            continue
 
 
 if __name__ == "__main__":
