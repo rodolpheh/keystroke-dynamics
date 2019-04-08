@@ -3,7 +3,7 @@ version: '3'
 services:
   sampler:
     build: .
-    image: sample_recorder:latest
+    image: kstrox:latest
     volumes:
       - ./sequence:/root/project/sequence
     devices:
