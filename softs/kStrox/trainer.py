@@ -23,6 +23,19 @@ from threading import Thread, current_thread
 from time import sleep
 
 
+def get_binary_validation(message: str, default: bool = True) -> bool:
+    """Validation on a binary alternative"""
+    questions = [
+        {
+            'type': 'confirm',
+            'message': message,
+            'name': 'confirmed',
+            'default': default,
+        }
+    ]
+    return prompt(questions, style=custom_style_2)["confirmed"]
+
+
 def get_path() -> str:
     """Path of current dir"""
     return os.path.dirname(os.path.realpath(__file__))
@@ -174,6 +187,15 @@ def trainer():
     report = Model.report(params["model"], train, test, fakeData)
 
     print_report(report)
+
+    save_model = get_binary_validation(
+            "Do you want to keep this model ?", True
+        )
+
+    if save_model:
+        with open("model/model.mdl", 'wb') as file:
+            pickle.dump(params["model"], file, pickle.HIGHEST_PROTOCOL)
+            print("Model saved in model/model.mdl")
 
 
 def spinner_loop(spinner):
