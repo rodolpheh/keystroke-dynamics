@@ -54,7 +54,7 @@ def get_existing_filename(existing_files: List[str]) -> str:
     # Ask user which file only if there are multiple files
 
     if len(existing_files) == 1:
-        return existing_files[0]
+        return existing_files[0]["name"]
 
     questions = [
         {
@@ -82,7 +82,8 @@ def tester():
         exit()
 
     model = None
-    with open("model/" + target_filename['name'], 'rb') as file:
+    print(target_filename)
+    with open("model/" + target_filename, 'rb') as file:
         model = pickle.load(file)
 
     is_running = True
@@ -117,7 +118,6 @@ def tester():
 ╚════██║██║   ██║██║     ██║     ██╔══╝  ╚════██║╚════██║
 ███████║╚██████╔╝╚██████╗╚██████╗███████╗███████║███████║
 ╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝╚══════╝╚══════╝╚══════╝
-                                                         
                 \u001b[0m''')
         except ValueError:
             print("It seems that you made a mistake, try again")

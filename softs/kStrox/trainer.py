@@ -10,6 +10,8 @@ import glob
 import os
 import pickle
 from typing import List
+import datetime
+import re
 
 from sklearn.model_selection import train_test_split
 
@@ -21,6 +23,29 @@ from progress.spinner import PixelSpinner
 
 from threading import Thread, current_thread
 from time import sleep
+
+
+def get_custom_filename(existing_files: List[str]) -> str:
+    """Prompt user for new filename"""
+    questions = [
+        {
+            'type': 'input',
+            'name': 'custom_filename',
+            'message': 'Name your model :',
+            'default': get_default_filename(),
+            'validate': lambda text: (
+                (len(re.findall(r'^[A-Za-z0-9_\-.]{3,40}$', text)) > 0
+                 and text+'.smp' not in existing_files) or
+                'Typed file name contains illegal characters or already exist'
+            )
+        }
+    ]
+    return prompt(questions, style=custom_style_2)['custom_filename']+'.mdl'
+
+
+def get_default_filename() -> str:
+    """Generate default filename based on timestamp"""
+    return datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 
 def get_binary_validation(message: str, default: bool = True) -> bool:
@@ -193,9 +218,10 @@ def trainer():
         )
 
     if save_model:
-        with open("model/model.mdl", 'wb') as file:
+        filename = get_custom_filename(target_filenames)
+        with open("model/" + filename, 'wb') as file:
             pickle.dump(params["model"], file, pickle.HIGHEST_PROTOCOL)
-            print("Model saved in model/model.mdl")
+            print("Model saved in model/" + filename)
 
 
 def spinner_loop(spinner):
