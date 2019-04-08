@@ -1,6 +1,17 @@
-# Sample recorder
+# kStrox
 
-## Using Docker
+- [:whale: Using Docker](#whale-using-docker)
+  - [Requirements](#requirements)
+  - [Build](#build)
+  - [Run with Docker](#run-with-docker)
+  - [Run with Docker-compose](#run-with-docker-compose)
+- [Manual installation](#manual-installation)
+  - [Requirements](#requirements-1)
+  - [Deployment (first launch)](#deployment-first-launch)
+  - [Usage](#usage)
+  - [Gotcha](#gotcha)
+
+## :whale: Using Docker
 
 ### Requirements
 
@@ -10,20 +21,20 @@
 ### Build
 
 ```bash
-docker build --rm -t sample_recorder:latest .
+docker build --rm -t kstrox:latest .
 ```
 
 ### Run with Docker
 
 ```bash
-docker run --rm -it --device "/dev/input/by-path/platform-i8042-serio-0-event-kbd" --volume `pwd`/sequence:/root/project/sequence sample_recorder:latest
+docker run --rm -it --device "/dev/input/by-path/platform-i8042-serio-0-event-kbd" --volume `pwd`/sequence:/root/project/sequence --volume `pwd`/model:/root/project/model kstrox:latest
 ```
 
 ### Run with Docker-compose
 
 ```bash
 # Much simpler isn't it ?
-docker-compose run --rm sampler
+docker-compose run --rm kstrox
 ```
 
 ## Manual installation
