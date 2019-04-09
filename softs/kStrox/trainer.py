@@ -137,8 +137,6 @@ def print_report(report):
 
 
 def trainer():
-    print("--=== Welcome to kStrokes model trainer ! ===--\n")
-
     existing_files = get_file_list()
 
     if not existing_files:
@@ -204,7 +202,7 @@ def trainer():
     print("")
 
     # Print a report on the training/optimization phase
-    evaluate = Model.evaluate(params["model"], train, test)
+    # evaluate = Model.evaluate(params["model"], train, test)
 
     # Print a final evaluation of the model agains impostors data
     report = Model.report(params["model"], train, test, fakeData)
@@ -230,5 +228,17 @@ def spinner_loop(spinner):
         sleep(0.5)
 
 
+def main():
+    is_running = True
+    while is_running:
+        trainer()
+        again = get_binary_validation(
+            "Do you want to train another model ?",
+            False
+        )
+        if not again:
+            is_running = False
+
+
 if __name__ == '__main__':
-    trainer()
+    main()
