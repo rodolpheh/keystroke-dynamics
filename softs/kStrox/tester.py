@@ -17,6 +17,19 @@ from io import StringIO
 from SampleParser import SampleParser
 
 
+def get_binary_validation(message: str, default: bool = True) -> bool:
+    """Validation on a binary alternative"""
+    questions = [
+        {
+            'type': 'confirm',
+            'message': message,
+            'name': 'confirmed',
+            'default': default,
+        }
+    ]
+    return prompt(questions, style=custom_style_2)["confirmed"]
+
+
 def get_single_sample() -> Sample:
     """Record a single sample"""
     print("Recording ... : ", end="")
@@ -67,8 +80,6 @@ def get_existing_filename(existing_files: List[str]) -> str:
 
 
 def tester():
-    print("--=== Welcome to kStrokes model tester ! ===--\n")
-
     existing_files = get_file_list()
 
     if not existing_files:
@@ -95,19 +106,18 @@ def tester():
         timings = timings[:timings[-1]]
         try:
             results = model.pipeline.predict([timings])
-            is_running = False
             if results[0] == -1:
                 print('''\u001b[38;5;196m
- █████▒▄▄▄       ██▓ ██▓    ▓█████ ▓█████▄ 
+ █████▒▄▄▄       ██▓ ██▓    ▓█████ ▓█████▄
 ▓██   ▒▒████▄    ▓██▒▓██▒    ▓█   ▀ ▒██▀ ██▌
 ▒████ ░▒██  ▀█▄  ▒██▒▒██░    ▒███   ░██   █▌
 ░▓█▒  ░░██▄▄▄▄██ ░██░▒██░    ▒▓█  ▄ ░▓█▄   ▌
-░▒█░    ▓█   ▓██▒░██░░██████▒░▒████▒░▒████▓ 
- ▒ ░    ▒▒   ▓▒█░░▓  ░ ▒░▓  ░░░ ▒░ ░ ▒▒▓  ▒ 
- ░       ▒   ▒▒ ░ ▒ ░░ ░ ▒  ░ ░ ░  ░ ░ ▒  ▒ 
- ░ ░     ░   ▒    ▒ ░  ░ ░      ░    ░ ░  ░ 
-             ░  ░ ░      ░  ░   ░  ░   ░    
-                                     ░      
+░▒█░    ▓█   ▓██▒░██░░██████▒░▒████▒░▒████▓
+ ▒ ░    ▒▒   ▓▒█░░▓  ░ ▒░▓  ░░░ ▒░ ░ ▒▒▓  ▒
+ ░       ▒   ▒▒ ░ ▒ ░░ ░ ▒  ░ ░ ░  ░ ░ ▒  ▒
+ ░ ░     ░   ▒    ▒ ░  ░ ░      ░    ░ ░  ░
+             ░  ░ ░      ░  ░   ░  ░   ░
+                                     ░
                 \u001b[0m''')
             else:
                 print('''\u001b[38;5;76m
@@ -118,10 +128,25 @@ def tester():
 ███████║╚██████╔╝╚██████╗╚██████╗███████╗███████║███████║
 ╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝╚══════╝╚══════╝╚══════╝
                 \u001b[0m''')
+            again = get_binary_validation("Do you want to try again ?", False)
+            if not again:
+                is_running = False
         except ValueError:
             print("It seems that you made a mistake, try again")
             continue
 
 
+def main():
+    is_running = True
+    while is_running:
+        tester()
+        again = get_binary_validation(
+            "Do you want to test another model ?",
+            False
+        )
+        if not again:
+            is_running = False
+
+
 if __name__ == "__main__":
-    tester()
+    main()

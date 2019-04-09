@@ -15,12 +15,6 @@ from examples import custom_style_2
 # Custom C library wrapped
 from keylogger import Sample, keylog_session
 
-def print_logo():
-    """Displays the text logo as the program starts"""
-    with open('logo.txt', 'r') as file:
-        for line in file:
-            print(line)
-
 def get_intro_message() -> str:
     """Holds a message for the beginning of a new sequence"""
     return """You are about to begin a new record.
@@ -172,9 +166,6 @@ def save_to_file(filename: str, sequence: List[Sample]):
 
 def sample_recorder():
     """Main program"""
-    print_logo()
-    print("--=== Welcome to kStrokes sequence manager ! ===--\n")
-
     init_seq_size = 0
 
     # Get list of files in `sequence/` directory
