@@ -208,6 +208,19 @@ def sample_recorder():
     save_to_file(target_filename, sequence[init_seq_size:])
     print("saved!")
 
+
+def main():
+    is_running = True
+    while is_running:
+        sample_recorder()
+        again = get_binary_validation(
+            "Do you want to add samples to an other sequence ?",
+            False
+        )
+        if not again:
+            is_running = False
+
+
 #### == program start == ####
 if __name__ == '__main__':
-    sample_recorder()
+    main()

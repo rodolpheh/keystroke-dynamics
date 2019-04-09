@@ -52,7 +52,7 @@ def menu():
         choice = program_menu()
 
         if choice == "Sample recorder":
-            sample_recorder.sample_recorder()
+            sample_recorder.main()
         elif choice == "Trainer":
             trainer.main()
         else:
