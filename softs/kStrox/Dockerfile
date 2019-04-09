@@ -1,18 +1,22 @@
-FROM ubuntu:latest
-
-RUN apt update && apt upgrade -y
-RUN apt install -y python3-venv python3-dev build-essential python3-pip
+FROM alpine:latest
 
 RUN mkdir /root/project
 WORKDIR /root/project
+COPY keylogger.c ./
+COPY keylogger.h ./
+COPY Makefile ./
+COPY requirements.txt ./
 
-COPY requirements.txt /root/project
+RUN apk --no-cache add linux-headers g++ make \
+ && make dll \
+ && apk del make g++ linux-headers
 
-RUN pip3 install --upgrade pip
-RUN pip3 install -r requirements.txt
+COPY requirements.txt ./
+RUN apk --no-cache add python3 python3-dev openblas-dev openblas gfortran g++ make libstdc++ \
+ && pip3 install --no-cache-dir --upgrade pip \
+ && pip3 install --no-cache-dir --only-binary all --prefer-binary -r requirements.txt \
+ && apk del openblas-dev gfortran python3-dev make g++
 
 COPY . /root/project
-RUN make dll
-
 
 ENTRYPOINT [ "python3", "hello.py" ]

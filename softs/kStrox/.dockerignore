@@ -1,1 +1,8 @@
 deploy.sh
+env/
+model/
+__pycache__/
+sequence/
+.git/
+.gitignore
+.dockerignore
