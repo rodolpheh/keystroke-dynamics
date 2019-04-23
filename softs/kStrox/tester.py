@@ -1,13 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from typing import List
-
-# CLI style imports
-from PyInquirer import prompt
-from examples import custom_style_2
-
-import glob
-import os
 import sys
 import pickle
 
@@ -16,18 +8,7 @@ from io import StringIO
 
 from SampleParser import SampleParser
 
-
-def get_binary_validation(message: str, default: bool = True) -> bool:
-    """Validation on a binary alternative"""
-    questions = [
-        {
-            'type': 'confirm',
-            'message': message,
-            'name': 'confirmed',
-            'default': default,
-        }
-    ]
-    return prompt(questions, style=custom_style_2)["confirmed"]
+from common import get_binary_validation, get_file_list, get_existing_filename
 
 
 def get_single_sample() -> Sample:
@@ -51,36 +32,8 @@ def get_single_sample() -> Sample:
     return sample
 
 
-def get_file_list() -> List[str]:
-    """Get the list of candidate files in `sequence/` dir"""
-    filenames = []
-    os.makedirs("sequence", exist_ok=True)
-    for file in glob.glob("model/*.mdl"):
-        filenames.append({'name': file.replace("model/", "")})
-    return filenames
-
-
-def get_existing_filename(existing_files: List[str]) -> str:
-    """Choose file name from a list of filenames"""
-
-    # Ask user which file only if there are multiple files
-
-    if len(existing_files) == 1:
-        return existing_files[0]["name"]
-
-    questions = [
-        {
-            'type': 'list',
-            'name': 'target_filename',
-            'message': 'Which file do you want to load ?',
-            'choices': existing_files
-        }
-    ]
-    return prompt(questions, style=custom_style_2)["target_filename"]
-
-
 def tester():
-    existing_files = get_file_list()
+    existing_files = get_file_list("model", "mdl")
 
     if not existing_files:
         print("No models files found. Come back when you have models.")

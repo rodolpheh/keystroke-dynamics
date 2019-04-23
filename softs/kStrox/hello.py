@@ -3,6 +3,7 @@
 import sample_recorder
 import trainer
 import tester
+import evaluator
 
 # CLI style imports
 from PyInquirer import prompt
@@ -23,7 +24,7 @@ def get_binary_validation(message: str, default: bool = True) -> bool:
 
 
 def program_menu():
-    items = ["Sample recorder", "Trainer", "Tester"]
+    items = ["Sample recorder", "Trainer", "Evaluator", "Tester"]
     options = [
         {
             'type': 'list',
@@ -55,6 +56,8 @@ def menu():
             sample_recorder.main()
         elif choice == "Trainer":
             trainer.main()
+        elif choice == "Evaluator":
+            evaluator.main()
         else:
             tester.main()
 

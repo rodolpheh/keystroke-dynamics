@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from Model import Model
-from Sample import Sample
 from SampleParser import SampleParser
 
 import glob
@@ -16,11 +15,15 @@ from sklearn.model_selection import train_test_split
 # CLI style imports
 from PyInquirer import prompt
 from examples import custom_style_2
-from termgraph.termgraph import chart, AVAILABLE_COLORS as colors
 from progress.spinner import PixelSpinner
 
 from threading import Thread, current_thread
 from time import sleep
+
+from common import get_binary_validation
+from common import print_report
+from common import get_existing_filename
+from common import get_sequence_from_file
 
 
 def get_custom_filename(existing_files: List[str]) -> str:
@@ -46,56 +49,6 @@ def get_default_filename() -> str:
     return datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 
-def get_binary_validation(message: str, default: bool = True) -> bool:
-    """Validation on a binary alternative"""
-    questions = [
-        {
-            'type': 'confirm',
-            'message': message,
-            'name': 'confirmed',
-            'default': default,
-        }
-    ]
-    return prompt(questions, style=custom_style_2)["confirmed"]
-
-
-def get_path() -> str:
-    """Path of current dir"""
-    return os.path.dirname(os.path.realpath(__file__))
-
-
-def get_sequence_from_file(filename: str) -> List[Sample]:
-    """Recover sequence of samples from file"""
-    samples = []
-
-    with open(get_path() + "/sequence/" + filename, "rb") as file:
-        while True:
-            try:
-                samples.append(pickle.load(file))
-            except EOFError:
-                break
-    return samples
-
-
-def get_existing_filename(existing_files: List[str]) -> str:
-    """Choose file name from a list of filenames"""
-
-    # Ask user which file only if there are multiple files
-
-    if len(existing_files) == 1:
-        return existing_files[0]
-
-    questions = [
-        {
-            'type': 'checkbox',
-            'name': 'target_filenames',
-            'message': 'Which file do you want to load ?',
-            'choices': existing_files
-        }
-    ]
-    return prompt(questions, style=custom_style_2)["target_filenames"]
-
-
 def get_file_list() -> List[str]:
     """Get the list of candidate files in `sequence/` dir"""
     filenames = []
@@ -105,37 +58,6 @@ def get_file_list() -> List[str]:
     return filenames
 
 
-def print_report(report):
-    print("\n# Metrics\n")
-    labels = ['User', 'Impostor']
-    data = [
-        [report["TP"], report["FN"]],
-        [report["TN"], report["FP"]]
-    ]
-    args = {
-        'stacked': True, 'width': 80, 'no_labels': False, 'format': '{:<5.2f}',
-        'suffix': '', "vertical": False
-    }
-    chart(colors=[
-        colors['green'],
-        colors['red']
-        ], data=data, args=args, labels=labels)
-
-    print("\n# Evaluation\n")
-    labels = ['Precision', 'Recall', 'F1', 'Accuracy']
-    data = [
-        [report["precision"] * 100],
-        [report["recall"] * 100],
-        [report["f1"] * 100],
-        [report["accuracy"] * 100]
-    ]
-    args = {
-        'stacked': False, 'width': 50, 'no_labels': False,
-        'format': '{:<5.2f}', 'suffix': '', "vertical": False
-    }
-    chart(colors=[], data=data, args=args, labels=labels)
-
-
 def trainer():
     existing_files = get_file_list()
 
@@ -143,7 +65,7 @@ def trainer():
         print("No samples files found. Come back when you have samples.")
         exit()
 
-    target_filenames = get_existing_filename(existing_files)
+    target_filenames = get_existing_filename(existing_files, True)
     if len(target_filenames) == 0:
         print("No files selected, quitting...")
         exit()
