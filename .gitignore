@@ -53,6 +53,9 @@ Thumbs.db
 env/
 __pycache__
 
+*pyvenv.cfg
+*pip-selfcheck.json
+
 # DLLs
 *.so
 
