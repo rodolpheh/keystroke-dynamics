@@ -5,6 +5,8 @@ import pickle
 import os
 import sys
 import argparse
+import time
+
 
 def sanitize_encoding(filename : str ):
     print(filename)
@@ -33,20 +35,44 @@ def sanitize_encoding(filename : str ):
         for sample in samples:
             pickle.dump(sample, file, pickle.HIGHEST_PROTOCOL)
 
+def display_file(filename):
+    samples = []
+    with open(filename, 'rb') as file:
+        while True:
+            try:
+                samples.append(pickle.load(file))
+            except EOFError:
+                break
+
+    print("{} :".format(filename))
+    for sample in samples:
+        print("\t{}\t{}\t[{}]".format(time.strftime("%a, %d %b %Y %H:%M:%S", sample_to_localtime(sample)), len(sample),"Impostor" if sample.impostor else "Legit"))
+    print()
+
+def sample_to_localtime(a_sample):
+    kb_evt = next(iter(a_sample))
+    return time.localtime(kb_evt.seconds)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("FILENAME", nargs='+', help='One or multiple file names')
     parser.add_argument("-x", "--exclude", help='A range with the format start,finish for example : 10,30. Dataset values to exclude from provided file')
-    parser.add_argument("-d", "--display", help="Displays informations on dataset(s) in provided files")
+    parser.add_argument("-d", "--display", help="Displays informations on dataset(s) in provided files", action="store_const", const=True)
+    parser.add_argument("-e", "--encoding", help="Clean encoding issues on serialized files", action="store_const", const=True)
+
     args = vars(parser.parse_args())
 
     if len(args["FILENAME"]) > 1 and args["exclude"]:
         parser.error("Can only exclude data from single file")
     elif args["display"]:
         print("Priting file(s) contents of {}".format(args["FILENAME"]))
+        for filename in args["FILENAME"]:
+            display_file(filename)
+    elif args["encoding"]:
+        print("Cleaning encoding problems on file(s) : {}".format(args["FILENAME"]))
     else:
-        print("Sanitizing files : {}".format(args["FILENAME"]))
-
+        parser.error("No operation provided")
 
 if __name__ == '__main__' :
     main()
