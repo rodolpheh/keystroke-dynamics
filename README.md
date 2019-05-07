@@ -1,34 +1,73 @@
-# Keystroke dynamics
+# kStrox
 
-Scripts et datas pour le projet de recherche sur les keystroke dynamics.
+- [:whale: Using Docker](#whale-using-docker)
+  - [Requirements](#requirements)
+  - [Build](#build)
+  - [Run with Docker](#run-with-docker)
+  - [Run with Docker-compose](#run-with-docker-compose)
+- [Manual installation](#manual-installation)
+  - [Requirements](#requirements-1)
+  - [Deployment (first launch)](#deployment-first-launch)
+  - [Usage](#usage)
+  - [Gotcha](#gotcha)
 
-## Objectif
+## :whale: Using Docker
 
-L'objectif est de faire une démonstration.
+### Requirements
 
+* `docker`
+* `docker-compose` (optional)
 
+### Build
 
-* 31/10/18 : État de l'art sous forme de rapport bibliographique
+```bash
+docker build --rm -t kstrox:latest .
+```
 
-Entre 2 et 4 synthèses de publication par personne. 
-Expliquer en quoi les publications sont pertinentes pour notre problématique.
-Expliquer quels en sont les faiblesses.
+### Run with Docker
 
-Les synthèses n'ont pas de contrainte de taille mais dans l'idée c'est une ou
-deux pages. 
+```bash
+docker run --rm -it --device "/dev/input/by-path/platform-i8042-serio-0-event-kbd" --volume `pwd`/sequence:/root/project/sequence --volume `pwd`/model:/root/project/model kstrox:latest
+```
 
-On pourra ajouter une section terminologie et glossaire ("Formulaire") pour les 
-concepts les plus utilisés du domaine.
+### Run with Docker-compose
 
-On ajoutera aux synthèses individuelles une synthèse globale, comment les
-publications apportent à notre construction de la problématique, orientent
-notre sujet. De tout ça on extrait une problématique, et une présentation 
-du sujet.
+```bash
+# Much simpler isn't it ?
+docker-compose run --rm kstrox
+```
 
-En annexe : biblio et les publications elle-mêmes.
+## Manual installation
 
-Rendu en format PDF.
+### Requirements
 
-* 19/11/18 : Présentation démo (du moins ce qui va être fait) + problématique
-* 15/04/19 : présentation de l'environnement avec possiblement quelques tests
-* 18/05/19 : soutenance et publication
+* `gcc`
+* `make`
+* `python3`
+
+### Deployment (first launch)
+
+```bash
+source deploy.sh
+```
+
+### Usage
+
+```bash
+# Step inside the virtual env
+source env/bin/activate
+# Record some samples
+python3 sample_recorder.py
+# Step outside the virtual env
+deactivate
+```
+
+### Gotcha
+
+The software needs access to an input file in `/dev/input` path. So we need to add the user to the `input` group.
+
+```bash
+sudo usermod -aG input $USER
+```
+
+The command is in the `deploy.sh` script and should be already executed after `source deploy.sh`. But you probably need to restart your session
