@@ -17,6 +17,7 @@ Le principal algorithme de \textit{novelty detection} présent dans la librairie
 
 Les données nécessitent d'abord un pré-traitement. Selon la publication \textit{A Practical Guide to Support Vector Classification \cite{svmpractical}}, les données doivent être mises à l'échelle $[0, 1]$ ou $[-1, 1]$. Notre choix s'est porté sur l'échelle $[0, 1]$, qui mettait en évidence de meilleurs résultats lors de l'évaluation des tests préliminaires.
 
+\label{modele}
 \subsection{Entraînement du modèle}
 
 L'entraînement du modèle se fait uniquement sur les données utilisateur, c'est-à-dire des données non polluées par des données d'imposteurs. Comme pour nombre de modèles d'apprentissage machine, nous divisons les données en deux lots :
