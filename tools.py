@@ -72,7 +72,14 @@ def main():
         parser.error("Can only exclude data from single file")
     elif args["exclude"]:
         slice_str = [int(x) for x in args["exclude"].split(',')]
-        myslice = slice(slice_str[0], slice_str[1])
+
+        # myslice can be an index if there is only one bound
+        start = slice_str[0]
+        if len(slice_str) > 1:
+            end = slice_str[1]
+            myslice = slice(start, end)
+        else :
+            myslice = start
         print("Excluding range {}".format(myslice))
         excluded = get_samples(args["FILENAME"][0])[myslice]
         print("Elements excluded : {}".format(excluded))
