@@ -36,6 +36,13 @@ def sanitize_encoding(filename : str ):
             pickle.dump(sample, file, pickle.HIGHEST_PROTOCOL)
 
 def display_file(filename):
+    samples = get_samples(filename)
+    print("{} :".format(filename))
+    for sample in samples:
+        print("\t{}\t{}\t[{}]".format(time.strftime("%a, %d %b %Y %H:%M:%S", sample_to_localtime(sample)), len(sample),"Impostor" if sample.impostor else "Legit"))
+    print()
+
+def get_samples(filename):
     samples = []
     with open(filename, 'rb') as file:
         while True:
@@ -43,11 +50,7 @@ def display_file(filename):
                 samples.append(pickle.load(file))
             except EOFError:
                 break
-
-    print("{} :".format(filename))
-    for sample in samples:
-        print("\t{}\t{}\t[{}]".format(time.strftime("%a, %d %b %Y %H:%M:%S", sample_to_localtime(sample)), len(sample),"Impostor" if sample.impostor else "Legit"))
-    print()
+    return samples
 
 def sample_to_localtime(a_sample):
     kb_evt = next(iter(a_sample))
@@ -63,8 +66,16 @@ def main():
 
     args = vars(parser.parse_args())
 
+    print(args)
+
     if len(args["FILENAME"]) > 1 and args["exclude"]:
         parser.error("Can only exclude data from single file")
+    elif args["exclude"]:
+        slice_str = [int(x) for x in args["exclude"].split(',')]
+        myslice = slice(slice_str[0], slice_str[1])
+        print("Excluding range {}".format(myslice))
+        excluded = get_samples(args["FILENAME"][0])[myslice]
+        print("Elements excluded : {}".format(excluded))
     elif args["display"]:
         print("Priting file(s) contents of {}".format(args["FILENAME"]))
         for filename in args["FILENAME"]:
