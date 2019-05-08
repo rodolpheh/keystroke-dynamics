@@ -21,12 +21,18 @@ def sanitize_encoding(filename : str) -> List[Sample]:
 
     return samples
 
-def display_file(filename : str, indent : bool = False):
+def display_file(
+    filename : str,
+    custom_slice : slice = slice(None),
+    indent : bool = False
+    ):
     """Display the serialized samples in a file"""
 
     samples = get_samples(filename)
-    i = 0
-    for sample in samples:
+    print("custom_slice : {}".format(custom_slice))
+    print("Custom start : {}".format(custom_slice.start))
+    i = custom_slice.start if custom_slice.start else 0
+    for sample in samples[custom_slice]:
         print("{}[{:3d}]\t{}\t{}\t{}".format(
             "\t" if indent else "",
             i,
@@ -35,7 +41,7 @@ def display_file(filename : str, indent : bool = False):
             len(sample),
             "Impostor" if sample.impostor else "Legit")
         )
-        i+=1
+        i += (custom_slice.step if custom_slice.step else 1)
 
 def get_samples(filename : str) -> List[Sample]:
     """Get the serialized sequence of Samples from a file"""
@@ -74,22 +80,46 @@ def sanitize_flag(filename : str):
     new_filename = "".join(new_filename)
     save_to_file(sanitize_encoding(filename), new_filename )
 
-def main():
-    parser = argparse.ArgumentParser()
+def extract_flag(filename : str, a_slice_args, dest : str = None):
+
+    try:
+        slice_str = [int(x) for x in a_slice_args.split(',')]
+    except:
+        raise Exception("Incorrect range format")
+
+    # Building the slice object
+    start = slice_str[0]
+    if len(slice_str) > 1:
+        end = slice_str[1]
+        if start >= end:
+            raise Exception(
+                "Incorrect range value : [{}:{}]".format(start, end))
+        else: myslice = slice(start, end)
+    else :
+        myslice = slice(start, start+1)
+
+    if dest:
+        orig_samples = get_samples(filename)
+        save_to_file(orig_samples[myslice], dest[0])
+    else:
+        display_file(filename, myslice)
+
+
+def define_args(parser):
     parser.add_argument(
         "FILENAME",
         nargs='+',
         help='One or multiple file names')
     parser.add_argument(
         "-x",
-        "--exclude",
+        "--extract",
         help='A range with the format start,finish for example : 10,30. '
-        'Dataset values to exclude from provided file'
+        'Dataset values to extract from provided file'
         )
     parser.add_argument(
         "-d",
         "--display",
-        help="Displays informations on dataset(s) in provided files",
+        help="DisplaExcludingys informations on dataset(s) in provided files",
         action="store_const",
         const=True
         )
@@ -100,23 +130,32 @@ def main():
         action="store_const",
         const=True
         )
+    parser.add_argument(
+        "-o",
+        "--output-file",
+        nargs=1
+    )
+
+def check_args(parser):
 
     args = vars(parser.parse_args())
 
-    if len(args["FILENAME"]) > 1 and args["exclude"]:
-        parser.error("Can only exclude data from single file")
-    elif args["exclude"]:
-        slice_str = [int(x) for x in args["exclude"].split(',')]
-        filename = args["FILENAME"][0]
-        # myslice can be an index if there is only one bound
-        start = slice_str[0]
-        if len(slice_str) > 1:
-            end = slice_str[1]
-            myslice = slice(start, end)
-        else :
-            myslice = start
-        print("Excluding range {} from file {}".format(myslice, filename))
-        # excluded = get_samples(args["FILENAME"][0])[myslice]
+    if args["output_file"] and os.path.isfile(args["output_file"][0]):
+        parser.error("Cannot export to already existing file, "
+        "please implement --append")
+
+    if len(args["FILENAME"]) > 1 and args["extract"]:
+        parser.error("Can only extract data from single file")
+    elif args["extract"]:
+        try :
+            extract_flag(
+                args["FILENAME"][0],
+                args["extract"],
+                args["output_file"]
+            )
+        except Exception as e:
+            parser.error(str(e))
+
     elif args["display"]:
         files = args["FILENAME"]
         if len(files) > 1 :
@@ -130,6 +169,14 @@ def main():
         print("Cleaning encoding problems on file(s) : {}".format(args["FILENAME"]))
     else:
         parser.error("No operation provided")
+
+def main():
+    parser = argparse.ArgumentParser()
+
+    define_args(parser)
+
+    check_args(parser)
+
 
 if __name__ == '__main__' :
     main()
