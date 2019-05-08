@@ -1,30 +1,34 @@
 #! /usr/bin/env python
 
-# sequence[0].string.encode('ISO-8859-1', 'surrogateescape').decode('utf-8')
 import pickle
 import os
 import sys
 import argparse
 import time
+from typing import List
+
+from keylogger import Sample, keylog_session
 
 
-def sanitize_encoding(filename : str ):
-    print(filename)
-    orig_filename = filename
+
+def sanitize_encoding(filename : str):
+    """Clean a record of Samples
+
+    Some encoding issues have been spotted across machines.
+    This function solves this problem and reserialized the cleaned
+    sequence to a new file.
+
+    At the end of the process, a new file is created, called
+    `filename + "_sanitized"` and containing the serialized sanitized
+    sequence of samples.
+    """
+
+    # Building new filename
     new_filename = filename.split('.')
     new_filename.insert(1, '_sanitized.')
-
     new_filename = "".join(new_filename)
 
-    # print("Filename : {} ; new : {}".format(orig_filename, new_filename))
-    samples = []
-
-    with open(orig_filename, "rb") as file:
-        while True:
-            try:
-                samples.append(pickle.load(file))
-            except EOFError:
-                break
+    samples = get_samples(filename)
 
     for sample in samples:
         sample.string = sample.string.encode(
@@ -35,14 +39,21 @@ def sanitize_encoding(filename : str ):
         for sample in samples:
             pickle.dump(sample, file, pickle.HIGHEST_PROTOCOL)
 
-def display_file(filename):
-    samples = get_samples(filename)
-    print("{} :".format(filename))
-    for sample in samples:
-        print("\t{}\t{}\t[{}]".format(time.strftime("%a, %d %b %Y %H:%M:%S", sample_to_localtime(sample)), len(sample),"Impostor" if sample.impostor else "Legit"))
-    print()
+def display_file(filename : str, indent : bool = False):
+    """Display the serialized samples in a file"""
 
-def get_samples(filename):
+    samples = get_samples(filename)
+    for sample in samples:
+        print("{}{}\t{}\t[{}]".format(
+            "\t" if indent else "",
+            time.strftime(
+                "%a, %d %b %Y %H:%M:%S", sample_to_localtime(sample)),
+            len(sample),
+            "Impostor" if sample.impostor else "Legit")
+        )
+
+def get_samples(filename : str) -> List[Sample]:
+    """Get the serialized sequence of Samples from a file"""
     samples = []
     with open(filename, 'rb') as file:
         while True:
@@ -52,7 +63,8 @@ def get_samples(filename):
                 break
     return samples
 
-def sample_to_localtime(a_sample):
+def sample_to_localtime(a_sample : Sample) -> time.struct_time:
+    """Find the exact date of a sample"""
     kb_evt = next(iter(a_sample))
     return time.localtime(kb_evt.seconds)
 
@@ -65,8 +77,6 @@ def main():
     parser.add_argument("-e", "--encoding", help="Clean encoding issues on serialized files", action="store_const", const=True)
 
     args = vars(parser.parse_args())
-
-    print(args)
 
     if len(args["FILENAME"]) > 1 and args["exclude"]:
         parser.error("Can only exclude data from single file")
@@ -85,8 +95,16 @@ def main():
         print("Elements excluded : {}".format(excluded))
     elif args["display"]:
         print("Priting file(s) contents of {}".format(args["FILENAME"]))
-        for filename in args["FILENAME"]:
-            display_file(filename)
+
+        files = args["FILENAME"]
+        if len(files) > 1 :
+            for filename in files:
+                print("{} :".format(filename))
+                display_file(filename, indent=True)
+                print()
+        else:
+            display_file(files[0])
+
     elif args["encoding"]:
         print("Cleaning encoding problems on file(s) : {}".format(args["FILENAME"]))
     else:
