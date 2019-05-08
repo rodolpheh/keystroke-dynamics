@@ -1,3 +1,11 @@
+"""Historic script to extract samples from one serialized file of Samples
+
+Use `tools.py` now.
+
+TODO: delete this file from version control once certain it's not needed
+as a HOWTO anymore.
+"""
+
 import pickle
 import os
 import time
