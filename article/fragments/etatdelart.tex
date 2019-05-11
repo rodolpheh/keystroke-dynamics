@@ -1,7 +1,19 @@
 \section{État de l'art}
 
+La recherche en dynamique de frappe au clavier n'est pas récente\cite{wood1977}. En effet, l'idée s'est développée dès l'émergence de systèmes d'exploitation partagés entre plusieurs utilisateurs (UNIX dans les années 1970). L'authentification par nom d'utilisateur et mot de passe est apparue très rapidement comme limitée pour la protection de l'accès aux ressources informatiques, d'où la recherche de nouvelles solutions.
 
+Cependant, après plus de quarante ans de recherche elle est encore loin d'être largement répandue alors que les capteurs d'empreinte digitales sont maintenant monnaie courante sur les \textit{smartphones} et les ordinateurs d'aujourd'hui. Et c'est bien malgré les attraits dont cette technique dispose \textit{a priori} : le faible coût d'acquisition et de traitement des données devrait l'avantager face à toute méthode nécessitant du matériel supplémentaire.
+
+Outre des problèmes de propriété intellectuelle relevés par Peacock \textit{et al.} \cite{peacock2004}, la recherche en dynamique de frappe doit relever de nombreux défis. La qualité de la donnée et le bruit qui peut s'y trouver peuvent fortement influencer les performances du système. Il est donc difficile de développer une solution robuste quand elle à ce point sensible aux biais de la donnée d'entrée. Et dans un contexte où les standards imposent des taux de fiabilité très importants \cite{killourhy2009}, on peut comprendre que la recherche peine à proposer des méthodologies reproductibles pour obtenir des systèmes performants en toute situation.
+
+Il s'avère que le milieu de la recherche en \textit{keystroke dynamics} fait face à un problème de taille, à savoir l'accès à la donnée. Si des travaux ont tenté de normaliser cet aspect de la recherche avec des bases de données publiques de taille respectable \cite{giotGREYC,killourhy2009}, on reste encore loin de jeux de données qui permettraient de s'approcher des situations réelles de certaines applications Web gérant des millions d'utilisateurs.
+
+Néanmoins une autre utilisation que le web nous a parue sous-exploitée. En effet,la dynamique de frappe au clavier \textbf{statique} est largement convoquée dans la littérature existante pour l'identification de \textbf{multiples utilisateurs partageant un secret commun}, tandis que la dynamique de frappe au clavier \textbf{dynamique} est utilisée pour contrôler périodiquement l'authenticité de l'utilisateur du clavier\cite{gunetti2005} (et cette branche est beaucoup plus complexe et moins explorée). Ces deux disciplines sont limitées par le peu de données disponibles pour affiner la recherche.
+
+En revanche, il nous a paru intéressant de se repositionner dans un contexte où la rareté des données est \textbf{non négociable} : dans le cadre d'une \textbf{authentification à deux facteurs} sur une machine personnelle. Dans ce cas précis, la machine ne dispose de toute façons pas de plus de données que celles fournies par son utilisateur. De plus il est inenvisageable d'obtenir des données d'imposteurs pour affiner un modèle en le confrontant à des exemples de données "négatives".
+
+Nous avons donc voulu partir dans la direction de la détection d'imposteur sans disposer de données en grande quantité, ni de données d'imposteurs. Nous nous sommes alors orientés vers les algorithmes de \textit{novelty detection}, et notamment les SVM (\textit{single vector machine}).
 
 La méthode utilisée est largement inspirée par l'article de Chang et Eude\cite{doi:10.1111/coin.12122}.
-Dans la section \ref{modele} on utilise une méthodologie de constitution et de validation du modèle de données très largement inspirée de cette publication.
+Dans la section \ref{modele} on utilise une méthodologie de constitution et de validation du modèle de données qui doit beaucoup à cette publication, tout en étant adaptée à un contexte opérationnel différent.
 
