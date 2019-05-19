@@ -3,6 +3,10 @@ env/
 model/
 __pycache__/
 sequence/
+review/
+research/
+softs/
 .git/
 .gitignore
 .dockerignore
+docker-compose.yml
