@@ -1,0 +1,34 @@
+\section{resultats}
+
+À partir de la base de données du GREYC, nous avons constitué, pour chaque utilisateur possédant plus de 30 enregistrements, 5 modèles. Le modèle affichant le meilleur rappel lors de la phase de pré-évaluation a été retenu et utilisé lors de la phase d'évaluation du modèle.
+
+La figure~\ref{results} représente les FAR et FRR obtenus sur ces modèles lors de la phase d'évaluation pour chaque profil utilisateur testé.
+
+\pgfplotstableset{col sep=semicolon}
+
+\pgfplotstableread{res/graph_data.csv}
+\loadedtable
+
+\begin{figure}
+\begin{tikzpicture}
+\begin{axis}[xbar=0pt,
+    bar width=2pt,
+    ylabel=Utilisateur,
+    xlabel=Valeur,
+    ytick=data,
+    yticklabels from table={\loadedtable}{userId},
+    height=24cm,
+    xmin=0,
+    xmax=1,
+    ymin=0,
+    ymax=98,
+    width=\linewidth
+]
+
+\addplot table[y=nb, x=FRR] {\loadedtable};
+\addplot table[y=nb, x=FAR] {\loadedtable};
+\end{axis}
+\end{tikzpicture}
+\caption{FAR et FRR pour chaque modèle obtenu}
+\label{results}
+\end{figure}
