@@ -42,7 +42,7 @@ def get_existing_filename(existing_files: "List[str]", multiple: bool = False) -
     # Ask user which file only if there are multiple files
 
     if len(existing_files) == 1:
-        return existing_files[0]["name"]
+        return [existing_files[0]["name"]]
 
     plural = '(s)' if multiple else ''
 
