@@ -11,9 +11,10 @@ from sklearn.svm import OneClassSVM
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import make_scorer
-from sklearn.base import BaseEstimator
+from sklearn.base import BaseEstimator, clone
 from sklearn.utils.validation import check_array, check_is_fitted
 from sklearn.model_selection import GridSearchCV
+from copy import deepcopy
 
 
 class Model(BaseEstimator):
@@ -86,8 +87,10 @@ class Model(BaseEstimator):
         y_pred_train = pipeline.predict(train)
         y_pred_test = pipeline.predict(test)
 
-        TP = y_pred_test[y_pred_test == 1].size
-        FN = y_pred_test[y_pred_test == -1].size
+        TP = y_pred_test[y_pred_test == 1].size + \
+            y_pred_train[y_pred_train == 1].size
+        FN = y_pred_test[y_pred_test == -1].size + \
+            y_pred_train[y_pred_train == -1].size
 
         return {
             "TP": TP,
@@ -149,6 +152,15 @@ class Model(BaseEstimator):
         returned["gamma"] = gs.best_params_["gamma"]
         if returnModel:
             returned["model"] = gs.best_estimator_
+        return returned
+
+    @staticmethod
+    def copyParameters(params):
+        returned = {}
+        returned["nu"] = params["nu"]
+        returned["gamma"] = params["gamma"]
+        #returned["model"] = clone(params["model"])
+        returned["model"] = deepcopy(params["model"])
         return returned
 
 
