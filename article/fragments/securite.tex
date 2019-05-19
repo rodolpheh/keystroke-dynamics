@@ -1,24 +1,21 @@
-\section{Sécurité des données}
-Un point central des systèmes d'authentifications, qu'elle qui soit, reste la sécurité.
-Le but est de pérenniser les données et dans notre cas le modèle de données. Il est donc impératif de prendre les mesures nécessaires afin de rendre impossible, la falsification du modèle biométrique.
+\section{Sécurité}
+Un point central des systèmes d'authentification est la sécurité.
+Le but final est de protéger les données personnelles de l'utilisateur. Dans le cas présent, rajouter une méthode d'authentification augmente la surface d'attaque potentielle du système. Il est donc impératif de prendre les mesures nécessaires afin de rendre impossible la falsification et l'exploitation du modèle biométrique.
 
 \subsection{Critères de sécurités}
-Afin de rendre le modèle le plus sur possible, il est nécessaire d'appliquer des critères précis concernant le modèle et le module d'évaluation.
+On entend "\textbf{modèle}" quand on parle de ce qui a été produit par l'algorithme de \textit{machine learning} en lui-même et "\textbf{module}" quand on parle de la brique logicielle qui utilise le modèle dans un processus d'authentification.
+Afin de rendre le modèle le plus sûr possible, il est nécessaire d'appliquer des précautions spécifiques concernant le modèle et le module d'évaluation.
 
-En premier lieu, il faut s'assurer que le module d'évaluation conserve le même temps de traitement, pour tout type de données et quelque soit son exactitude. La mise en place d'un temps de traitement constant permet d'éviter l'exploitation de cette information par un faussaire, en empêchant de montrer les signes d'un mot de passe erroné.
-La solution à cette problématique est la mise en place d'une exécution des tâches de manière asynchrones : toute fonction est exécutée sans attendre la fin de l'étape précédente.
+En premier lieu, il faut s'assurer que le module d'évaluation conserve le même temps de traitement, quelle que soit la situation. La mise en place d'un temps de traitement constant permet d'éviter les attaques par timing.
 
-Dans la mesure ou le système biométrique ne soit pas stocker de données d'imposteurs, il est nécessaire que un attaquant ne puisse accéder à d'autres échantillons susceptible de permettre l'accès au modèle.
-Afin d'empêcher toute falsification, les échantillons ayant servi à l'entrainement du modèle, ne sont pas stockés. Il en est également de même pour les caractères tapés lors des entrainements et les authentifications.
-Dans le cadre de l'algorithme utilisé, ces entités sont déjà prises en compte et ne sont pas garder en mémoire.
+Ensuite, afin d'empêcher toute falsification, les échantillons ayant servi à l'entrainement du modèle ne doivent pas être récupérables par un attaquant. Pour cet aspect, l'algorithme utilisé présente l'avantage de ne pas conserver les échantillons de données dans le modèle final.
 
-\subsection{Chiffrement de la donnée}
-Le problème d'utiliser un modèle de Machine Learning correspondant à des profils est qu'il permet d'ouvrir une surface d'attaque à tout faussaire.
-Un attaquant qui récupérerait la modèle, pourrait repartir de cette signature, afin d'en générer un autre. De cette faiblesse, il serait donc possible d'outrepasser l'authentification, avec un modèle bien entrainé.
-Il est donc vitale de chiffrer les données afin de remédier à cette faille.
+\subsection{Chiffrement du modèle}
 
-Le choix a donc été orienté sur un modèle de chiffrement AES256. Les fonctions de chiffrements et de déchiffrements sont symétriques (utilisation d'une clé) mais reste suffisamment complexe à exploiter. De plus, le fait de ne pas avoir de communication extérieure au système, ne justifie pas l'utilisation de chiffrement asymétrique.
-Ce modèle présente plusieurs avantages en termes de ressources, de temps et de sécurité.
-Il s'agit d'abord d'un algorithme difficile à casser de manière brutale. La génération aléatoire de clés de chiffrements et l'utilisation d'octets pures, renforce ce modèle.
-Le modèle reste pour autant, facile à inclure au modèle et propose un temps d'exécution rapide, ce qui suit l'idée d'uniformisation du temps de traitement. 
-Pour ces raisons, le modèle n'en reste que plus sûr.
+On peut imaginer un autre vecteur d'attaque introduit par un modèle de \textit{machine learning} : un attaquant qui récupérerait le modèle pourrait s'en servir pour entraîner un autre modèle de \textit{machine learning}, dont la spécialité serait de tromper le modèle de l'utilisateur. C'est ce que laisse penser la recherche autour des GAN (\textit{Generative Adversarial Networks}). 
+Il est donc vital de chiffrer le modèle afin de limiter la surface d'attaque.
+
+Le choix a donc été orienté sur un algorithme de chiffrement AES256. Les fonctions de chiffrements et de déchiffrements sont symétriques (utilisation d'une clé) mais reste suffisamment complexe à exploiter. Comme le modèle n'a pas vocation à être communiqué, le chiffrement asymétrique est inutile.
+Cet algorithme présente plusieurs avantages en termes de ressources, de temps et de sécurité. Il est notamment difficile à casser avec une attaque en brute force.
+
+Dans le cadre de la gestion du module d'évaluation sur le système cible, on imagine que les clés de chiffrement du modèle seraient stockées dans un fichier sur lequel l'utilisateur n'a aucun droit : c'est l'utilisateur qui se charge de l'authentification qui peut y accéder. De notre point de vue, cela limite la surface d'attaque car si l'attaquant dispose déjà des privilèges de l'utilisateur chargé de l'authentification des autres utilisateurs (super-utilisateur ou compte de service), alors il n'a plus vraiment besoin du modèle verrouillant l'accès au compte de l'utilisateur.
