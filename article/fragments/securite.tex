@@ -1,0 +1,24 @@
+\section{Sécurité des données}
+Un point central des systèmes d'authentifications, qu'elle qui soit, reste la sécurité.
+Le but est de pérenniser les données et dans notre cas le modèle de données. Il est donc impératif de prendre les mesures nécessaires afin de rendre impossible, la falsification du modèle biométrique.
+
+\subsection{Critères de sécurités}
+Afin de rendre le modèle le plus sur possible, il est nécessaire d'appliquer des critères précis concernant le modèle et le module d'évaluation.
+
+En premier lieu, il faut s'assurer que le module d'évaluation conserve le même temps de traitement, pour tout type de données et quelque soit son exactitude. La mise en place d'un temps de traitement constant permet d'éviter l'exploitation de cette information par un faussaire, en empêchant de montrer les signes d'un mot de passe erroné.
+La solution à cette problématique est la mise en place d'une exécution des tâches de manière asynchrones : toute fonction est exécutée sans attendre la fin de l'étape précédente.
+
+Dans la mesure ou le système biométrique ne soit pas stocker de données d'imposteurs, il est nécessaire que un attaquant ne puisse accéder à d'autres échantillons susceptible de permettre l'accès au modèle.
+Afin d'empêcher toute falsification, les échantillons ayant servi à l'entrainement du modèle, ne sont pas stockés. Il en est également de même pour les caractères tapés lors des entrainements et les authentifications.
+Dans le cadre de l'algorithme utilisé, ces entités sont déjà prises en compte et ne sont pas garder en mémoire.
+
+\subsection{Chiffrement de la donnée}
+Le problème d'utiliser un modèle de Machine Learning correspondant à des profils est qu'il permet d'ouvrir une surface d'attaque à tout faussaire.
+Un attaquant qui récupérerait la modèle, pourrait repartir de cette signature, afin d'en générer un autre. De cette faiblesse, il serait donc possible d'outrepasser l'authentification, avec un modèle bien entrainé.
+Il est donc vitale de chiffrer les données afin de remédier à cette faille.
+
+Le choix a donc été orienté sur un modèle de chiffrement AES256. Les fonctions de chiffrements et de déchiffrements sont symétriques (utilisation d'une clé) mais reste suffisamment complexe à exploiter. De plus, le fait de ne pas avoir de communication extérieure au système, ne justifie pas l'utilisation de chiffrement asymétrique.
+Ce modèle présente plusieurs avantages en termes de ressources, de temps et de sécurité.
+Il s'agit d'abord d'un algorithme difficile à casser de manière brutale. La génération aléatoire de clés de chiffrements et l'utilisation d'octets pures, renforce ce modèle.
+Le modèle reste pour autant, facile à inclure au modèle et propose un temps d'exécution rapide, ce qui suit l'idée d'uniformisation du temps de traitement. 
+Pour ces raisons, le modèle n'en reste que plus sûr.
