@@ -2,7 +2,7 @@
 
 Notre problèmatique est centrée autour de la constitution d'un système d'authentification en l'absence de données d'imposteurs.
 
-À l'aide de la base de données du GREYC, nous avons pu tracer sur la figure~\ref{3d}, sur trois dimensions, le positionnement des mesures pour deux utilisateurs distincts. On peut noter que même dans un nombre faible de dimensions, il semble possible de séparer les mesures en deux groupes distincts représentant chacun un utilisateur. S'il est possible de grouper les données de deux utilisateurs distincts, il est donc possible de définir une frontière de décision qui permet de définir si une nouvelle mesure fait partie ou non d'un groupe donné. On appelle ceci un algorithme de \textit{novelty detection}.
+À l'aide de la base de données du GREYC, on peut tracer le positionnement des mesures pour deux utilisateurs distinctssur trois dimensions (voir la figure~\ref{3d}). On peut noter que même dans un nombre faible de dimensions, il semble possible de séparer les mesures en deux groupes distincts représentant chacun un utilisateur. S'il est possible de grouper les données de deux utilisateurs distincts, il est donc possible de définir une frontière de décision qui permet de définir si une nouvelle mesure fait partie ou non d'un groupe donné. On appelle ceci un algorithme de \textit{novelty detection}.
 
 \begin{figure}[b]
     \centering
@@ -22,7 +22,7 @@ Les données nécessitent d'abord un pré-traitement. Selon la publication \text
 \label{modele}
 \subsection{Entraînement du modèle}
 
-L'entraînement du modèle se fait uniquement sur les données utilisateur, c'est-à-dire des données uniquement \textbf{positives}, le jeu de données ne comportant pas d'exemple de données d'imposteurs. Comme pour nombre de modèles d'apprentissage machine, nous divisons les données en deux lots :
+L'entraînement du modèle se fait uniquement sur les données utilisateur, c'est-à-dire des données uniquement \textbf{positives}, le jeu de données ne comportant pas d'exemple de données d'imposteurs. Comme pour nombre de modèles d'apprentissage machine, on divise les données en deux lots :
 
 \begin{itemize}
     \item Un lot de données d'entraînement
@@ -37,9 +37,9 @@ Le rappel est "la proportion des items pertinents proposés parmi l'ensemble des
 
 \subsection{Évaluation du modèle}
 
-Une fois le modèle entraîné, nous pouvons l'évaluer avec des données d'imposteurs. Il faut noter ici que cette phase d'évaluation ne sera pas possible lors de l'implémentation d'un logiciel d'authentification par la dynamique de frappe au clavier, en l'absence de données d'imposteurs. Nous l'utilisons ici pour évaluer notre méthode d'entraînement du modèle.
+Une fois le modèle entraîné, on peut l'évaluer avec des données d'imposteurs. Il faut noter ici que cette phase d'évaluation ne sera pas possible lors de l'implémentation d'un logiciel d'authentification par la dynamique de frappe au clavier, en l'absence de données d'imposteurs. Nous l'utilisons ici pour évaluer notre méthode d'entraînement du modèle.
 
-Pour l'évaluation, nous utilisons toutes les données à notre disposition. Les données utilisateurs seront d'abords divisées en deux lots (un d'entraînement et un d'évaluation). Les données d'entraînement sont passées au module d'entraînement. Le modèle résultant est alors évalué à l'aide des données d'évaluation. On s'intéresse ici au \textit{f-score}, qui est une métrique équilibrant les notions de \textbf{rappel} et de \textbf{précision} pour produire un score significatif.
+Pour l'évaluation, on utilise toutes les données à notre disposition. Les données utilisateurs seront d'abords divisées en deux lots (un d'entraînement et un d'évaluation). Les données d'entraînement sont passées au module d'entraînement. Le modèle résultant est alors évalué à l'aide des données d'évaluation. On s'intéresse ici au \textit{f-score}, qui est une métrique équilibrant les notions de \textbf{rappel} et de \textbf{précision} pour produire un score significatif.
 
 \begin{figure}[]
     \centering

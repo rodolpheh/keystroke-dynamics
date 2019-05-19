@@ -1,13 +1,15 @@
 \section{Capture des données}
 
-Afin de garantir une capture suffisamment précise il est nécessaire d’éliminer les retards peuvent être causées par des couches logicielles. Les différences temporelles observées sont de l'ordre des dizaines de microsecondes. Le langage C offre un niveau de contrôle proche de la machine en restant raisonnablement simple d'utilisation. Il nous a servi en conséquence pour capturer les événements du clavier. 
+Afin de garantir une capture suffisamment précise il est nécessaire d’éliminer les retards peuvent être causées par des couches logicielles. Les différences temporelles observées sont de l'ordre des dizaines de microsecondes. Le langage C offre un niveau de contrôle proche de la machine en restant raisonnablement simple d'utilisation. C'est pourquoi on l'utilise pour capturer les événements du clavier.
 
-Le traitement des données, n’étant pas soumis aux même contraintes, il a pu être réalisé avec des technologies du plus haut niveau. Nous avons choisis Python, pour la richesse de sa bibliothèque d’utils ainsi que la facilité de prototypage.
+Le traitement des données, n’étant pas soumis aux même contraintes, il a pu être réalisé avec des technologies de plus haut niveau. Python paraissait être un bon choix, pour la richesse de sa bibliothèque d’utilitaires, ses librairies de \textit{data science} et de \textit{machine learning} ainsi que la facilité de prototypage.
 
-La capture consiste à journaliser les événements clavier en sauvegardant la touche, le type d’action et le temps de l’événement. Les collections d’événements sont pérsistées, sous forme d’un fichier binaire, susceptible d’être élargi par des nouvelles empreintes.
+La capture consiste à journaliser les événements clavier en sauvegardant la touche, le type d’action et le temps de l’événement. Les collections d’événements sont sauvegardées sous la forme d’un fichier binaire, susceptible d’être enrichit de nouveaux échantillions.
 
-Les empreintes sont marquées en fonction de leur auteur. Les empreintes marquées comme provenant d'un imposteur seront ignorées durant l’entrainement du modèle. Elles sont utilisés à la fin du processus d’entraînement, pour réaliser des testes automatisées. Ces tests permettent de déterminer les marqueurs de qualité et performance du modèle.
+Les échantillons sont étiquetés en fonction de leur auteur, de manière à pouvoir distinguer l'utilisateur nominal et les imposteurs pour la phase d’entrainement du modèle. Elles sont utilisés à la fin du processus d’entraînement, pour réaliser des tests automatisés (voir la section \ref{modele}).
 
-Dans le cadre de ce travail nous avons décidés de limiter les variables d’environnement, avant d’étendre les cas d’utilisation. Afin d’éviter les variations liées aux changements du matériel, nous supposons qu’une empreinte est liée à un seul appareil et également qu’il s’agit d’un clavier matériel. Afin de permettre à chacun de reproduire nos résultats dans un environnement identique, nous avons rassemblés nos outils sous forme d'une image Docker.
+Afin de limiter l'influence des variations liées aux changements du matériel, nous supposons qu’une empreinte est liée à un seul appareil et également qu’il s’agit d’un clavier matériel. Pour permettre la reproductibilité du protocole d'acquisition des données, une image Docker est fournie avec cet article. Il est néanmoins important que l'utilisateur ait conscience de l'influence qu'un changement d'environnement peut avoir sur la qualité des données.
 
 On peut noter que la suppression de caractères ou l'utilisation des combinaisons multi-touches provoquent une rupture dans l’enchaînement d’appuis et de relâchements. Les deux cas n'affectent pas la capture ni la journalisation. Néanmoins ils nécessitent un traitement spécifique lors de l'entrainement du modèle.
+
+Le protocole d'acquisition des données mérite plus de recherche et de consolidation. En effet, au vu des résultats assez aléatoire obtenus sur les données récoltées avec cette méthodologie, nous avons préféré nous concentrer sur les résultats obtenus avec les données du GREYC

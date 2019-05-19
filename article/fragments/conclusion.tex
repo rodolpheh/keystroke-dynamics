@@ -1,3 +1,15 @@
 \section{Conclusion}
 
-La méthode suivie pour l'entraînement de la \textit{One-Class SVM} et son utilisation produit des résultats peu satisfaisants sur la base de données GREYC. En pratique, à partir des données que nous avions nous même recueillies et exploitées, nous obtenions des résultats plutôt satisfaisants. L'étude des données du GREYC nous montre qu'il y a un certain manque de finesse dans la capture des données et nous pensons que l'utilisation d'un méthode de capture plus précise permettrait d'améliorer les résultats obtenus précedemment.
+Ce travail propose une exploration de ce qu'il faudrait pour produire une méthodologie qui permettrait le développement d'un système d'authentification par \textit{keystroke dynamics} comme deuxième facteur d'une authentification à deux facteur sur machine personnelle. Les apports proposés le sont à la fois sur la méthodologie de capture des données et sur l'utilisation d'un algorithme jusqu'ici assez peu exploité : la \textit{One-Class SVM}. Cependant ces deux aspects demandent encore plus de travail et de temps pour qu'on puisse qualifier les résultats obtenus.
+
+La méthode suivie pour l'entraînement de la \textit{One-Class SVM} et son utilisation produit des résultats assez peu satisfaisants sur la base de données GREYC. Le peu de données collectées spécialement pour cette étude ont l'air de suggérer qu'on peut obtenir de meilleurs résultats avec une précision plus importante dans la capture des événements de clavier. Ceci étant, il n'est pas souhaitable de rejetter les apports du GREYC sur ces premiers résultats. Il est important de savoir jusqu'à quel niveau de précision la fiabilité du système reste acceptable, notamment parce que les données de la vie réelle sont par essence de moindre qualité que des données capturées dans des conditions de laboratoire.
+
+D'autres axes d'améliorations sont possibles :
+
+\begin{itemize}
+    \item La recherche des hyperparamètres optimums, qui pourrait être grandement améliorée ;
+    \item La méthodologie de capture des données, qui explore des pistes intéressantes mais qui réclamerait des tests à plus long terme pour être concluante ;
+    \item La recherche d'une méthode permettant de faire confiance à un "gabarit" de modèle qui pourrait avoir des performances satisfaisantes en toute circonstance, y compris en conditions réelles quand l'utilisateur ne dispose pas de données d'imposteurs pour en éprouver la robustesse.
+\end{itemize}
+
+Nous espérons que ce travail inspirera de futures améliorations, et nous restons ouverts à toute suggestion, tant sur la forme que sur le fond.
