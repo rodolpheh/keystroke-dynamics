@@ -26,7 +26,9 @@ La figure~\ref{results} représente les FAR et FRR obtenus sur ces modèles lors
 ]
 
 \addplot table[y=nb, x=FRR] {\loadedtable};
+\addlegendentry{FRR}
 \addplot table[y=nb, x=FAR] {\loadedtable};
+\addlegendentry{FAR}
 \end{axis}
 \end{tikzpicture}
 \caption{FAR et FRR pour chaque modèle obtenu}
